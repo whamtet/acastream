@@ -13,3 +13,13 @@
   (compare-bits
    (->> a .toLowerCase (re-seq #"\d+|\D+"))
    (->> b .toLowerCase (re-seq #"\d+|\D+"))))
+
+(defn group-by-other [f s]
+  (->> s
+       (group-by f)
+       (reduce
+        (fn [m [k v]]
+          (if (< (count v) 3)
+            (update m "Other" concat v)
+            (assoc m k v)))
+        {"Other" ()})))

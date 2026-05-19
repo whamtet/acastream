@@ -12,10 +12,14 @@
         first
         :slideshow_id)))
 
-(defn get-slideshows [query-fn]
-  (->> (query-fn :get-slideshows {})
-       (sort-by :slideshow_name util/compare-names)
-       (map #(update % :details delete/read-details))))
+(defn get-slideshows [query-fn tab]
+  (let [grouped (util/group-by-other #(re-find #"\w+" (:slideshow_name %))
+                                     (query-fn :get-slideshows {}))]
+    [(->> tab
+          grouped
+          (sort-by :slideshow_name util/compare-names)
+          (map #(update % :details delete/read-details)))
+     (->> grouped keys sort)]))
 
 (defn- recent? [x]
   (and x
