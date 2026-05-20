@@ -20,6 +20,7 @@
 - Memory Game
 - Reveal Game
 - Bingo
+- Dice Sentence Game
 
 ## Development
 
