@@ -52,7 +52,7 @@
   (map png->jpg files))
 
 (defn input-file [local_id]
-  (->> local_id format-img (str "local/")))
+  (->> local_id format-img (str "local/") File.))
 (defn input-stream [local_id]
   (io/input-stream (input-file local_id)))
 

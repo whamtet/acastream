@@ -10,9 +10,9 @@
 
 ;; assume all images are either cached or local
 (defn img-url [src]
-  (if (string? src)
-    (-> src cache/cache-file str)
-    (local/input-file src)))
+  (let [f (if (string? src) (cache/cache-file src) (local/input-file src))]
+    (when (.exists f)
+      (str f))))
 
 (defn reference-map [srcs]
   (->> srcs distinct (map img-url) prn))
@@ -44,7 +44,7 @@
   (let [srcs (->> (slideshow/get-slideshow-slides query-fn slideshow_id)
                   (map second)
                   distinct
-                  (map img-url))
+                  (keep img-url))
         out (ByteArrayOutputStream.)]
     ;; produce PDF in another thread
     (pdf/pdf
@@ -53,7 +53,9 @@
            :right-margin  margin
            :top-margin    margin
            :bottom-margin margin}
-          (->> srcs page (repeatedly pages))
+          (if (empty? srcs)
+            "No src"
+            (->> srcs page (repeatedly pages)))
           ]
          out)
     (ByteArrayInputStream. (.toByteArray out))))
