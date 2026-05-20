@@ -73,7 +73,11 @@
         [:a {:class "mr-2"
              :href (format "../../memory/%s/" slideshow_id)
              :target "_blank"}
-         (components/button "Memory")]]])))
+         (components/button "Memory")]
+        [:a {:class "mr-2"
+             :href (format "../../api/pdf-bingo/%s?pages=20" slideshow_id)
+             :target "_blank"}
+         (components/button "Bingo")]]])))
 
 (defn- get-src-simple [x]
   (if (string? x)

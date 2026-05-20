@@ -19,6 +19,7 @@
 - Word Search
 - Memory Game
 - Reveal Game
+- Bingo
 
 ## Development
 
