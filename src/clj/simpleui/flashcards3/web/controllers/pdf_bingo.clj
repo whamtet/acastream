@@ -1,12 +1,18 @@
 (ns simpleui.flashcards3.web.controllers.pdf-bingo
   (:require
+    [clojure.java.io :as io]
     [clj-pdf.core :as pdf]
     [simpleui.flashcards3.web.controllers.cache :as cache]
     [simpleui.flashcards3.web.controllers.local :as local]
-    [simpleui.flashcards3.web.controllers.slideshow :as slideshow]
-    [simpleui.flashcards3.util :as util])
+    [simpleui.flashcards3.web.controllers.slideshow :as slideshow])
   (:import [java.io File
             ByteArrayOutputStream ByteArrayInputStream]))
+
+(defn- slurp-icon [s]
+  (->> s (format "icons/%s.svg") io/resource slurp))
+
+(def svgs
+  (map slurp-icon ["circle" "star" "triangle"]))
 
 ;; assume all images are either cached or local
 (defn img-url [src]
@@ -18,9 +24,10 @@
   (->> srcs distinct (map img-url) prn))
 
 (def margin 18)
+(def scale 0.16)
 
 (defn- img [src]
-  [:image {:xscale 0.15 :yscale 0.15} src])
+  [:image {:xscale scale :yscale scale} src])
 
 (defn- row [keys]
   (vec
@@ -28,16 +35,24 @@
      [:pdf-cell
       (img (rand-nth keys))])))
 
+(defn- svg [h]
+  (let [i (long (/ h 5))
+        j (mod h 5)
+        x (+ 120 (* j 163))
+        y (+ 85 (* i 83))]
+    [:svg {:translate [x y]} (rand-nth svgs)]))
+
 (defn- page [keys]
   #(list
     [:pdf-table
-     {:border false}
+     {:border false :width-percent 100}
      [20 20 20 20 20]
      (row keys)
      (row keys)
      (row keys)
      (row keys)
      (row keys)]
+    (map svg (range 25))
     [:pagebreak]))
 
 (defn pdf [query-fn pages slideshow_id]
@@ -49,6 +64,7 @@
     ;; produce PDF in another thread
     (pdf/pdf
          [{:size :a4
+           :orientation :landscape
            :left-margin   margin
            :right-margin  margin
            :top-margin    margin
