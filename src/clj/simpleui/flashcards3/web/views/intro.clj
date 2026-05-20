@@ -21,6 +21,9 @@
     [:a {:href "blooket/" :target "_blank"}
      "Blooket"]]
    [:div.text-blue-500.p-4
+    [:a {:href "blooket/?dice=true" :target "_blank"}
+     "Dice PDF"]]
+   [:div.text-blue-500.p-4
     [:a {:href "icon-search/" :target "_blank"}
      "Icons PDF"]]
    [:div.text-blue-500.p-4

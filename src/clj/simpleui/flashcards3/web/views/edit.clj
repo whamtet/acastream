@@ -77,7 +77,11 @@
         [:a {:class "mr-2"
              :href (format "../../api/pdf-bingo/%s?pages=20" slideshow_id)
              :target "_blank"}
-         (components/button "Bingo")]]])))
+         (components/button "Bingo")]
+        [:a {:class "mr-2"
+             :href (str "../../blooket/?dice=true&init=" phrases)
+             :target "_blank"}
+         (components/button "Dice PDF")]]])))
 
 (defn- get-src-simple [x]
   (if (string? x)

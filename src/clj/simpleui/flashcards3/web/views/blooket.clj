@@ -4,10 +4,10 @@
     [simpleui.flashcards3.web.views.components :as components]
     [simpleui.flashcards3.web.htmx :refer [page-htmx defcomponent]]))
 
-(defcomponent form [req init]
+(defcomponent form [req init ^:boolean dice]
   [:form#my-form
    {:class "p-2"
-    :action "../blooket-csv"
+    :action (if dice "../pdf-dice" "../blooket-csv")
     :method "POST"}
    [:div.flex.items-center.py-2
     [:input {:type "submit"
@@ -15,17 +15,17 @@
              :class "bg-clj-blue py-1.5 px-3 rounded-lg text-white mr-2"}]]
    [:div.flex
     [:div.p-2
-     [:div.text-xl.mb-2 "Questions (one per line)"]
+     [:div.text-xl.mb-2 (if dice "Part 1" "Questions (one per line)")]
      [:textarea {:class "border rounded-md p-2 resize"
                  :style {:min-width "500px"}
                  :rows 20
-                 :name "questions"}]]
+                 :name (if dice "part1" "questions")}]]
     [:div.p-2
-     [:div.text-xl.mb-2 "Answers (one per line)"]
+     [:div.text-xl.mb-2 (if dice "Part 2" "Answers (one per line)")]
      [:textarea {:class "border rounded-md p-2 resize"
                  :style {:min-width "300px"}
                  :rows 20
-                 :name "answers"}
+                 :name (if dice "part2" "answers")}
       init]]]
    ])
 

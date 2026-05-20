@@ -15,6 +15,7 @@
     [simpleui.flashcards3.web.controllers.email :as email]
     [simpleui.flashcards3.web.controllers.pdf-icons :as controllers.pdf-icons]
     [simpleui.flashcards3.web.controllers.pdf-battleships :as pdf-battleships]
+    [simpleui.flashcards3.web.controllers.pdf-dice :as pdf-dice]
     [simpleui.flashcards3.web.controllers.pdf-snl :as pdf-snl]
     [simpleui.flashcards3.web.controllers.students :as controllers.students]
     [integrant.core :as ig]
@@ -60,6 +61,11 @@
       {:status 200
        :headers {"Content-Type" "application/pdf"}
        :body (-> req :params pdf-battleships/pdf)})]
+   ["/pdf-dice"
+    (fn [req]
+      {:status 200
+       :headers {"Content-Type" "application/pdf"}
+       :body (-> req :params pdf-dice/pdf)})]
    ["/battleships" (route-data opts) (battleships/ui-routes opts)]
    ["/battleships-demo" battleships/demo]
    ["/blooket" (route-data opts) (blooket/ui-routes opts)]
