@@ -38,14 +38,14 @@
 (defn- svg [h]
   (let [i (long (/ h 5))
         j (mod h 5)
-        x (+ 120 (* j 163))
-        y (+ 85 (* i 83))]
+        x (+ 122 (* j 163))
+        y (+ 84 (* i 85))]
     [:svg {:translate [x y]} (rand-nth svgs)]))
 
 (defn- page [keys]
   #(list
     [:pdf-table
-     {:border false :width-percent 100}
+     {:width-percent 100 :border-width 2}
      [20 20 20 20 20]
      (row keys)
      (row keys)
