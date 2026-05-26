@@ -29,6 +29,8 @@
      [:a.mr-2.text-purple-500 (href (format "../play-effect/%s/" slideshow_id))
       icons/play-circle]
      [:a.mr-2.text-green-500 (href (format "../memory/%s/" slideshow_id))
+      icons/play-circle]
+     [:a.mr-2.text-sky-400 (href (format "../play-guess/%s/" slideshow_id))
       icons/play-circle]]
     (when src
       [:img.absolute.w-20.hidden.group-hover:block
