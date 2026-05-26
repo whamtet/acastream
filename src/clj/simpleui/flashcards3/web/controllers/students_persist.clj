@@ -2,24 +2,15 @@
   (:require
     [java-time.api :as jt])
   (:import
-    java.util.Date
-    java.io.File))
+    java.util.Date))
 
-(def f (File. "students.edn"))
+(def ^:private info (atom {}))
 
 (defn- slurp-students []
-  (if (.exists f)
-    (-> f slurp read-string)
-    {}))
-
-(defn- spit-students [x]
-  (assert (map? x))
-  (->> x pr-str (spit f)))
+  @info)
 
 (defn- update-students [f & args]
-  (as-> (slurp-students) $
-        (apply f $ args)
-        (spit-students $)))
+  (apply swap! info f args))
 
 (defn- course-name [s]
   (second
