@@ -1,4 +1,4 @@
-(ns simpleui.flashcards3.web.views.play-guess
+(ns simpleui.flashcards3.web.views.play-exchange
   (:require
     [clojure.java.io :as io]
     [clojure.set :as set]

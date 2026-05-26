@@ -3,7 +3,7 @@
     [clojure.string :as string]
     [simpleui.core :as simpleui]
     [simpleui.flashcards3.web.views.components :as components]
-    [simpleui.flashcards3.web.views.play-guess :as play-guess]
+    [simpleui.flashcards3.web.views.play-exchange :as play-exchange]
     [simpleui.flashcards3.web.controllers.pdf-battleships :as pdf-battleships]
     [simpleui.flashcards3.web.htmx :refer [page-htmx page-simple defcomponent]]))
 
@@ -14,7 +14,7 @@
                      top2 top1)]
     (->> exclusions
          parse-exclusions
-         (play-guess/get-names 10)
+         (play-exchange/get-names 10)
          (string/join "\n"))))
 
 (defcomponent form [req init]

@@ -42,9 +42,9 @@
              :target "_blank"}
          (components/button "Grid Printout")]
         [:a {:class "mr-2"
-             :href (format "../../play-guess/%s/" slideshow_id)
+             :href (format "../../play-exchange/%s/" slideshow_id)
              :target "_blank"}
-         (components/button "Guess")]
+         (components/button "Exchange")]
         [:a {:class "mr-2"
              :href (str "../../snl/?init=" phrases)
              :target "_blank"}
