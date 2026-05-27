@@ -37,22 +37,29 @@
        {:style {:left "110%"}
         :src (get-src src)}])]])
 
+(defmacro tabs-sesh [body]
+  `(if ~'top-level?
+    {:session (assoc (:session ~'req) :tab ~'tab)
+     :body ~body}
+    ~body))
+
 (defcomponent ^:endpoint tabs-disp [req tab]
-  (let [tab (or tab "Look")
+  (let [tab (or tab (-> req :session :tab) "Look")
         [slideshows tabs] (slideshow/get-slideshows query-fn tab)
         style #(if (= % tab)
                 "px-4 py-2 border-b-2 border-blue-500 text-blue-600 font-medium cursor-pointer transition-colors"
                 "px-4 py-2 border-b-2 border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300 cursor-pointer transition-colors")]
-    [:div {:hx-target "this"
-           :class "mt-2"}
-     [:div {:class "flex border-b border-gray-200 text-sm"}
-      (for [s tabs]
-        [:a {:class (style s)
-             :hx-get "tabs-disp"
-             :hx-vals {:tab s}}
-         s])]
-     [:div.mt-2
-      (map slideshow-disp slideshows)]]))
+    (tabs-sesh
+     [:div {:hx-target "this"
+            :class "mt-2"}
+      [:div {:class "flex border-b border-gray-200 text-sm"}
+       (for [s tabs]
+         [:a {:class (style s)
+              :hx-get "tabs-disp"
+              :hx-vals {:tab s}}
+          s])]
+      [:div.mt-2
+       (map slideshow-disp slideshows)]])))
 
 (defcomponent ^:endpoint panel [req ^:prompt slideshow-name command]
   (case command
@@ -109,8 +116,7 @@
      [:div {:class "right-2 top-2 absolute"}
       [:a {:href "../white.html" :target "_blank"}
        (components/button "White Screen")]]
-     (tabs-disp req) #_
-     (map slideshow-disp (slideshow/get-slideshows query-fn))]))
+     (tabs-disp req)]))
 
 (defn ui-routes [{:keys [query-fn]}]
   (simpleui/make-routes

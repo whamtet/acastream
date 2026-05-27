@@ -1,5 +1,6 @@
 (ns simpleui.flashcards3.web.routes.api
   (:require
+    [simpleui.flashcards3.env :refer [dev?]]
     [simpleui.flashcards3.web.controllers.cache :as cache]
     [simpleui.flashcards3.web.controllers.health :as health]
     [simpleui.flashcards3.web.controllers.local :as local]
@@ -91,6 +92,12 @@
                   :local_id
                   Long/parseLong
                   local/input-stream)})]
+   (when dev?
+     ["/session"
+      (fn [req]
+        {:status 200
+         :headers {"Content-Type" "text/html"}
+         :body (pr-str (:session req))})])
    ["/health"
     ;; note that use of the var is necessary
     ;; for reitit to reload routes without
