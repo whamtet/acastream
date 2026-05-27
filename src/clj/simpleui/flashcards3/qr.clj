@@ -10,7 +10,7 @@
 
 (defn generate-qr!
   [key]
-  (let [url (host "/mobile?key=" key)
+  (let [url (host "/mobile/?key=" key)
         hints (doto (HashMap.)
                     (.put EncodeHintType/MARGIN 1))
         matrix (.encode (QRCodeWriter.)

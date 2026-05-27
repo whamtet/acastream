@@ -12,6 +12,8 @@
     [simpleui.flashcards3.web.views.students :as students]
     [simpleui.flashcards3.web.views.intro :as intro]
     [simpleui.flashcards3.web.views.snl :as snl]
+    [simpleui.flashcards3.web.controllers.cache :as cache]
+    [simpleui.flashcards3.web.controllers.local :as local]
     [simpleui.flashcards3.web.controllers.blooket :as controllers.blooket]
     [simpleui.flashcards3.web.controllers.email :as email]
     [simpleui.flashcards3.web.controllers.pdf-icons :as controllers.pdf-icons]
@@ -53,6 +55,21 @@
       (email/send-params (:params req))
       (response/redirect "https://acastream.uk/reply.html"))]
    ["/mobile" (route-data opts) (play-mobile/ui-routes opts)]
+   ["/cache"
+    (fn [req]
+      (-> req
+          :params
+          :src
+          cache/cache))]
+   ["/local/:local_id"
+    (fn [req]
+      {:status 200
+       :headers {"Content-Type" "image/jpeg"}
+       :body (->> req
+                  :path-params
+                  :local_id
+                  Long/parseLong
+                  local/input-stream)})]
    ["/pdf-icon"
     (fn [req]
       {:status 200

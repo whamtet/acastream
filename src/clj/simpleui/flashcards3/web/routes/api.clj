@@ -1,9 +1,7 @@
 (ns simpleui.flashcards3.web.routes.api
   (:require
     [simpleui.flashcards3.env :refer [dev?]]
-    [simpleui.flashcards3.web.controllers.cache :as cache]
     [simpleui.flashcards3.web.controllers.health :as health]
-    [simpleui.flashcards3.web.controllers.local :as local]
     [simpleui.flashcards3.web.controllers.pdf :as pdf]
     [simpleui.flashcards3.web.controllers.pdf-jtd :as pdf-jtd]
     [simpleui.flashcards3.web.controllers.pdf-bingo :as pdf-bingo]
@@ -77,22 +75,8 @@
                         :params
                         :pages
                         Long/parseLong)))})]
-   ["/cache"
-    (fn [req]
-      (-> req
-          :params
-          :src
-          cache/cache))]
+
    ["/studentss" students/parse]
-   ["/local/:local_id"
-    (fn [req]
-      {:status 200
-       :headers {"Content-Type" "image/jpeg"}
-       :body (->> req
-                  :path-params
-                  :local_id
-                  Long/parseLong
-                  local/input-stream)})]
    ["/qr/:slideshow_id"
     (fn [req]
       {:status 200
