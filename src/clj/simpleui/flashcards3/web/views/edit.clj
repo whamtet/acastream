@@ -86,7 +86,7 @@
 (defn- get-src-simple [x]
   (if (string? x)
     x
-    (format "../../api/local/%s" x)))
+    (format "../../local/%s" x)))
 
 (defcomponent ^:endpoint image-note [req ^:long i note]
   (slideshow/slideshow-note query-fn slideshow_id i note)

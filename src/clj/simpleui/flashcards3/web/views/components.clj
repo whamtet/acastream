@@ -64,7 +64,7 @@
     (if (.startsWith x "http")
       (str "../../cache?src=" x)
       x)
-    (format "../../api/local/%s" x)))
+    (format "../../local/%s" x)))
 
 (defn get-src2 [x]
   (if (string? x)
