@@ -7,6 +7,7 @@
     [simpleui.flashcards3.web.controllers.pdf :as pdf]
     [simpleui.flashcards3.web.controllers.pdf-jtd :as pdf-jtd]
     [simpleui.flashcards3.web.controllers.pdf-bingo :as pdf-bingo]
+    [simpleui.flashcards3.web.controllers.slideshow :as slideshow]
     [simpleui.flashcards3.web.controllers.students :as students]
     [simpleui.flashcards3.web.middleware.auth :as auth]
     [simpleui.flashcards3.web.middleware.exception :as exception]
@@ -92,6 +93,15 @@
                   :local_id
                   Long/parseLong
                   local/input-stream)})]
+   ["/qr/:slideshow_id"
+    (fn [req]
+      {:status 200
+       :headers {"Content-Type" "image/png"}
+       :body (->> req
+                  :path-params
+                  :slideshow_id
+                  Long/parseLong
+                  slideshow/mobile)})]
    (when dev?
      ["/session"
       (fn [req]

@@ -15,3 +15,6 @@
 
 (def dev? true)
 (def prod? false)
+
+(defn host [& ss]
+  (apply str "http://localhost:3005" ss))

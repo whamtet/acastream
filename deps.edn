@@ -11,6 +11,9 @@
            ring/ring-core                  {:mvn/version "1.14.2"}
            ring/ring-defaults              {:mvn/version "0.6.0"}
 
+           com.google.zxing/core {:mvn/version "3.5.3"}
+           com.google.zxing/javase {:mvn/version "3.5.3"}
+
            ;; Logging
            ch.qos.logback/logback-classic  {:mvn/version "1.5.16"}
 

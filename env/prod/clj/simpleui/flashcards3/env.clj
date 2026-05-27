@@ -13,3 +13,6 @@
 
 (def dev? false)
 (def prod? true)
+
+(defn host [& ss]
+  (apply str "https://flashcards.simpleui.io" ss))
