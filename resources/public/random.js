@@ -9,7 +9,7 @@ document.addEventListener('keydown', (event) => {
         window.open(
             "/key.html",
             "Legend",
-            "width=500,height=600,toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes"
+            "width=300,height=580,toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes"
         );
     }
 });
