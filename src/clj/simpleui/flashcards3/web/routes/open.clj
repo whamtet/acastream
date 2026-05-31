@@ -93,6 +93,11 @@
       {:status 200
        :headers {"Content-Type" "text/csv"}
        :body (-> req :params controllers.blooket/csv)})]
+   ["/kahoot"
+    (fn [req]
+      {:status 200
+       :headers {"Content-Type" "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}
+       :body (-> req :params controllers.blooket/kahoot)})]
    ["/api/students" controllers.students/parse]
    ["/api/snl"
     (fn [req]

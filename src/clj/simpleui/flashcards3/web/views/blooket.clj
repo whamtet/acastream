@@ -12,7 +12,12 @@
    [:div.flex.items-center.py-2
     [:input {:type "submit"
              :value "Create"
-             :class "bg-clj-blue py-1.5 px-3 rounded-lg text-white mr-2"}]]
+             :class "bg-clj-blue py-1.5 px-3 rounded-lg text-white mr-2"}]
+    [:button {:type "submit"
+              :formaction "../kahoot"
+              :class "bg-gray-500 py-1.5 px-3 rounded-lg text-white"}
+     "Create Kahoot"]
+    ]
    [:div.flex
     [:div.p-2
      [:div.text-xl.mb-2 (if dice "Part 1" "Questions (one per line)")]

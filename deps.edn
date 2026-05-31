@@ -17,6 +17,8 @@
            ;; Logging
            ch.qos.logback/logback-classic  {:mvn/version "1.5.16"}
 
+           org.apache.poi/poi-ooxml {:mvn/version "5.4.1"}
+
            ;; email
            com.cognitect.aws/api {:mvn/version "0.8.774"},
            com.cognitect.aws/endpoints {:mvn/version "871.2.39.3"},
