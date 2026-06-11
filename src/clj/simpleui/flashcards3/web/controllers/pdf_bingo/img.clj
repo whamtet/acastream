@@ -5,12 +5,11 @@
 
 ;; assume all images are either cached or local
 (defn- img-url [src]
-  (let [f (if (string? src) (cache/cache-file src) (local/input-file src))]
-    (when (.exists f) f)))
+  (if (string? src) (cache/cache-file src) (local/input-file src)))
 
 
 (defn make-scale [scale srcs]
   (for [src srcs
         :let [src (img-url src)]
-        :when src]
+        :when (.exists src)]
     {:scale scale :src (str src)}))
