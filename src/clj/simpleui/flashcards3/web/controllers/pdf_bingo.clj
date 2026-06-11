@@ -2,8 +2,7 @@
   (:require
     [clojure.java.io :as io]
     [clj-pdf.core :as pdf]
-    [simpleui.flashcards3.web.controllers.cache :as cache]
-    [simpleui.flashcards3.web.controllers.local :as local]
+    [simpleui.flashcards3.web.controllers.pdf-bingo.img :as img]
     [simpleui.flashcards3.web.controllers.slideshow :as slideshow])
   (:import [java.io File
             ByteArrayOutputStream ByteArrayInputStream]))
@@ -14,32 +13,21 @@
 (def svgs
   (map slurp-icon ["circle" "star" "triangle"]))
 
-;; assume all images are either cached or local
-(defn img-url [src]
-  (let [f (if (string? src) (cache/cache-file src) (local/input-file src))]
-    (when (.exists f)
-      (str f))))
-
-(defn reference-map [srcs]
-  (->> srcs distinct (map img-url) prn))
-
 (def margin 18)
-(def scale 0.16)
 
-(defn- img [src]
+(defn- img [{:keys [scale src]}]
   [:image {:xscale scale :yscale scale} src])
 
 (defn- row [keys]
   (vec
    (for [key keys]
-     [:pdf-cell
-      (img key)])))
+     [:pdf-cell (img key)])))
 
 (defn- svg [h img]
   (let [i (long (/ h 5))
         j (mod h 5)
         x (+ 132 (* j 163))
-        y (+ 88 (* i 86))]
+        y (+ 88 (* i 88))]
     [:svg {:translate [x y]} img]))
 
 (defn shuffle-keys [keys]
@@ -66,11 +54,11 @@
     (map-indexed svg (shuffle-svgs))
     [:pagebreak]))
 
-(defn pdf [query-fn pages slideshow_id]
+(defn pdf [query-fn pages scale slideshow_id]
   (let [srcs (->> (slideshow/get-slideshow-slides query-fn slideshow_id)
                   (map second)
                   distinct
-                  (keep img-url))
+                  (img/make-scale scale)) 
         out (ByteArrayOutputStream.)]
     ;; produce PDF in another thread
     (pdf/pdf

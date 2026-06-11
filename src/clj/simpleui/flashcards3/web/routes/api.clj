@@ -74,7 +74,11 @@
                    (->> req
                         :params
                         :pages
-                        Long/parseLong)))})]
+                        Long/parseLong)
+                   (->> req
+                        :params
+                        :scale
+                        Double/parseDouble)))})]
 
    ["/studentss" students/parse]
    ["/qr/:slideshow_id"

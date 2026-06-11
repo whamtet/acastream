@@ -75,7 +75,7 @@
              :target "_blank"}
          (components/button "Memory")]
         [:a {:class "mr-2"
-             :href (format "../../api/pdf-bingo/%s?pages=20" slideshow_id)
+             :href (format "../../api/pdf-bingo/%s?pages=20&scale=0.17" slideshow_id)
              :target "_blank"}
          (components/button "Bingo")]
         [:a {:class "mr-2"
