@@ -31,28 +31,39 @@
 
 (defn- row [keys]
   (vec
-   (for [_ (range 5)]
+   (for [key keys]
      [:pdf-cell
-      (img (rand-nth keys))])))
+      (img key)])))
 
-(defn- svg [h]
+(defn- svg [h img]
   (let [i (long (/ h 5))
         j (mod h 5)
-        x (+ 122 (* j 163))
-        y (+ 84 (* i 85))]
-    [:svg {:translate [x y]} (rand-nth svgs)]))
+        x (+ 132 (* j 163))
+        y (+ 88 (* i 86))]
+    [:svg {:translate [x y]} img]))
+
+(defn shuffle-keys [keys]
+  (->> keys
+    shuffle
+    cycle
+    (take 25)
+    shuffle
+    (partition 5)))
+
+(defn- shuffle-svgs []
+  (->> svgs
+       shuffle
+       cycle
+       (take 25)
+       shuffle))
 
 (defn- page [keys]
   #(list
-    [:pdf-table
-     {:width-percent 100 :border-width 2}
-     [20 20 20 20 20]
-     (row keys)
-     (row keys)
-     (row keys)
-     (row keys)
-     (row keys)]
-    (map svg (range 25))
+    `[:pdf-table
+      {:width-percent 100 :border-width 2}
+      [20 20 20 20 20]
+      ~@(map row (shuffle-keys keys))]
+    (map-indexed svg (shuffle-svgs))
     [:pagebreak]))
 
 (defn pdf [query-fn pages slideshow_id]
