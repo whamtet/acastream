@@ -125,6 +125,7 @@
     "del" (slideshow/delete-slide query-fn slideshow_id i)
     nil)
   [:div#images
+   (when top-level? [:script "clipboardListener();"])
    [:div.flex.m-2
     [:form {:hx-post "image-order:concat"
             :class "mr-2"

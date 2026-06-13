@@ -1,6 +1,6 @@
 const $ = x => document.querySelector(x);
 
-document.getElementById("pasteClipboard").addEventListener("click", async () => {
+const clipboardListener = () => document.getElementById("pasteClipboard").addEventListener("click", async () => {
     try {
         const items = await navigator.clipboard.read();
 
@@ -33,6 +33,8 @@ document.getElementById("pasteClipboard").addEventListener("click", async () => 
         console.error("Failed to read clipboard:", err);
     }
 });
+
+clipboardListener();
 
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {

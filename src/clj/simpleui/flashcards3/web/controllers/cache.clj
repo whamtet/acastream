@@ -1,5 +1,6 @@
 (ns simpleui.flashcards3.web.controllers.cache
   (:require
+    [simpleui.flashcards3.env :refer [dev?]]
     [clojure.java.io :as io]
     [clojure.string :as string]
     [clj-http.lite.client :as client]
@@ -32,11 +33,13 @@
     (client/get url {:headers {"User-Agent" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"}
                      :as :stream})))
 
+(def cache-url (if dev? "/ncache2/" "/ncache/"))
+
 (defn cache [src]
   (let [f (cache-file src)]
     (if (.exists f)
-      (->> f .getName (str "/ncache/") response/redirect)
+      (->> f .getName (str cache-url) response/redirect)
       (do
         (with-open [in (web-stream src)]
           (io/copy in f))
-        (->> f .getName (str "/ncache/") response/redirect)))))
+        (->> f .getName (str cache-url) response/redirect)))))
