@@ -45,7 +45,10 @@
      (scripts js opts))
     [:script {:src
               (unminify "https://unpkg.com/htmx.org@1.9.5/dist/htmx.min.js")}]
-    [:script "htmx.config.defaultSwapStyle = 'outerHTML';"]]))
+    [:script "htmx.config.defaultSwapStyle = 'outerHTML';"]
+    #_#_
+    [:script {:src "https://cdn.jsdelivr.net/npm/eruda"}]
+    [:script "eruda.init();"]]))
 
 (defn page-simple [{:keys [css]} & body]
   (page

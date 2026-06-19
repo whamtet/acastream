@@ -9,7 +9,7 @@
   (string/replace s #"[aeiou]" "_"))
 
 (defn hide-consonants [s]
-  (string/replace s #"[^aeiou]" "_"))
+  (string/replace s #"[^aeiou ]" "_"))
 
 (defn scramble [s]
   (-> s seq shuffle string/join))
@@ -19,7 +19,7 @@
 
 (defcomponent ^:endpoint panel [req ^:longs randoms]
   (let [notes (slideshow/get-slideshow-notes query-fn slideshow_id)]
-    [:div {:style {:height "100vh"}
+    [:div {:style {:height "100vh" :letter-spacing "0.6em"}
            :class "flex items-center justify-center"
            :hx-post "panel"}
      [:span.text-9xl (-> notes rand-nth create-guess)]]))

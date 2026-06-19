@@ -2,6 +2,8 @@
   (:require
     [clojure.java.io :as io])
   (:import
+    java.awt.geom.AffineTransform
+    java.awt.image.AffineTransformOp
     [java.io File]
     [javax.imageio ImageIO]
     [java.awt Color Graphics2D]
@@ -65,3 +67,20 @@
                (when-let [n (->> f .getName (re-find #"\d+"))]
                  (Long/parseLong n))))
        set))
+
+(defn- rot90 [width height]
+  (doto (AffineTransform.) (.rotate (* 0.5 Math/PI) (* 0.5 width) (* 0.5 height))))
+
+(defn- rot-img [img]
+  (let [out (BufferedImage. (.getHeight img) (.getWidth img) BufferedImage/TYPE_INT_ARGB)]
+    (-> (rot90 (.getWidth img) (.getHeight img))
+        (AffineTransformOp. AffineTransformOp/TYPE_BICUBIC)
+        (.filter img out))
+    out))
+
+(defn rotate-img [local_id]
+  (let [f (input-file local_id)]
+    (-> (with-open [in (io/input-stream f)]
+          (ImageIO/read in))
+        rot-img
+        (ImageIO/write "jpg" f))))
