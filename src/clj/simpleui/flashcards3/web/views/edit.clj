@@ -109,6 +109,16 @@
            :hx-vals {:i i :to-move slideshow_id}}
           slideshow_name]])])))
 
+(defcomponent ^:endpoint rot [req ^:long i]
+  (let [medium (slideshow/rot-slide query-fn slideshow_id i)]
+    [:img {:class "max-h-96"
+           :hx-post "rot"
+           :hx-trigger "contextmenu"
+           :hx-vals {:i i}
+           :oncontextmenu "event.preventDefault()"
+           :src (str (get-src medium) "?x=" (rand)) ;; cache buster
+           }]))
+
 (defcomponent ^:endpoint image-order [req
                                       command
                                       medium
@@ -117,6 +127,7 @@
                                       ^:array images]
   image-note
   move-modal
+  rot
   (case command
     "concat" (slideshow/concat-slideshow query-fn slideshow_id images)
     "conj" (slideshow/conj-slideshow query-fn slideshow_id [(or medium large) large])
@@ -165,6 +176,10 @@
              :tabindex -1
              :href (format "../../play/%s/%s/" slideshow_id i)}
          [:img {:class "max-h-96"
+                :hx-post "rot"
+                :hx-trigger "contextmenu"
+                :hx-vals {:i i}
+                :oncontextmenu "event.preventDefault()"
                 :src (get-src medium)}]]
         [:div {:class "cursor-pointer border rounded-md p-2 mr-2"
                :hx-post "image-order:del"

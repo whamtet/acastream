@@ -68,11 +68,13 @@
                  (Long/parseLong n))))
        set))
 
+;; rotating images
+
 (defn- rot90 [width height]
   (doto (AffineTransform.) (.rotate (* 0.5 Math/PI) (* 0.5 width) (* 0.5 height))))
 
 (defn- rot-img [img]
-  (let [out (BufferedImage. (.getHeight img) (.getWidth img) BufferedImage/TYPE_INT_ARGB)]
+  (let [out (BufferedImage. (.getHeight img) (.getWidth img) (.getType img))]
     (-> (rot90 (.getWidth img) (.getHeight img))
         (AffineTransformOp. AffineTransformOp/TYPE_BICUBIC)
         (.filter img out))

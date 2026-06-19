@@ -165,3 +165,8 @@
 
 (defn mobile-random [query-fn key]
   (->> key mobile/key->slideshow_id (get-slideshow-slides query-fn) rand-nth))
+
+(defn rot-slide [query-fn slideshow_id i]
+  (let [local_id (-> (get-slideshow-slides query-fn slideshow_id) (get i) first)]
+    (local/rotate-img local_id)
+    local_id))
