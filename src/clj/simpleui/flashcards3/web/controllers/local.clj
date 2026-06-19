@@ -70,13 +70,15 @@
 
 ;; rotating images
 
-(defn- rot90 [width height]
-  (doto (AffineTransform.) (.rotate (* 0.5 Math/PI) (* 0.5 width) (* 0.5 height))))
+(defn rot90 [h]
+  (doto (AffineTransform.)
+        (.translate h 0)
+        (.rotate (/ Math/PI 2))))
 
 (defn- rot-img [img]
   (let [out (BufferedImage. (.getHeight img) (.getWidth img) (.getType img))]
-    (-> (rot90 (.getWidth img) (.getHeight img))
-        (AffineTransformOp. AffineTransformOp/TYPE_BICUBIC)
+    (-> (rot90 (.getHeight img))
+        (AffineTransformOp. AffineTransformOp/TYPE_NEAREST_NEIGHBOR)
         (.filter img out))
     out))
 
