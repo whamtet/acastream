@@ -40,7 +40,7 @@
        [:a {:href next-href}
         [:div.p-6.text-xl "Empty"]]
        (let [[_ src] (nth slides step)]
-         [:a {:href next-href}
+         [:a#next {:href next-href}
           [:div.flex.justify-center.items-center
            [:img {:src (get-src2 src)
                   :style {:max-width "1000px"}}]]]))]))

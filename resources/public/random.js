@@ -12,6 +12,9 @@ document.addEventListener('keydown', (event) => {
             "width=300,height=580,toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes"
         );
     }
+    if (event.code === "Space") {
+        document.querySelector("#next").click();
+    }
     if (event.key === 'q' || event.key === 'Q') {
         const slideshowId = location.href.split('/')[4];
         window.open(
