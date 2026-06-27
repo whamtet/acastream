@@ -29,7 +29,7 @@
   (query-fn :reading-details {:reading_id reading_id :details details}))
 
 (defn reading-name [query-fn reading_id reading_name]
-  (if (and (empty-s? reading_name) (empty-s? (get-details query-fn reading_id)))
+  (if (empty-s? reading_name)
     (do
       (query-fn :reading-delete {:reading_id reading_id})
       false)
