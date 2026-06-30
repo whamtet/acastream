@@ -9,7 +9,7 @@
   (string/replace s #"[aeiou]" "_"))
 
 (defn hide-consonants [s]
-  (string/replace s #"[^aeiou ]" "_"))
+  (string/replace s #"[^aeiou -]" "_"))
 
 (defn scramble [s]
   (-> s seq shuffle string/join))
