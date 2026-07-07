@@ -101,7 +101,7 @@
 
 (defn concat-slideshow [query-fn slideshow_id images]
   (as-> (get-slideshow-details query-fn slideshow_id) $
-        (update $ :slides into (local/convert images))
+        (update $ :slides into (reverse (local/convert images)))
         (update $ :notes into (repeat (count images) ""))
         (slideshow-details query-fn slideshow_id $)))
 
