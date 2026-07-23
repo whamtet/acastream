@@ -22,12 +22,14 @@
     [:div.p-2
      [:div.text-xl.mb-2 (if dice "Part 1" "Questions (one per line)")]
      [:textarea {:class "border rounded-md p-2 resize"
+                 :id "questions"
                  :style {:min-width "500px"}
                  :rows 20
                  :name (if dice "part1" "questions")}]]
     [:div.p-2
      [:div.text-xl.mb-2 (if dice "Part 2" "Answers (one per line)")]
      [:textarea {:class "border rounded-md p-2 resize"
+                 :id "answers"
                  :style {:min-width "300px"}
                  :rows 20
                  :name (if dice "part2" "answers")}
@@ -40,5 +42,6 @@
    [query-fn]
    (fn [req]
      (page-htmx
-      {:css ["../output.css"]}
+      {:css ["../output.css"]
+       :js ["../blooket.js"]}
       (form req)))))
