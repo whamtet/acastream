@@ -70,15 +70,15 @@
        (remove #(-> % .trim empty?))
        (string/join "\n")))
 
-(defn- pdf [{:keys [slides]}]
+(defn- pdf [{{:keys [slides]} :details :keys [slideshow_name]}]
   (let [out (ByteArrayOutputStream.)]
     (pdf/pdf
-     [{}
+     [{:footer {:text (str slideshow_name " Page")}}
       (pmap img-el slides)]
      out)
     (-> out .toByteArray ByteArrayInputStream.)))
 
 (defn get-pdf [query-fn slideshow_id]
   (->> slideshow_id
-       (slideshow/get-slideshow-details query-fn)
+       (slideshow/get-slideshow-details2 query-fn)
        pdf))

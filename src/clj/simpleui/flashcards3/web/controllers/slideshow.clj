@@ -45,10 +45,13 @@
        (map #(update % :details delete/read-details))
        (sort-by identity compare-updated-name)))
 
-(defn get-slideshow-details [query-fn slideshow_id]
+(defn- get-slideshow-details [query-fn slideshow_id]
   (-> (query-fn :get-slideshow {:slideshow_id slideshow_id})
       :details
       delete/read-details))
+(defn get-slideshow-details2 [query-fn slideshow_id]
+  (-> (query-fn :get-slideshow {:slideshow_id slideshow_id})
+      (update :details delete/read-details)))
 (defn get-slideshow-slides [query-fn slideshow_id]
   (:slides
     (get-slideshow-details query-fn slideshow_id)))
