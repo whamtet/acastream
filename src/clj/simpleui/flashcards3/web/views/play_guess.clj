@@ -17,12 +17,13 @@
 (defn create-guess [s]
   ((rand-nth [hide-vowels hide-consonants scramble]) s))
 
-(defcomponent ^:endpoint panel [req ^:longs randoms]
-  (let [notes (slideshow/get-slideshow-notes query-fn slideshow_id)]
+(defcomponent ^:endpoint panel [req n]
+  (let [note (rand-nth (slideshow/get-slideshow-notes query-fn slideshow_id))]
     [:div {:style {:height "100vh" :letter-spacing "0.6em"}
            :class "flex items-center justify-center"
-           :hx-post "panel"}
-     [:span.text-9xl (-> notes rand-nth create-guess)]]))
+           :hx-post "panel"
+           :hx-vals (when-not n {:n note})}
+     [:span.text-9xl (or n (create-guess note))]]))
 
 (defn ui-routes [{:keys [query-fn]}]
   (simpleui/make-routes
