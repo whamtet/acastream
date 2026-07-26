@@ -5,3 +5,11 @@ document.addEventListener('keydown', (event) => {
         $('#new-slideshow').click();
     }
 });
+
+document.querySelectorAll("img[data-src]").forEach(img => {
+    img.parentElement.addEventListener("mouseenter", () => {
+        if (!img.src) {
+            img.src = img.dataset.src;
+        }
+    }, { once: true });
+});

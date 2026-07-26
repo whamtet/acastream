@@ -35,7 +35,7 @@
     (when src
       [:img.absolute.w-20.hidden.group-hover:block
        {:style {:left "110%"}
-        :src (get-src src)}])]])
+        :data-src (get-src src)}])]])
 
 (defmacro tabs-sesh [body]
   `(if ~'top-level?
