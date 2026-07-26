@@ -6,10 +6,13 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-document.querySelectorAll("img[data-src]").forEach(img => {
-    img.parentElement.addEventListener("mouseenter", () => {
-        if (!img.src) {
-            img.src = img.dataset.src;
-        }
-    }, { once: true });
-});
+function activateImages() {
+    document.querySelectorAll("img[data-src]").forEach(img => {
+        img.parentElement.addEventListener("mouseenter", () => {
+            if (!img.src) {
+                img.src = img.dataset.src;
+            }
+        }, {once: true});
+    });
+}
+activateImages();

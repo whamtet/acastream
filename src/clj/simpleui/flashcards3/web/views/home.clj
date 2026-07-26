@@ -40,7 +40,7 @@
 (defmacro tabs-sesh [body]
   `(if ~'top-level?
     {:session (assoc (:session ~'req) :tab ~'tab)
-     :body ~body}
+     :body (conj ~body [:script "activateImages()"])}
     ~body))
 
 (defcomponent ^:endpoint tabs-disp [req tab]
