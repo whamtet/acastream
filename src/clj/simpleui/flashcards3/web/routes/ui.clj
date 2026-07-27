@@ -22,7 +22,6 @@
     [simpleui.flashcards3.web.views.students :as students]
     [simpleui.flashcards3.web.views.word-search :as word-search]
     [simpleui.flashcards3.web.views.memory :as memory]
-    [simpleui.flashcards3.web.views.vocab :as vocab]
     [integrant.core :as ig]
     [reitit.ring.middleware.muuntaja :as muuntaja]
     [reitit.ring.middleware.parameters :as parameters]))
@@ -62,6 +61,4 @@
    ["/fills/:reading_id" (route-data opts) (fill/ui-routes opts)]
    ["/scramble-paragraph/:reading_id" (route-data opts) (scramble-paragraph/ui-routes opts)]
    ["/scramble-sentence/:reading_id" (route-data opts) (scramble-sentence/ui-routes opts)]
-   ["/studentss" (route-data opts) (students/ui-routes opts)]
-   ["/vocabs" (route-data opts) (vocab/ui-routes-vocabs opts)]
-   ["/vocab/:slideshow_id" (route-data opts) (vocab/ui-routes-vocab opts)]])
+   ["/studentss" (route-data opts) (students/ui-routes opts)]])

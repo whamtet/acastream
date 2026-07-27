@@ -12,6 +12,7 @@
     [simpleui.flashcards3.web.views.students :as students]
     [simpleui.flashcards3.web.views.intro :as intro]
     [simpleui.flashcards3.web.views.snl :as snl]
+    [simpleui.flashcards3.web.views.vocab :as vocab]
     [simpleui.flashcards3.web.controllers.cache :as cache]
     [simpleui.flashcards3.web.controllers.local :as local]
     [simpleui.flashcards3.web.controllers.blooket :as controllers.blooket]
@@ -106,4 +107,6 @@
        :body (pdf-snl/pdf req)})]
    ["/dominos" (route-data opts) (dominos/ui-routes opts)]
    ["/snl" (route-data opts) (snl/ui-routes opts)]
-   ["/students" (route-data opts) (students/ui-routes opts)]])
+   ["/students" (route-data opts) (students/ui-routes opts)]
+   ["/vocabs" (route-data opts) (vocab/ui-routes-vocabs opts)]
+   ["/vocab/:slideshow_id" (route-data opts) (vocab/ui-routes-vocab opts)]])
