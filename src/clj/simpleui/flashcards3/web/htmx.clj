@@ -32,6 +32,8 @@
   (page
    [:head
     [:meta {:charset "UTF-8"}]
+    [:meta {:name "viewport"
+            :content "width=device-width, initial-scale=1.0"}]
     [:title "SimpleUI Flashcards"]
     [:link {:rel "icon" :href "/logo_dark.svg"}]
     (for [sheet css]
@@ -54,6 +56,8 @@
   (page
    [:head
     [:meta {:charset "UTF-8"}]
+    [:meta {:name "viewport"
+            :content "width=device-width, initial-scale=1.0"}]
     (for [sheet css]
       [:link {:rel "stylesheet" :href (resource-cache/cache-suffix sheet)}])]
    [:body (render/walk-attrs body)]))
