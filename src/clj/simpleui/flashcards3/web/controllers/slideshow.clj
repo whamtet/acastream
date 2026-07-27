@@ -23,6 +23,10 @@
           (map #(update % :details delete/read-details)))
      (->> grouped keys sort)]))
 
+(defn get-slideshows-flat [query-fn]
+  (->> (query-fn :get-slideshows-flat {})
+       (sort-by :slideshow_name util/compare-names)))
+
 (defn- recent? [x]
   (and x
        (<

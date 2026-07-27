@@ -11,6 +11,8 @@ returning reading_id;
 
 -- :name get-slideshows :query
 select * from slideshow;
+-- :name get-slideshows-flat :query
+select slideshow_id, slideshow_name from slideshow;
 -- :name get-readings :query
 select * from reading;
 -- :name get-slideshow :query :one
