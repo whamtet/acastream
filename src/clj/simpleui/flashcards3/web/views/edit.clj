@@ -81,7 +81,11 @@
         [:a {:class "mr-2"
              :href (str "../../blooket/?dice=true&init=" phrases)
              :target "_blank"}
-         (components/button "Dice PDF")]]])))
+         (components/button "Dice PDF")]
+        [:div {:class "cursor-pointer"
+               :hx-post "panel:shuffle"
+               :hx-confirm "Shuffle?"}
+         (components/button "Shuffle")]]])))
 
 (defn- get-src-simple [x]
   (if (string? x)
@@ -239,6 +243,10 @@
     "duplicate"
     (response/hx-redirect
      (format "../%s/" (slideshow/duplicate-slideshow query-fn slideshow_id)))
+    "shuffle"
+    (do
+      (slideshow/shuffle-slides query-fn slideshow_id)
+      :refresh)
     [:div.p-2
      (name-editor req)
      [:hr.border-top]

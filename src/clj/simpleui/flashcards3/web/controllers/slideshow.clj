@@ -105,6 +105,14 @@
         (update $ :notes conj note)
         (assoc $ :updated (Date.))
         (slideshow-details query-fn slideshow_id $)))
+(defn shuffle-slides [query-fn slideshow_id]
+  (let [details (get-slideshow-details query-fn slideshow_id)
+        indices (-> details :slides count range shuffle)]
+    (as-> details $
+          (update $ :slides #(mapv % indices))
+          (update $ :notes #(mapv % indices))
+          (assoc $ :updated (Date.))
+          (slideshow-details query-fn slideshow_id $))))
 
 (defn concat-slideshow [query-fn slideshow_id images]
   (as-> (get-slideshow-details query-fn slideshow_id) $
