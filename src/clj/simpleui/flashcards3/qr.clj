@@ -9,8 +9,8 @@
     [java.util HashMap]))
 
 (defn generate-qr!
-  [key]
-  (let [url (host "/mobile/?key=" key)
+  [a key]
+  (let [url (host a key)
         hints (doto (HashMap.)
                     (.put EncodeHintType/MARGIN 1))
         matrix (.encode (QRCodeWriter.)

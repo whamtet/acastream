@@ -79,17 +79,7 @@
                         :params
                         :scale
                         Double/parseDouble)))})]
-
    ["/studentss" students/parse]
-   ["/qr/:slideshow_id"
-    (fn [req]
-      {:status 200
-       :headers {"Content-Type" "image/png"}
-       :body (->> req
-                  :path-params
-                  :slideshow_id
-                  Long/parseLong
-                  slideshow/mobile)})]
    (when dev?
      ["/session"
       (fn [req]

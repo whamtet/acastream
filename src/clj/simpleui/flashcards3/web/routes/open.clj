@@ -8,7 +8,6 @@
     [simpleui.flashcards3.web.views.dominos :as dominos]
     [simpleui.flashcards3.web.views.fill :as fill]
     [simpleui.flashcards3.web.views.icon-search :as icon-search]
-    [simpleui.flashcards3.web.views.play-mobile :as play-mobile]
     [simpleui.flashcards3.web.views.students :as students]
     [simpleui.flashcards3.web.views.intro :as intro]
     [simpleui.flashcards3.web.views.snl :as snl]
@@ -55,7 +54,6 @@
     (fn [req]
       (email/send-params (:params req))
       (response/redirect "https://acastream.uk/reply.html"))]
-   ["/mobile" (route-data opts) (play-mobile/ui-routes opts)]
    ["/cache"
     (fn [req]
       (-> req

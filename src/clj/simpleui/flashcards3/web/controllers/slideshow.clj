@@ -1,8 +1,6 @@
 (ns simpleui.flashcards3.web.controllers.slideshow
   (:require
-    [simpleui.flashcards3.qr :as qr]
     [simpleui.flashcards3.web.controllers.local :as local]
-    [simpleui.flashcards3.web.controllers.slideshow.mobile :as mobile]
     [simpleui.flashcards3.web.controllers.slideshow.delete :as delete]
     [simpleui.flashcards3.web.controllers.util :as util])
   (:import
@@ -174,12 +172,6 @@
   (when-let [slides (not-empty (get-slideshow-slides query-fn slideshow_id))]
     (let [[i & rest] (or order (-> slides count range shuffle))]
       [(nth slides i) rest])))
-
-(defn mobile [slideshow_id]
-  (qr/generate-qr! (mobile/get-key slideshow_id)))
-
-(defn mobile-random [query-fn key]
-  (->> key mobile/key->slideshow_id (get-slideshow-slides query-fn) rand-nth))
 
 (defn rot-slide [query-fn slideshow_id i]
   (let [local_id (-> (get-slideshow-slides query-fn slideshow_id) (get i) first)]
