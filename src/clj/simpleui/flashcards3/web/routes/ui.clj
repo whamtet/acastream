@@ -19,6 +19,7 @@
     [simpleui.flashcards3.web.views.fill :as fill]
     [simpleui.flashcards3.web.views.scramble-paragraph :as scramble-paragraph]
     [simpleui.flashcards3.web.views.scramble-sentence :as scramble-sentence]
+    [simpleui.flashcards3.web.views.share-admin :as share-admin]
     [simpleui.flashcards3.web.views.students :as students]
     [simpleui.flashcards3.web.views.word-search :as word-search]
     [simpleui.flashcards3.web.views.memory :as memory]
@@ -61,4 +62,5 @@
    ["/fills/:reading_id" (route-data opts) (fill/ui-routes opts)]
    ["/scramble-paragraph/:reading_id" (route-data opts) (scramble-paragraph/ui-routes opts)]
    ["/scramble-sentence/:reading_id" (route-data opts) (scramble-sentence/ui-routes opts)]
+   ["/share-admin" (route-data opts) (share-admin/ui-routes opts)]
    ["/studentss" (route-data opts) (students/ui-routes opts)]])
