@@ -5,12 +5,12 @@
     [com.google.zxing BarcodeFormat EncodeHintType]
     [com.google.zxing.qrcode QRCodeWriter]
     [com.google.zxing.client.j2se MatrixToImageWriter]
-    [java.io ByteArrayOutputStream ByteArrayInputStream]
-    [java.util HashMap]))
+    [java.io ByteArrayOutputStream]
+    [java.util HashMap Base64]))
 
-(defn generate-qr!
-  [a key]
-  (let [url (host a key)
+(defn base64
+  [a]
+  (let [url (host a)
         hints (doto (HashMap.)
                     (.put EncodeHintType/MARGIN 1))
         matrix (.encode (QRCodeWriter.)
@@ -21,4 +21,6 @@
                         hints)
         baos (ByteArrayOutputStream.)]
     (MatrixToImageWriter/writeToStream matrix "PNG" baos)
-    (ByteArrayInputStream. (.toByteArray baos))))
+    (str "data:image/png;base64,"
+         (.encodeToString (Base64/getEncoder)
+                          (.toByteArray baos)))))

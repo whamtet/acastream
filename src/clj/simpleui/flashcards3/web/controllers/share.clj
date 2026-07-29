@@ -11,7 +11,8 @@
   (atom
    {:files []
     :names []
-    :open? false}))
+    :open? false
+    :force-images? false}))
 
 (defn- copy-file [{:keys [tempfile]}]
   (io/copy tempfile (File. share (.getName tempfile)))
@@ -27,9 +28,14 @@
 
 (defn open? []
   (:open? @share-status))
+(defn force-images? []
+  (:force-images? @share-status))
 
 (defn toggle-open [open?]
   (swap! share-status assoc :open? open?)
+  nil)
+(defn force-images [force?]
+  (swap! share-status assoc :force-images? force?)
   nil)
 
 (defn delete-files []

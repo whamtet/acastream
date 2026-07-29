@@ -6,10 +6,11 @@
     [simpleui.flashcards3.web.htmx :refer [page-htmx defcomponent]]
     [simpleui.flashcards3.util :as util]))
 
-(defcomponent ^:endpoint panel [req ^:long status command]
+(defcomponent ^:endpoint panel [req ^:long status ^:boolean force command]
   (case command
     "toggle" (share/toggle-open (pos? status))
-    "delete" (share/delete-files)
+    "delete" (do (share/delete-files) :refresh)
+    "images" (share/force-images force)
     [:div.p-2
      [:div.flex.items-center.gap-3.mt-2.ml-2
       [:span.text-sm.font-medium "Closed"]
@@ -22,6 +23,13 @@
         :step 1
         :value (if (share/open?) 1 0)}]
       [:span.text-sm.font-medium "Open"]]
+     [:div.flex.items-center.gap-3.mt-2.ml-2
+      [:span.text-sm.font-medium "Force Images?"]
+      [:input.accent-blue-600
+       {:type "checkbox"
+        :hx-post "panel:images"
+        :name "force"
+        :checked (share/force-images?)}]]
      [:div.mt-3
       {:hx-post "panel:delete"
        :hx-confirm "Wipe Files?"}
@@ -33,6 +41,5 @@
    [query-fn]
    (fn [req]
      (page-htmx
-      {:css ["../../output.css"]
-       :js ["../../edit.js"]}
+      {:css ["../output.css"]}
       (-> req (assoc :query-fn query-fn) panel)))))
