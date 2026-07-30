@@ -2,7 +2,7 @@
   (:require
     [simpleui.response :as response]
     [simpleui.flashcards3.web.middleware.exception :as exception]
-    [simpleui.flashcards3.web.middleware.formats :as formats]
+    [simpleui.flashcards3.web.middleware.share :as middleware.share]
     [simpleui.flashcards3.web.views.battleships :as battleships]
     [simpleui.flashcards3.web.views.blooket :as blooket]
     [simpleui.flashcards3.web.views.dominos :as dominos]
@@ -23,20 +23,26 @@
     [simpleui.flashcards3.web.controllers.pdf-snl :as pdf-snl]
     [simpleui.flashcards3.web.controllers.students :as controllers.students]
     [integrant.core :as ig]
-    [reitit.ring.middleware.muuntaja :as muuntaja]
     [reitit.ring.middleware.parameters :as parameters]))
 
 (defn route-data [opts]
   (merge
    opts
-   {:muuntaja   formats/instance
-    :middleware
+   {:middleware
     [;; query-params & form-params
      parameters/parameters-middleware
-     ;; encoding response body
-     muuntaja/format-response-middleware
      ;; exception handling
      exception/wrap-exception]}))
+
+(defn route-data-share [opts]
+  (merge
+   opts
+   {:middleware
+    [;; query-params & form-params
+      parameters/parameters-middleware
+      middleware.share/wrap-protect-share
+      ;; exception handling
+      exception/wrap-exception]}))
 
 (derive :reitit.routes/open :reitit/routes)
 
@@ -107,7 +113,7 @@
    ["/dominos" (route-data opts) (dominos/ui-routes opts)]
    ["/snl" (route-data opts) (snl/ui-routes opts)]
    ["/s" (share/ui-routes-qr opts)]
-   ["/share" (route-data opts) (share/ui-routes opts)]
+   ["/share" (route-data-share opts) (share/ui-routes opts)]
    ["/students" (route-data opts) (students/ui-routes opts)]
    ["/vocabs" (route-data opts) (vocab/ui-routes-vocabs opts)]
    ["/vocab/:slideshow_id" (route-data opts) (vocab/ui-routes-vocab opts)]])

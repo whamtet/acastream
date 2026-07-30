@@ -5,6 +5,7 @@
     [simpleui.flashcards3.web.controllers.pdf :as pdf]
     [simpleui.flashcards3.web.controllers.pdf-jtd :as pdf-jtd]
     [simpleui.flashcards3.web.controllers.pdf-bingo :as pdf-bingo]
+    [simpleui.flashcards3.web.controllers.share :as share]
     [simpleui.flashcards3.web.controllers.slideshow :as slideshow]
     [simpleui.flashcards3.web.controllers.students :as students]
     [simpleui.flashcards3.web.middleware.auth :as auth]
@@ -45,6 +46,12 @@
     {:get {:no-doc  true
            :swagger {:info {:title "simpleui.flashcards3 API"}}
            :handler (swagger/create-swagger-handler)}}]
+   ["/share/:i/:j"
+    (fn [{{:keys [i j]} :path-params}]
+      (let [[content-type body] (share/get-submission (Long/parseLong i) (Long/parseLong j))]
+        {:status 200
+         :headers {"Content-Type" content-type}
+         :body body}))]
    ["/pdf/:slideshow_id"
     (fn [req]
       {:status 200

@@ -33,7 +33,22 @@
      [:div.mt-3
       {:hx-post "panel:delete"
        :hx-confirm "Wipe Files?"}
-      (components/button "Delete Files")]]))
+      (components/button "Delete Files")]
+     [:div.flex.flex-col.gap-4
+      (map-indexed
+       (fn [i [submission-name files]]
+         [:div
+          [:div.border-b.border-gray-500.p-2
+           submission-name]
+          [:div.flex
+           (map-indexed
+            (fn [j {:keys [f]}]
+              [:span.p-1
+               [:a.text-clj-blue.mr-2
+                {:href (format "/api/share/%s/%s" i j)}
+                (.getName f)]])
+            files)]])
+       (share/get-submissions))]]))
 
 (defn ui-routes [{:keys [query-fn]}]
   (simpleui/make-routes
