@@ -40,8 +40,8 @@
   nil)
 
 (defn delete-files []
-  (doseq [file (:files @share-status)]
-    (.delete file))
+  (doseq [f (.listFiles share)]
+    (.delete f))
   (swap! share-status assoc :files [] :names [])
   nil)
 
