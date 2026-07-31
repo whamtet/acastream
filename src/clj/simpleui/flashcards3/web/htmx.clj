@@ -52,7 +52,7 @@
     [:script {:src "https://cdn.jsdelivr.net/npm/eruda"}]
     [:script "eruda.init();"]]))
 
-(defn page-simple [{:keys [css]} & body]
+(defn page-simple [{:keys [css js] :as opts} & body]
   (page
    [:head
     [:meta {:charset "UTF-8"}]
@@ -60,7 +60,11 @@
             :content "width=device-width, initial-scale=1.0"}]
     (for [sheet css]
       [:link {:rel "stylesheet" :href (resource-cache/cache-suffix sheet)}])]
-   [:body (render/walk-attrs body)]))
+   [:body (render/walk-attrs body)]
+   (map
+    (fn [src]
+      [:script {:src src}])
+    (scripts js opts))))
 
 (def optionals
   '{slideshow_id [slideshow_id (Long/parseLong (:slideshow_id params))]

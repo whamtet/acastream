@@ -6,8 +6,11 @@
 (def intro
   [:div.p-2
    [:div.text-blue-500.p-4
-    [:a {:href "vocabs/" :target "_blank"}
+    [:a {:href "vocabs/"}
      "Vocabs"]]
+   [:div.text-blue-500.p-4
+    [:a {:href "boggle/"}
+     "Boggle"]]
    [:div.text-blue-500.p-4
     [:a {:href "students/" :target "_blank"}
      "Student Questionnaire"]]
