@@ -54,9 +54,13 @@
 (defn get-slideshow-details2 [query-fn slideshow_id]
   (-> (query-fn :get-slideshow {:slideshow_id slideshow_id})
       (update :details delete/read-details)))
+
 (defn get-slideshow-slides [query-fn slideshow_id]
   (:slides
     (get-slideshow-details query-fn slideshow_id)))
+(defn get-slideshow-slides-large [query-fn slideshow_id]
+  (map second (get-slideshow-slides query-fn slideshow_id)))
+
 (defn get-slideshow-notes [query-fn slideshow_id]
   (:notes
     (get-slideshow-details query-fn slideshow_id)))
