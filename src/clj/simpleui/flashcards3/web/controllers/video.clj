@@ -34,8 +34,3 @@
   (video-info*
    (slideshow/get-slideshow-slides-large query-fn slideshow_id)
    prefix))
-
-(prn
- (video-info*
-  (range 9)
-  "The_Floor_Is_Lava"))
