@@ -11,6 +11,6 @@
       :js ["../boggle.js"]}
      [:div.mt-4.flex.flex-col.items-center.gap-2
       [:h1#time-disp.text-3xl "2:00"]
-      [:div.grid.grid-cols-4.gap-2.max-w-xs.mx-auto
+      [:div.grid.grid-cols-5.gap-2.max-w-xs.mx-auto
        (map #(vector :div.flex.items-center.justify-center.w-16.h-16.rounded-lg.border.text-2xl.font-bold.shadow %)
             (boggle/result))]])))

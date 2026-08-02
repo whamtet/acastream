@@ -1,24 +1,10 @@
 (ns simpleui.flashcards3.web.controllers.boggle)
 
 (def dice-str
-  "AEANEG
-WNGEEH
-AHSPCO
-LNHNRZ
-ASPFFK
-TSTIYD
-OBJOAB
-OWTOAT
-IOTMUC
-ERTTYL
-RYVDEL
-TOESSI
-LREIXD
-TERWHV
-EIUNES
-NUIHMQ")
+  "AAAFRS AAEEEE AAFIRS ADENNN AEEEEM AEEGMU AEGMNN AFIRSY BJKQXZ CCNSTW CEIILT CEILPT CEIPST DHHNOT DHHLOR DHLNOR DDLNOR EIIITT EMOTTT ENSSSU FIPRSY GORRVW HIPRRY NOOTUW OOOTTU")
 
-(def dice (map #(.trim %) (.split dice-str "\n")))
+(def dice (re-seq #"\w+" dice-str))
+(prn 'dice dice)
 
 (defn- rand-char [s]
   (let [c (rand-nth s)]
