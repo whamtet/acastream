@@ -26,9 +26,9 @@
         n (-> (/ (count slides) num-prefragments)
               Math/floor
               (max 1))]
-    (conj
-     (mapv conj (partition-all-big n slides) fragments)
-     (drop num-prefragments fragments))))
+    (as-> (mapv conj (partition-all-big n slides) fragments) $
+          (conj $ (drop num-prefragments fragments))
+          (apply concat $))))
 
 (defn video-info [query-fn slideshow_id prefix]
   (video-info*

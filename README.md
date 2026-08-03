@@ -21,6 +21,8 @@
 - Reveal Game
 - Bingo
 - Dice Sentence Game
+- Boggle
+- Mixed video + slides
 
 ## Development
 
