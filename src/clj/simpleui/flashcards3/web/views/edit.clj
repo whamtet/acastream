@@ -134,6 +134,7 @@
   rot
   (case command
     "concat" (slideshow/concat-slideshow query-fn slideshow_id images)
+    "concat2" (slideshow/concat-slideshow2 query-fn slideshow_id images)
     "conj" (slideshow/conj-slideshow query-fn slideshow_id [(or medium large) large])
     "up" (slideshow/up-slideshow query-fn slideshow_id i)
     "down" (slideshow/down-slideshow query-fn slideshow_id i)
@@ -142,7 +143,7 @@
   [:div#images
    (when top-level? [:script "clipboardListener();"])
    [:div.flex.m-2
-    [:form {:hx-post "image-order:concat"
+    [:form {:hx-post "image-order:concat2"
             :class "mr-2"
             :hx-encoding "multipart/form-data"
             :hx-target "#images"}

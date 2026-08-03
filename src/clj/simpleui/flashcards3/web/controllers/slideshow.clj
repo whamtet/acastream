@@ -116,9 +116,15 @@
           (assoc $ :updated (Date.))
           (slideshow-details query-fn slideshow_id $))))
 
+(defn concat-slideshow [query-fn slideshow_id images]
+  (as-> (get-slideshow-details query-fn slideshow_id) $
+        (update $ :slides into (reverse (local/convert images)))
+        (update $ :notes into (count images) "")
+        (slideshow-details query-fn slideshow_id $)))
+
 (defn- precat [v x]
   (vec (concat x v)))
-(defn concat-slideshow [query-fn slideshow_id images]
+(defn concat-slideshow2 [query-fn slideshow_id images]
   (as-> (get-slideshow-details query-fn slideshow_id) $
         (update $ :slides precat (local/convert images))
         (update $ :notes precat (count images) "")
