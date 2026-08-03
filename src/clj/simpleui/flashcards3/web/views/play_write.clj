@@ -14,7 +14,7 @@
 (def color
   ["black" "black" "black" "black" "white"])
 
-(defn- half-column [enlargement slides]
+(defn- half-row [enlargement slides]
   [:div.flex.flex-col {:style {:height "48vh"}}
    [:div {:class "grid grid-rows-1 flex-1 min-h-0"
           :style {:grid-template-columns (format "repeat(%s, minmax(0, 1fr))" (count slides))}}
@@ -30,10 +30,16 @@
          {:style {:font-size (font-size enlargement)
                   :color (color enlargement)}} note])])])
 
+(defn- split-rows [slides n three?]
+  (if three?
+    [(take n slides) (->> slides (drop n) (take n)) (drop (* 2 n) slides)]
+    (split-at n slides)))
 (defcomponent ^:endpoint panel [req ^:long enlargement ^:boolean shuff]
   (let [slides (slideshow/get-slideshow-slides-notes query-fn slideshow_id)
         slides (if shuff (shuffle slides) slides)
-        n (-> slides count (/ 2) Math/ceil long)
+        three-rows? (> (count slides) 20)
+        n (-> slides count (/ (if three-rows? 3 2)) long)
+        [a b c] (split-rows slides n three-rows?)
         enlargement (or enlargement 0)]
     [:div {:hx-target "this"}
      [:div#shuffle.hidden
@@ -43,8 +49,9 @@
      (if (empty? slides)
        [:div.p-6.text-xl "Empty"]
        [:div
-        (half-column enlargement (take n slides))
-        (half-column enlargement (drop n slides))])
+        (half-row enlargement a)
+        (half-row enlargement b)
+        (when c (half-row enlargement c))])
      [:div {:style {:height "500px"}}]]))
 
 (defn ui-routes [{:keys [query-fn]}]
