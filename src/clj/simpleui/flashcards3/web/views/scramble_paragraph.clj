@@ -12,20 +12,14 @@
     [(take n p)
      (drop n p)]))
 
-[:div.grid.grid-cols-1]
-[:div.grid-cols-2]
-[:div.grid-cols-3]
-[:div.grid-cols-4]
-[:div.grid-cols-5]
-[:div.grid-cols-6]
-
 (defn- paragraph [x]
   [:div.flex.items-center.justify-center.p-4.border
    [:p.fit.text-center.leading-tight
     x]])
+(defn- count1 [x]
+  (max (count x) 1))
 (defn- row [items]
-  [:div {:class (format "grid grid-cols-%s" (max (count items) 1))
-         :style {:height "50vh"}}
+  [:div.grid {:style {:height "50vh" :grid-template-columns (format "repeat(%s, minmax(0, 1fr))" (count1 items))}}
    (map paragraph items)])
 
 (defcomponent panel [req]

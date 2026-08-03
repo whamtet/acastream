@@ -1,11 +1,11 @@
 (ns simpleui.flashcards3.web.views.scramble-sentence
-    (:require
-      [clojure.string :as string]
-      [simpleui.core :as simpleui]
-      [simpleui.flashcards3.web.controllers.reading :as reading]
-      [simpleui.flashcards3.web.views.components :as components]
-      [simpleui.flashcards3.web.views.icons :as icons]
-      [simpleui.flashcards3.web.htmx :refer [page-htmx defcomponent]]))
+  (:require
+    [clojure.string :as string]
+    [simpleui.core :as simpleui]
+    [simpleui.flashcards3.web.controllers.reading :as reading]
+    [simpleui.flashcards3.web.views.components :as components]
+    [simpleui.flashcards3.web.views.icons :as icons]
+    [simpleui.flashcards3.web.htmx :refer [page-htmx defcomponent]]))
 
 (defn- inc-i [i paragraphs]
   (mod (inc i) (count paragraphs)))
@@ -18,20 +18,15 @@
       (.split "\n")
       (->> (map shuffle-sentence) shuffle)))
 
-[:div.grid.grid-cols-1]
-[:div.grid-cols-2]
-[:div.grid-cols-3]
-[:div.grid-cols-4]
-[:div.grid-cols-5]
-[:div.grid-cols-6]
-
 (defn- paragraph [x]
   [:div.flex.items-center.justify-center.p-4.border
    [:p.fit.text-center.leading-tight
     x]])
+(defn- count1 [x]
+  (max (count x) 1))
 (defn- row [items]
-  [:div {:class (format "grid grid-cols-%s" (max (count items) 1))
-         :style {:height "50vh"}}
+  [:div.grid {:style {:height "50vh"
+                      :grid-template-columns (format "repeat(%s, minmax(0, 1fr))" (count1 items))}}
    (map paragraph items)])
 
 (defcomponent ^:endpoint panel [req ^:long i]

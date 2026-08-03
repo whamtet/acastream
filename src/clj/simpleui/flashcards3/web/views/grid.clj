@@ -6,6 +6,8 @@
     [simpleui.flashcards3.web.views.icons :as icons]
     [simpleui.flashcards3.web.htmx :refer [page-htmx defcomponent]]))
 
+;; this is the printout for writing words
+
 (defn- drop-cycle [d cycle slides]
   (as-> slides $
         (drop d $)

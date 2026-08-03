@@ -23,16 +23,9 @@
      [:a {:href (if (number? title) ".?names=true" ".?names=false")}
       [:img {:src (get-src src)}]])])
 
-[:div.grid.grid-rows-2]
-[:div.grid-cols-1]
-[:div.grid-cols-2]
-[:div.grid-cols-3]
-[:div.grid-cols-4]
-[:div.grid-cols-5]
-[:div.grid-cols-6]
-[:div.grid-cols-7]
 (defn- page [cols images names]
-  [:div {:class (format "print-landscape grid grid-rows-2 grid-cols-%s" cols)}
+  [:div {:class "print-landscape grid grid-rows-2"
+         :style {:grid-template-columns (format "repeat(%s, minmax(0, 1fr))" cols)}}
    (map square (or names (map inc (range))) images)])
 
 (defcomponent pages [req ^:boolean names]

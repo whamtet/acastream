@@ -14,24 +14,17 @@
 (def color
   ["black" "black" "black" "black" "white"])
 
-[:div.grid.grid-rows-1.flex-1.min-h-0]
-[:div.grid-cols-1]
-[:div.grid-cols-2]
-[:div.grid-cols-3]
-[:div.grid-cols-4]
-[:div.grid-cols-5]
-[:div.grid-cols-6]
-[:div.grid-cols-7]
 (defn- half-column [enlargement slides]
   [:div.flex.flex-col {:style {:height "48vh"}}
-   [:div {:class (format "grid grid-rows-1 grid-cols-%s flex-1 min-h-0" (count slides))}
+   [:div {:class "grid grid-rows-1 flex-1 min-h-0"
+          :style {:grid-template-columns (format "repeat(%s, minmax(0, 1fr))" (count slides))}}
     (for [[_ src] (map first slides)]
       [:img {:class "max-h-full w-full object-contain"
              :src (get-src src)
              :hx-get "panel"
              :hx-vals {:enlargement (inc-mod enlargement)}}])]
    (when (pos? enlargement)
-     [:div {:class (format "grid grid-rows-1 grid-cols-%s" (count slides))}
+     [:div.grid {:style {:grid-template-columns (format "repeat(%s, minmax(0, 1fr))" (count slides))}}
       (for [note (map second slides)]
         [:div.text-center.tracking-wider
          {:style {:font-size (font-size enlargement)
