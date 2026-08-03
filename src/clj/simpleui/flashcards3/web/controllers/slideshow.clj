@@ -119,7 +119,7 @@
 (defn concat-slideshow [query-fn slideshow_id images]
   (as-> (get-slideshow-details query-fn slideshow_id) $
         (update $ :slides into (reverse (local/convert images)))
-        (update $ :notes into (count images) "")
+        (update $ :notes into (repeat (count images) ""))
         (slideshow-details query-fn slideshow_id $)))
 
 (defn- precat [v x]
@@ -127,7 +127,7 @@
 (defn concat-slideshow2 [query-fn slideshow_id images]
   (as-> (get-slideshow-details query-fn slideshow_id) $
         (update $ :slides precat (local/convert images))
-        (update $ :notes precat (count images) "")
+        (update $ :notes precat (repeat (count images) ""))
         (slideshow-details query-fn slideshow_id $)))
 
 (defn slideshow-note [query-fn slideshow_id i note]
