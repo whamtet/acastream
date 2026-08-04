@@ -8,7 +8,7 @@
 
 
  :server/http
- {:port    #profile {:dev 3004 :prod 3005 :test 3004}
+ {:port    #or [#env PORT #profile {:dev 3004 :prod 3005 :test 3004}]
   :host    #or [#env HTTP_HOST "0.0.0.0"]
   :handler #ig/ref :handler/ring}
 
