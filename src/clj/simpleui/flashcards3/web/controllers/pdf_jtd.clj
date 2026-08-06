@@ -67,7 +67,7 @@
        is (parse-longs is)
        xs (parse-doubles xs)
        ys (parse-doubles ys)
-       words (->> is distinct (map (read-string words)) shuffle (string/join ", "))]
+       words (->> is (filter #(< % 6)) distinct (map (read-string words)) shuffle (string/join ", "))]
    ;; produce PDF in another thread
    (pdf/pdf
         [{:size :a4
