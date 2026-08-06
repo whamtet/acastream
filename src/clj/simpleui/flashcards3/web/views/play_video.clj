@@ -5,14 +5,14 @@
     [simpleui.flashcards3.web.views.components :refer [get-src2] :as components]
     [simpleui.flashcards3.web.htmx :refer [page-htmx defcomponent]]))
 
-(defcomponent panel [req prefix ^:edn todo]
+(defcomponent ^:endpoint panel [req prefix ^:edn todo]
   (let [[head & rest] (or todo (video/video-info query-fn slideshow_id prefix))
         video? (and (string? head) (.endsWith head "webm"))]
-    [:div {:hx-target "this"}
+    [:div.bg-black {:hx-target "this"}
      (if video?
-       [:video.fixed.inset-0.w-screen.h-screen.object-cover
-        {:src "/cache/video/The_Floor_Is_Lava.1.webm"
-         :autoplay true
+       [:video.h-screen.w-auto.mx-auto.block
+        {:src "/ncache/video/The_Floor_Is_Lava.1.webm"
+         :controls true
          :playsinline true
          :hx-trigger "ended"
          :hx-post "panel"
