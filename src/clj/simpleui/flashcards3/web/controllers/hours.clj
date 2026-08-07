@@ -132,12 +132,18 @@
   (->> (.split s "\n")
        (drop-while #(not (.startsWith % "Course Code")))
        rest
+       (take-while #(not (.startsWith % "Overall Sum")))
        (keep parse-row)
        (into {})))
 
+(defn- subtract-frequencies [f1 f2]
+  (for [[k v] f1
+        :let [v2 (- v (f2 k 0))]
+        :when (pos? v2)]
+    [k v2]))
+
 (defn remainders [ym s]
-  (let [vus-subtraction (parse-vus-hours s)]
-    (for [[course frequency] (ym-frequencies ym)
-          :let [reduced (- frequency (vus-subtraction course 0))]
-          :when (not= 0 reduced)]
-      [course reduced])))
+  (let [vus-reported (parse-vus-hours s)
+        recorded (ym-frequencies ym)]
+    [(subtract-frequencies recorded vus-reported)
+     (subtract-frequencies vus-reported recorded)]))

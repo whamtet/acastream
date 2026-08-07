@@ -36,8 +36,9 @@
    [:td {:class "px-4 py-2 text-sm text-gray-800"} course]
    [:td {:class "px-4 py-2 text-sm text-gray-800"} count]])
 
-(defn- missing [ym reported]
+(defn- missing* [title rows]
   [:div {:class "overflow-x-auto mt-4"}
+   [:h2.text-2xl title]
    [:table {:class "min-w-full border border-gray-200 rounded-lg shadow-sm"}
     [:thead {:class "bg-gray-100"}
      [:tr
@@ -46,7 +47,13 @@
       [:th {:class "px-4 py-2 text-left text-sm font-semibold text-gray-700 border-b"}
        "Count"]]]
     [:tbody {:class "divide-y divide-gray-200 bg-white"}
-     (map table-row2 (hours/remainders ym reported))]]])
+     (map table-row2 rows)]]])
+
+(defn- missing [ym reported]
+  (let [[a b] (hours/remainders ym reported)]
+    [:div.mb-2
+     (missing* "Recorded Excess" a)
+     (missing* "VUS Excess" b)]))
 
 (defcomponent ^:endpoint report [req ^:long year ^:long month reported]
   (let [current (hours/year-month)
