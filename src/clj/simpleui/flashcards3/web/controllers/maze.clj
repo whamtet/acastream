@@ -36,21 +36,24 @@
      (filter #(bit-test i %) (range 4)))
    (range 16)))
 (defn- neighbor [[i j] direction]
-  [direction
-   (case direction
-     0 [(dec i) j]
-     1 [i (inc j)]
-     2 [(inc i) j]
-     3 [i (dec j)])])
+  (case direction
+    0 [(dec i) j]
+    1 [i (inc j)]
+    2 [(inc i) j]
+    3 [i (dec j)]))
 (defn- get-grid [v [i j]]
   (-> i (* n) (+ j) v))
 
 (defn- search-candidates [grid this]
-  (for [direction (bit-tests (get-grid grid this))]
-    {:this this
-     :next (neighbor this direction)
-     :direction direction
-     :opposing-direction (case direction 0 2 1 3 2 0 3 1)}))
+  (->> this
+       (get-grid grid)
+       bit-tests
+       (map
+        (fn [direction]
+          {:this this
+           :next (neighbor this direction)
+           :direction direction
+           :opposing-direction (case direction 0 2 1 3 2 0 3 1)}))))
 
 (defn- bit-clear-v
   ([v [i j] k]
@@ -109,8 +112,3 @@
 (defn maze [words]
   (let [placements (place-words words)]
     (maze* (clear-squares placements) [0 0] #{} (coords->regions placements) [])))
-
-#_#_
-(use 'clojure.pprint)
-(pprint
- (maze ["hi"]))
