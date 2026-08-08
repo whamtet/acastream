@@ -2,33 +2,45 @@
   (:require
     [simpleui.flashcards3.web.controllers.slideshow :as slideshow]))
 
-(def m 5)
-(def n 4)
+(def m 9)
+(def n 9)
 (def m2 (- m 4))
 (def n2 (- n 4))
 
 (defn- place-words [words]
-  (let [words (->> words (map count) (filter #(< 1 % n2)))
+  (let [words (filter #(< 1 (count %) n2) words)
         step (->> words count (/ m2) long (max 3))]
-    (->>
-     words
-     (map-indexed
-      (fn [i len]
-        (let [i1 (+ 2 (* step i))
-              j1 (-> (- n 3 len) rand-int (+ 2))
-              i2 (+ i1 2)
-              j2 (+ j1 len)]
-          (when (< i2 m2)
-            (for [i (range i1 i2) j (range j1 j2)]
-              [[i j] [i1 j1 i2 j2]])))))
-     (apply concat)
-     (into {}))))
+    (keep-indexed
+     (fn [i word]
+       (let [i1 (+ 2 (* step i))
+             i2 (+ i1 2)
+             j1 (-> (- n 3 (count word)) rand-int (+ 2))]
+         (when (< i2 m2)
+           [i1 j1 word])))
+     words)))
+
+(defn- range2 [[i1 j1 word]]
+  (for [i (range i1 (+ i1 2)) j (range j1 (+ j1 (count word)))]
+    [i j]))
+
+(defn- coords->regions [placements]
+  (->> placements
+       (mapcat
+        #(let [r (range2 %)]
+          (for [coord r] [coord r])))
+       (into {})))
 
 (def bit-tests
   (mapv
    (fn [i]
      (filter #(bit-test i %) (range 4)))
    (range 16)))
+(defn- neighbor [i j x]
+  (case
+    0 [(dec i) j]
+    1 [i (inc j)]
+    2 [(inc i) j]
+    3 [i (dec j)]))
 
 (defn- bit-clear-v [v i j k]
   (update v (+ (* i n) j) bit-clear k))
@@ -36,7 +48,6 @@
   [12 7 3 6])
 (defn- corner-clear [v i j k]
   (update v (+ (* i n) j) bit-and (corner-clears k)))
-
 
 (defn- get-v [v i j]
   (-> i (* n) (+ j) v))
@@ -46,7 +57,7 @@
 (defn- clear-v [v j edge]
   (reduce #(bit-clear-v %1 %2 j edge) v (range m)))
 
-(defn- clear-square [v [i1 j1 _ j2]]
+(defn- clear-square [v [i1 j1 word]]
   (reduce
    (fn [v j]
      (-> v
@@ -55,7 +66,7 @@
          (corner-clear (inc i1) (inc j) 3)
          (corner-clear (inc i1) j 0)))
    v
-   (range j1 (dec j2))))
+   (range j1 (+ j1 (count word) -1))))
 
 (def virgin
   (-> (* m n)
@@ -66,3 +77,18 @@
       (clear-v 0 3)
       (clear-v (dec n) 1)))
 
+(defn- clear-squares [placements]
+  (reduce clear-square virgin placements))
+
+(defn- maze* [i j v visited coords->regions stack]
+  (let [to-mark (coords->regions [i j] [[i j]])
+        visited (apply conj visited to-mark)]
+    visited))
+
+(defn maze [words]
+  (let [placements (place-words words)]
+    (maze* 0 0 (clear-squares placements) #{} (coords->regions placements) [])))
+
+(use 'clojure.pprint)
+(pprint
+ (maze ["hi"]))
