@@ -35,22 +35,32 @@
    (fn [i]
      (filter #(bit-test i %) (range 4)))
    (range 16)))
-(defn- neighbor [i j x]
-  (case
-    0 [(dec i) j]
-    1 [i (inc j)]
-    2 [(inc i) j]
-    3 [i (dec j)]))
+(defn- neighbor [[i j] direction]
+  [direction
+   (case direction
+     0 [(dec i) j]
+     1 [i (inc j)]
+     2 [(inc i) j]
+     3 [i (dec j)])])
+(defn- get-grid [v [i j]]
+  (-> i (* n) (+ j) v))
 
-(defn- bit-clear-v [v i j k]
-  (update v (+ (* i n) j) bit-clear k))
+(defn- search-candidates [grid this]
+  (for [direction (bit-tests (get-grid grid this))]
+    {:this this
+     :next (neighbor this direction)
+     :direction direction
+     :opposing-direction (case direction 0 2 1 3 2 0 3 1)}))
+
+(defn- bit-clear-v
+  ([v [i j] k]
+   (update v (+ (* i n) j) bit-clear k))
+  ([v i j k]
+   (update v (+ (* i n) j) bit-clear k)))
 (def corner-clears
   [12 7 3 6])
 (defn- corner-clear [v i j k]
   (update v (+ (* i n) j) bit-and (corner-clears k)))
-
-(defn- get-v [v i j]
-  (-> i (* n) (+ j) v))
 
 (defn- clear-h [v i edge]
   (reduce #(bit-clear-v %1 i %2 edge) v (range n)))
@@ -80,15 +90,27 @@
 (defn- clear-squares [placements]
   (reduce clear-square virgin placements))
 
-(defn- maze* [i j v visited coords->regions stack]
-  (let [to-mark (coords->regions [i j] [[i j]])
-        visited (apply conj visited to-mark)]
-    visited))
+(defn- maze* [grid coord visited coords->regions stack]
+  (let [to-mark (coords->regions coord [coord])
+        visited (apply conj visited to-mark)
+        candidates (->> to-mark
+                        (mapcat #(search-candidates grid %))
+                        (remove #(-> % :next visited)))]
+    (if (empty? candidates)
+      (if (empty? stack)
+        grid
+        (recur grid (peek stack) visited coords->regions (pop stack)))
+      (let [{:keys [this next direction opposing-direction]} (rand-nth candidates)]
+        (-> grid
+            (bit-clear-v this direction)
+            (bit-clear-v next opposing-direction)
+            (recur next visited coords->regions (conj stack this)))))))
 
 (defn maze [words]
   (let [placements (place-words words)]
-    (maze* 0 0 (clear-squares placements) #{} (coords->regions placements) [])))
+    (maze* (clear-squares placements) [0 0] #{} (coords->regions placements) [])))
 
+#_#_
 (use 'clojure.pprint)
 (pprint
  (maze ["hi"]))
