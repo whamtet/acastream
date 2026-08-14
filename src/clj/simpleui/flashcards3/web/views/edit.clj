@@ -83,6 +83,10 @@
              :target "_blank"}
          (components/button "Dice PDF")]
         [:div {:class "cursor-pointer"
+               :hx-post "panel:reverse"
+               :hx-confirm "Reverse?"}
+         (components/button "Reverse")]
+        [:div {:class "cursor-pointer"
                :hx-post "panel:shuffle"
                :hx-confirm "Shuffle?"}
          (components/button "Shuffle")]]])))
@@ -147,7 +151,14 @@
             :class "mr-2"
             :hx-encoding "multipart/form-data"
             :hx-target "#images"}
-     (components/button "Paste" "pasteClipboard")
+     (components/button "Paste" "pasteClipboard2")
+     [:input#clipboard2.hidden {:type "file" :name "images"}]
+     [:input#clipboardSubmit2.hidden {:type "submit"}]]
+    [:form {:hx-post "image-order:concat"
+            :class "mr-2"
+            :hx-encoding "multipart/form-data"
+            :hx-target "#images"}
+     (components/button "Paste Bottom" "pasteClipboard")
      [:input#clipboard.hidden {:type "file" :name "images"}]
      [:input#clipboardSubmit.hidden {:type "submit"}]]
     [:form {:hx-post "image-order:conj"
@@ -247,6 +258,10 @@
     "shuffle"
     (do
       (slideshow/shuffle-slides query-fn slideshow_id)
+      :refresh)
+    "reverse"
+    (do
+      (slideshow/reverse-slides query-fn slideshow_id)
       :refresh)
     [:div.p-2
      (name-editor req)

@@ -115,6 +115,12 @@
           (update $ :notes #(mapv % indices))
           (assoc $ :updated (Date.))
           (slideshow-details query-fn slideshow_id $))))
+(defn reverse-slides [query-fn slideshow_id]
+  (as-> (get-slideshow-details query-fn slideshow_id) $
+        (update $ :slides #(-> % rseq vec))
+        (update $ :notes #(-> % rseq vec))
+        (assoc $ :updated (Date.))
+        (slideshow-details query-fn slideshow_id $)))
 
 (defn concat-slideshow [query-fn slideshow_id images]
   (as-> (get-slideshow-details query-fn slideshow_id) $

@@ -1,6 +1,6 @@
 const $ = x => document.querySelector(x);
 
-const clipboardListener = () => document.getElementById("pasteClipboard").addEventListener("click", async () => {
+const clipboardListener_ = (suffix) => document.getElementById("pasteClipboard" + suffix).addEventListener("click", async () => {
     try {
         const items = await navigator.clipboard.read();
 
@@ -17,12 +17,12 @@ const clipboardListener = () => document.getElementById("pasteClipboard").addEve
                     const dt = new DataTransfer();
                     dt.items.add(file);
 
-                    const input = document.getElementById("clipboard");
+                    const input = document.getElementById("clipboard" + suffix);
                     input.files = dt.files;
 
                     console.log("Clipboard image loaded into file input");
 
-                    document.getElementById("clipboardSubmit").click();
+                    document.getElementById("clipboardSubmit" + suffix).click();
                     return;
                 }
             }
@@ -33,6 +33,10 @@ const clipboardListener = () => document.getElementById("pasteClipboard").addEve
         console.error("Failed to read clipboard:", err);
     }
 });
+const clipboardListener = () => {
+    clipboardListener_('');
+    clipboardListener_('2');
+}
 
 clipboardListener();
 
