@@ -3,7 +3,9 @@
     [clojure.string :as string]
     [simpleui.flashcards3.web.controllers.students-persist :as students-persist]
     [simpleui.flashcards3.web.htmx :refer [page-htmx]]
-    [simpleui.flashcards3.web.views.icons :as icons]))
+    [simpleui.flashcards3.web.views.icons :as icons])
+  (:import
+    [java.text Normalizer Normalizer$Form]))
 
 (defn- after [s split]
   (last (.split s split)))
@@ -75,16 +77,29 @@
     (if (.startsWith student "New")
       (.substring student 4)
       student)))
-(defn- get-students [auth? students class]
+(defn- get-students* [auth? students class]
   (if (and auth? (not-empty class))
     (students-persist/get-students class)
     (->> (after students "Note")
          (re-seq r)
          (map get-student))))
 
+(defn remove-diacritics [s]
+  (-> s
+      (Normalizer/normalize Normalizer$Form/NFD)
+      (clojure.string/replace #"\p{M}" "")
+      (clojure.string/replace "Đ" "D")
+      (clojure.string/replace "đ" "d")))
+
+(defn get-students [students]
+  (->> (after students "Note")
+       remove-diacritics
+       (re-seq r)
+       (map get-student)))
+
 (defn parse [{{:keys [questions students stars icon url class extra]} :params
               auth? :basic-authentication}]
-  (let [students (get-students auth? students class)
+  (let [students (get-students* auth? students class)
         stars (when (not-empty stars) (Long/parseLong stars))
         url (when url (.trim url))]
     (when (and auth? (not-empty url))

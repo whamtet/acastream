@@ -51,7 +51,12 @@
     [:input {:class "rounded-md border p-2 mr-4"
              :name "stars"
              :placeholder "Quantity (optional)"}]
-    radio]
+    radio
+    [:input
+     {:type "submit"
+      :value "Trace Names"
+      :class "bg-clj-blue py-1.5 px-3 rounded-lg text-white ml-2"
+      :formaction "../pdf-trace"}]]
    [:textarea {:class "w-full rounded-md border mt-2 p-2"
                :style {:height "30vh"}
                :placeholder "Questions - one per line"

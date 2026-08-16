@@ -22,6 +22,7 @@
     [simpleui.flashcards3.web.controllers.pdf-battleships :as pdf-battleships]
     [simpleui.flashcards3.web.controllers.pdf-dice :as pdf-dice]
     [simpleui.flashcards3.web.controllers.pdf-snl :as pdf-snl]
+    [simpleui.flashcards3.web.controllers.pdf-trace :as pdf-trace]
     [simpleui.flashcards3.web.controllers.students :as controllers.students]
     [integrant.core :as ig]
     [reitit.ring.middleware.parameters :as parameters]))
@@ -82,6 +83,11 @@
       {:status 200
        :headers {"Content-Type" "application/pdf"}
        :body (-> req :params :images pdf)})]
+   ["/pdf-trace"
+    (fn [req]
+      {:status 200
+       :headers {"Content-Type" "application/pdf"}
+       :body (-> req :params pdf-trace/get-pdf)})]
    ["/pdf-battleships"
     (fn [req]
       {:status 200
