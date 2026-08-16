@@ -52,7 +52,7 @@
         [:a {:class "mr-2"
              :href (str "../../blooket/?init=" phrases)
              :target "_blank"}
-         (components/button "Blooklet")]
+         (components/button "Blooket")]
         [:a {:class "mr-2"
              :href (str "../../battleships/?init=" phrases)
              :target "_blank"}
