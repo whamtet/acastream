@@ -196,8 +196,5 @@
     (local/rotate-img local_id)
     local_id))
 
-(defn local-file [query-fn slideshow_id i]
-  (-> (get-slideshow-slides query-fn slideshow_id)
-      (get i)
-      first
-      local/input-file))
+(defn local-files [query-fn slideshow_id]
+  (map #(-> % first local/input-file) (get-slideshow-slides query-fn slideshow_id)))

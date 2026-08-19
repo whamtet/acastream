@@ -4,6 +4,7 @@
     [simpleui.core :as simpleui]
     [simpleui.response :as response]
     [simpleui.flashcards3.web.controllers.img-search :as img-search]
+    [simpleui.flashcards3.web.controllers.rescale :as rescale]
     [simpleui.flashcards3.web.controllers.slideshow :as slideshow]
     [simpleui.flashcards3.web.controllers.local :as local]
     [simpleui.flashcards3.web.views.components :refer [get-src] :as components]
@@ -82,14 +83,21 @@
              :href (str "../../blooket/?dice=true&init=" phrases)
              :target "_blank"}
          (components/button "Dice PDF")]
-        [:div {:class "cursor-pointer"
+        [:div {:class "cursor-pointer mr-2"
                :hx-post "panel:reverse"
                :hx-confirm "Reverse?"}
          (components/button "Reverse")]
-        [:div {:class "cursor-pointer"
+        [:div {:class "cursor-pointer mr-2"
                :hx-post "panel:shuffle"
                :hx-confirm "Shuffle?"}
-         (components/button "Shuffle")]]])))
+         (components/button "Shuffle")]
+        [:div {:class "cursor-pointer mr-2"
+               :id "rescale"
+               :hx-target "body"
+               :hx-swap "beforeend"
+               :hx-post "panel:rescale"
+               :hx-prompt "Potentially damaging operation.  Type CONFIRM to continue."}
+         (components/button "Rescale")]]])))
 
 (defn- get-src-simple [x]
   (if (string? x)
@@ -259,6 +267,12 @@
     (do
       (slideshow/shuffle-slides query-fn slideshow_id)
       :refresh)
+    "rescale"
+    (if (= "CONFIRM" slideshow-name)
+      (do
+        (rescale/rescale-all query-fn slideshow_id)
+        :refresh)
+      [:script "document.getElementById('rescale').click()"])
     "reverse"
     (do
       (slideshow/reverse-slides query-fn slideshow_id)
