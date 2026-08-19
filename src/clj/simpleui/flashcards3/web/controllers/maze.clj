@@ -8,16 +8,16 @@
 (def n2 (- n 4))
 
 (defn- place-words [words]
-  (let [words (filter #(< 1 (count %) n2) words)
-        step (->> words count (/ m2) long (max 3))]
-    (keep-indexed
-     (fn [i word]
-       (let [i1 (+ 2 (* step i))
-             i2 (+ i1 2)
-             j1 (-> (- n 3 (count word)) rand-int (+ 2))]
-         (when (< i2 m2)
-           [i1 j1 word])))
-     words)))
+  (when-let [words (->> words (filter #(< 1 (count %) n2)) not-empty)]
+    (let [step (->> words count (/ m2) long (max 3))]
+      (keep-indexed
+       (fn [i word]
+         (let [i1 (+ 2 (* step i))
+               i2 (+ i1 2)
+               j1 (-> (- n 3 (count word)) rand-int (+ 2))]
+           (when (< i2 m2)
+             [i1 j1 word])))
+       words))))
 
 (defn- range2 [[i1 j1 word]]
   (for [i (range i1 (+ i1 2)) j (range j1 (+ j1 (count word)))]
@@ -93,7 +93,7 @@
 (defn- clear-squares [placements]
   (reduce clear-square virgin placements))
 
-(defn- maze* [grid coord visited coords->regions stack]
+(defn- maze** [grid coord visited coords->regions stack]
   (let [to-mark (coords->regions coord [coord])
         visited (apply conj visited to-mark)
         candidates (->> to-mark
@@ -109,6 +109,10 @@
             (bit-clear-v next opposing-direction)
             (recur next visited coords->regions (conj stack this)))))))
 
-(defn maze [words]
+(defn maze* [words]
   (let [placements (place-words words)]
-    (maze* (clear-squares placements) [0 0] #{} (coords->regions placements) [])))
+    [placements
+     (maze** (clear-squares placements) [0 0] #{} (coords->regions placements) [])]))
+
+(defn maze [query-fn slideshow_id]
+  (prn 'xx (slideshow/get-slideshow-notes query-fn slideshow_id)))

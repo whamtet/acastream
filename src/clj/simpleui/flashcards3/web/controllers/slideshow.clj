@@ -195,3 +195,9 @@
   (let [local_id (-> (get-slideshow-slides query-fn slideshow_id) (get i) first)]
     (local/rotate-img local_id)
     local_id))
+
+(defn local-file [query-fn slideshow_id i]
+  (-> (get-slideshow-slides query-fn slideshow_id)
+      (get i)
+      first
+      local/input-file))
