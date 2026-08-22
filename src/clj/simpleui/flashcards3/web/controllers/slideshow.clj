@@ -198,3 +198,6 @@
 
 (defn local-files [query-fn slideshow_id]
   (map #(-> % first local/input-file) (get-slideshow-slides query-fn slideshow_id)))
+
+(defn local-file [query-fn slideshow_id i]
+  (nth (local-files query-fn slideshow_id) i))

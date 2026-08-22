@@ -2,8 +2,8 @@
   (:require
     [simpleui.flashcards3.web.controllers.slideshow :as slideshow]))
 
-(def m 9)
-(def n 9)
+(def m 24)
+(def n 24)
 (def m2 (- m 4))
 (def n2 (- n 4))
 
@@ -15,7 +15,7 @@
          (let [i1 (+ 2 (* step i))
                i2 (+ i1 2)
                j1 (-> (- n 3 (count word)) rand-int (+ 2))]
-           (when (< i2 m2)
+           (when (< i2 (dec m))
              [i1 j1 word])))
        words))))
 
@@ -55,20 +55,15 @@
            :direction direction
            :opposing-direction (case direction 0 2 1 3 2 0 3 1)}))))
 
-(defn- bit-clear-v
-  ([v [i j] k]
-   (update v (+ (* i n) j) bit-clear k))
-  ([v i j k]
-   (update v (+ (* i n) j) bit-clear k)))
+(defn- bit-clear-v [v [i j] k]
+  (update v (+ (* i n) j) bit-clear k))
+(defn- assoc-v [v i j x]
+  (assoc v (+ (* i n) j) x))
+
 (def corner-clears
-  [12 7 3 6])
+  [12 9 3 6])
 (defn- corner-clear [v i j k]
   (update v (+ (* i n) j) bit-and (corner-clears k)))
-
-(defn- clear-h [v i edge]
-  (reduce #(bit-clear-v %1 i %2 edge) v (range n)))
-(defn- clear-v [v j edge]
-  (reduce #(bit-clear-v %1 %2 j edge) v (range m)))
 
 (defn- clear-square [v [i1 j1 word]]
   (reduce
@@ -85,10 +80,23 @@
   (-> (* m n)
       (repeat 15)
       vec
-      (clear-h 0 0)
-      (clear-h (dec m) 2)
-      (clear-v 0 3)
-      (clear-v (dec n) 1)))
+      (update 0 bit-clear 0)
+      (update (dec (* m n)) bit-clear 2)))
+(def virgin-words
+  (-> (* m n)
+      (repeat nil)
+      vec))
+(def borders
+  (set
+   (concat
+    (mapcat
+     (fn [i]
+       [[i -1] [i n]])
+     (range m))
+    (mapcat
+     (fn [j]
+       [[-1 j] [m j]])
+     (range -1 (inc n))))))
 
 (defn- clear-squares [placements]
   (reduce clear-square virgin placements))
@@ -109,10 +117,22 @@
             (bit-clear-v next opposing-direction)
             (recur next visited coords->regions (conj stack this)))))))
 
-(defn maze* [words]
+(defn- insert-word [v [i j word]]
+  (->> word
+       seq
+       shuffle
+       (map-indexed list)
+       (reduce
+        (fn [v [j2 c]]
+          (-> v (assoc-v i (+ j j2) c) (assoc-v (inc i) (+ j j2) \_)))
+        v)))
+(defn- insert-words [words]
+  (reduce insert-word virgin-words words))
+
+(defn- maze* [words]
   (let [placements (place-words words)]
-    [placements
-     (maze** (clear-squares placements) [0 0] #{} (coords->regions placements) [])]))
+    [(insert-words placements)
+     (maze** (clear-squares placements) [0 0] borders (coords->regions placements) [])]))
 
 (defn maze [query-fn slideshow_id]
-  (prn 'xx (slideshow/get-slideshow-notes query-fn slideshow_id)))
+  (maze* (slideshow/get-slideshow-notes query-fn slideshow_id)))

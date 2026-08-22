@@ -52,3 +52,10 @@
         ImageIO/read
         rescale-buffer
         (ImageIO/write "jpg" f))))
+
+(defn rescale1 [query-fn slideshow_id i]
+  (let [f (slideshow/local-file query-fn slideshow_id i)]
+    (-> f
+        ImageIO/read
+        rescale-buffer
+        (ImageIO/write "jpg" f))))

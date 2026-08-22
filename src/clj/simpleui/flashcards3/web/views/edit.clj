@@ -97,7 +97,11 @@
                :hx-swap "beforeend"
                :hx-post "panel:rescale"
                :hx-prompt "Potentially damaging operation.  Type CONFIRM to continue."}
-         (components/button "Rescale")]]])))
+         (components/button "Rescale")]
+        [:a {:class "mr-2"
+             :href (format "../../maze/%s/" slideshow_id)
+             :target "_blank"}
+         (components/button "Maze")]]])))
 
 (defn- get-src-simple [x]
   (if (string? x)
@@ -211,11 +215,16 @@
                :hx-confirm "Delete pic?"
                :hx-vals {:i i}}
          icons/trash]
-        [:div {:class "cursor-pointer border rounded-md p-2"
+        [:div {:class "cursor-pointer border rounded-md p-2 mr-2"
                :hx-get "move-modal"
                :hx-vals {:i i}
                :hx-target "#modal"}
-         icons/arrow-right]]
+         icons/arrow-right]
+        [:div {:class "cursor-pointer border rounded-md p-2 mr-2"
+               :hx-post "panel:rescale1"
+               :hx-vals {:i i}
+               :hx-confirm "Rescale Image?  This cannot be undone"}
+         icons/photo]]
        [:input {:class "border rounded-md p-2 mt-1 mb-4 ml-20"
                 :style {:width "500px"}
                 :hx-post "image-note"
@@ -258,7 +267,7 @@
              :placeholder "Search icons..."
              :name "q"}]]])
 
-(defcomponent ^:endpoint panel [req ^:prompt slideshow-name command]
+(defcomponent ^:endpoint panel [req ^:prompt slideshow-name ^:long i command]
   (case command
     "duplicate"
     (response/hx-redirect
@@ -273,6 +282,10 @@
         (rescale/rescale-all query-fn slideshow_id)
         :refresh)
       [:script "document.getElementById('rescale').click()"])
+    "rescale1"
+    (do
+      (rescale/rescale1 query-fn slideshow_id i)
+      :refresh)
     "reverse"
     (do
       (slideshow/reverse-slides query-fn slideshow_id)
