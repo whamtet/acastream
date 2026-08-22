@@ -2,8 +2,8 @@
   (:require
     [simpleui.flashcards3.web.controllers.slideshow :as slideshow]))
 
-(def m 24)
-(def n 24)
+(def m 20)
+(def n 30)
 (def m2 (- m 4))
 (def n2 (- n 4))
 
@@ -85,7 +85,9 @@
 (def virgin-words
   (-> (* m n)
       (repeat nil)
-      vec))
+      vec
+      (assoc 0 :start)
+      (assoc (dec (* m n)) :end)))
 (def borders
   (set
    (concat
@@ -126,12 +128,10 @@
         (fn [v [j2 c]]
           (-> v (assoc-v i (+ j j2) c) (assoc-v (inc i) (+ j j2) \_)))
         v)))
-(defn- insert-words [words]
-  (reduce insert-word virgin-words words))
 
 (defn- maze* [words]
   (let [placements (place-words words)]
-    [(insert-words placements)
+    [(reduce insert-word virgin-words placements)
      (maze** (clear-squares placements) [0 0] borders (coords->regions placements) [])]))
 
 (defn maze [query-fn slideshow_id]
