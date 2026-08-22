@@ -2,7 +2,7 @@
   (:require
     [simpleui.flashcards3.web.controllers.slideshow :as slideshow]))
 
-(def m 20)
+(def m 40)
 (def n 30)
 (def m2 (- m 4))
 (def n2 (- n 4))

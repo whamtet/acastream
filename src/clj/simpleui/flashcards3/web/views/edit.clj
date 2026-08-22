@@ -99,7 +99,7 @@
                :hx-prompt "Potentially damaging operation.  Type CONFIRM to continue."}
          (components/button "Rescale")]
         [:a {:class "mr-2"
-             :href (format "../../maze/%s/" slideshow_id)
+             :href (format "../../api/pdf-maze/%s" slideshow_id)
              :target "_blank"}
          (components/button "Maze")]]])))
 

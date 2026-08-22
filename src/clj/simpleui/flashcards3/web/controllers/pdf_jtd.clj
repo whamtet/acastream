@@ -7,11 +7,15 @@
   (:import [java.io File
             ByteArrayOutputStream ByteArrayInputStream]))
 
-(defn- svg-s [body]
+(defn svg-s [& body]
   (str
    "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
            <!DOCTYPE svg>"
-   (h/html body)))
+   (h/html
+    [:svg {:xmlns "http://www.w3.org/2000/svg"
+           :width "100"
+           :height "100"
+           :viewBox "0 0 100 100"} body])))
 
 (defn- point [i x y]
   [:g
@@ -58,42 +62,38 @@
     [(Long/parseLong s)]
     (map #(Long/parseLong %) s)))
 (defn- parse-doubles [s]
- (if (string? s)
-   [(Double/parseDouble s)]
-   (map #(Double/parseDouble %) s)))
+  (if (string? s)
+    [(Double/parseDouble s)]
+    (map #(Double/parseDouble %) s)))
 
 (defn pdf [{:keys [is xs ys words]}]
- (let [out (ByteArrayOutputStream.)
-       is (parse-longs is)
-       xs (parse-doubles xs)
-       ys (parse-doubles ys)
-       words (->> is (filter #(< % 6)) distinct (map (read-string words)) shuffle (string/join ", "))]
-   ;; produce PDF in another thread
-   (pdf/pdf
-        [{:size :a4
-          :left-margin   margin
-          :right-margin  margin
-          :top-margin    margin
-          :bottom-margin margin
-          :footer {:text words :page-numbers false}}
+  (let [out (ByteArrayOutputStream.)
+        is (parse-longs is)
+        xs (parse-doubles xs)
+        ys (parse-doubles ys)
+        words (->> is (filter #(< % 6)) distinct (map (read-string words)) shuffle (string/join ", "))]
+    ;; produce PDF in another thread
+    (pdf/pdf
+     [{:size :a4
+       :left-margin   margin
+       :right-margin  margin
+       :top-margin    margin
+       :bottom-margin margin
+       :footer {:text words :page-numbers false}}
 
-         [:pdf-table {:width-percent 100}
-          [50 50]
-          [[:pdf-cell {:height cell-height}] [:pdf-cell {:height cell-height}]]
-          [[:pdf-cell {:height cell-height}] [:pdf-cell {:height cell-height}]]
-          [[:pdf-cell {:height cell-height}] [:pdf-cell {:height cell-height}]]]
+      [:pdf-table {:width-percent 100}
+       [50 50]
+       [[:pdf-cell {:height cell-height}] [:pdf-cell {:height cell-height}]]
+       [[:pdf-cell {:height cell-height}] [:pdf-cell {:height cell-height}]]
+       [[:pdf-cell {:height cell-height}] [:pdf-cell {:height cell-height}]]]
 
-         [:svg {:translate [10 46] :scale [5.75 7.2]}
-          (svg-s [:svg {:xmlns "http://www.w3.org/2000/svg"
-                        :width "100"
-                        :height "100"
-                        :viewBox "0 0 100 100"}
-                  (->> (map list is xs ys)
-                       (filter (fn [[i]] (< i 6)))
-                       (group-by first)
-                       (map points))
-                  ])]
+      [:svg {:translate [10 46] :scale [5.75 7.2]}
+       (->> (map list is xs ys)
+            (filter (fn [[i]] (< i 6)))
+            (group-by first)
+            (map points)
+            svg-s)]
 
-          ]
-         out)
+      ]
+     out)
     (ByteArrayInputStream. (.toByteArray out))))
