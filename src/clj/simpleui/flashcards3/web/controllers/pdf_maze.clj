@@ -9,20 +9,19 @@
 
 (def mi (/ 1 maze/m))
 (def ni (/ 1 maze/n))
+(def buff 2)
+(def tot (- 100 buff buff))
+(defn- pos [a b]
+  (+ buff (* tot a b)))
 
 (defn- h-line [i j]
-  [:line {:x1 (* 100 j ni) :x2 (* 100 (inc j) ni) :y1 (* 100 i mi) :y2 (* 100 i mi)
+  [:line {:x1 (pos j ni) :x2 (pos (inc j) ni) :y1 (pos i mi) :y2 (pos i mi)
           :stroke "black" :stroke-width 0.3}])
 (defn- v-line [i j]
-  [:line {:x1 (* 100 j ni) :x2 (* 100 j ni) :y1 (* 100 i mi) :y2 (* 100 (inc i) mi)
+  [:line {:x1 (pos j ni) :x2 (pos j ni) :y1 (pos i mi) :y2 (pos (inc i) mi)
           :stroke "black" :stroke-width 0.3}])
 (defn- text [i j c]
-  [:text {:x (+ (* 100 j ni) 1) :y (+ (* 100 i mi) 1.55) :font-size 1.8 :fill "black"} (str c)])
-;; "M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18"
-(defn- icon [i j icon]
-  [:g {:transform (str "translate(" (+ (* 100 j ni)) ", " (+ (* 100 i mi)) ")")}
-   [:g {:transform (str "scale(1 1)")}
-    [:path {#_#_#_#_:stroke-linecap "round" :stroke-linejoin "round" :d icon}]]])
+  [:text {:x (+ (pos j ni) 1) :y (+ (pos i mi) 1.55) :font-size 1.8 :fill "black"} (str c)])
 
 (defn- cell [h c x]
   (let [i (long (/ h maze/n))
@@ -33,10 +32,9 @@
      (when (bit-test x 2) (h-line (inc i) j))
      (when (and (zero? j) (bit-test x 3)) (v-line i j))
      (case c
-       :start (prn (icon i j "M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3"))
-       :end (prn (icon i j "M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3"))
-       (text i j c))
-     )))
+       :start [:text {:x (+ (pos j ni) 0.62) :y (+ (pos i mi) 0.2) :font-size 4 :fill "black"} "↓"]
+       :end [:text {:x (+ (pos j ni) 0.62) :y (+ (pos i mi) 2.5) :font-size 4 :fill "black"} "↓"]
+       (text i j c)))))
 
 (defn pdf [query-fn slideshow_id]
   (let [out (ByteArrayOutputStream.)
@@ -45,7 +43,7 @@
     (pdf/pdf
      [{:size :a4
        :footer false}
-      [:svg {:translate [25 32] :scale [5.3 7.4]}
+      [:svg {:translate [25 30] :scale [5.3 7.4]}
        (pdf-jtd/svg-s
         (mapcat cell (range) placements maze))]]
      out)
