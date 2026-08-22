@@ -20,8 +20,10 @@
 (defn- v-line [i j]
   [:line {:x1 (pos j ni) :x2 (pos j ni) :y1 (pos i mi) :y2 (pos (inc i) mi)
           :stroke "black" :stroke-width 0.3}])
+(defn- m [x y font-size]
+  {:x x :y y :font-size font-size :font-family :courier :fill "black"})
 (defn- text [i j c]
-  [:text {:x (+ (pos j ni) 1) :y (+ (pos i mi) 1.55) :font-size 1.8 :fill "black"} (str c)])
+  [:text (m (+ (pos j ni) 1) (+ (pos i mi) 1.6) 1.8) (str c)])
 
 (defn- cell [h c x]
   (let [i (long (/ h maze/n))
@@ -32,8 +34,8 @@
      (when (bit-test x 2) (h-line (inc i) j))
      (when (and (zero? j) (bit-test x 3)) (v-line i j))
      (case c
-       :start [:text {:x (+ (pos j ni) 0.62) :y (+ (pos i mi) 0.2) :font-size 4 :fill "black"} "↓"]
-       :end [:text {:x (+ (pos j ni) 0.62) :y (+ (pos i mi) 2.5) :font-size 4 :fill "black"} "↓"]
+       :start [:text (m (+ (pos j ni) 0.52) (+ (pos i mi) 0.4) 4) "↓"]
+       :end [:text (m (+ (pos j ni) 0.55) (+ (pos i mi) 3.5) 4) "↓"]
        (text i j c)))))
 
 (defn pdf [query-fn slideshow_id]
