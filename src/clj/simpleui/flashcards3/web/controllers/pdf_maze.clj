@@ -34,8 +34,8 @@
      (when (bit-test x 2) (h-line (inc i) j))
      (when (and (zero? j) (bit-test x 3)) (v-line i j))
      (case c
-       :start [:text (m (+ (pos j ni) 0.52) (+ (pos i mi) 0.4) 4) "↓"]
-       :end [:text (m (+ (pos j ni) 0.55) (+ (pos i mi) 3.5) 4) "↓"]
+       :start [:text (m (+ (pos j ni) 0.2) (+ (pos i mi) 0.4) 4) "↓"]
+       :end [:text (m (+ (pos j ni) 0.2) (+ (pos i mi) 3.5) 4) "↓"]
        (text i j c)))))
 
 (defn pdf [query-fn slideshow_id]
