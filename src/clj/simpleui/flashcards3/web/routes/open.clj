@@ -23,6 +23,7 @@
     [simpleui.flashcards3.web.controllers.pdf-dice :as pdf-dice]
     [simpleui.flashcards3.web.controllers.pdf-snl :as pdf-snl]
     [simpleui.flashcards3.web.controllers.pdf-trace :as pdf-trace]
+    [simpleui.flashcards3.web.controllers.schedule :as schedule]
     [simpleui.flashcards3.web.controllers.students :as controllers.students]
     [integrant.core :as ig]
     [reitit.ring.middleware.parameters :as parameters]))
@@ -111,6 +112,14 @@
       {:status 200
        :headers {"Content-Type" "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}
        :body (-> req :params controllers.blooket/kahoot)})]
+   ["/cal"
+    (fn [req]
+      {:status 200
+       :headers {"Content-Type" "text/calendar; charset=utf-8"
+                 "Content-Disposition" "inline; filename=\"calendar.ics\""
+                 "Cache-Control" "no-cache, no-store, must-revalidate"
+                 "Access-Control-Allow-Origin" "*"}
+       :body (schedule/cal-body)})]
    ["/api/students" controllers.students/parse]
    ["/api/snl"
     (fn [req]

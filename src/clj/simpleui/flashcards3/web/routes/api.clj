@@ -6,6 +6,7 @@
     [simpleui.flashcards3.web.controllers.pdf-jtd :as pdf-jtd]
     [simpleui.flashcards3.web.controllers.pdf-bingo :as pdf-bingo]
     [simpleui.flashcards3.web.controllers.pdf-maze :as pdf-maze]
+    [simpleui.flashcards3.web.controllers.schedule :as schedule]
     [simpleui.flashcards3.web.controllers.share :as share]
     [simpleui.flashcards3.web.controllers.slideshow :as slideshow]
     [simpleui.flashcards3.web.controllers.students :as students]
@@ -78,6 +79,12 @@
                   :slideshow_id
                   Long/parseLong
                   (pdf-maze/pdf query-fn))})]
+   ["/this-week"
+    (fn [req]
+      (-> req :body-params :content schedule/update-hours)
+      {:status 200
+       :headers {}
+       :body ""})]
    ["/pdf-bingo/:slideshow_id"
     (fn [req]
       {:status 200

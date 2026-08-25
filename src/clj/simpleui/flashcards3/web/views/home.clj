@@ -1,12 +1,12 @@
 (ns simpleui.flashcards3.web.views.home
-    (:require
-      [simpleui.core :as simpleui]
-      [simpleui.response :as response]
-      [simpleui.flashcards3.env :refer [prod?]]
-      [simpleui.flashcards3.web.controllers.slideshow :as slideshow]
-      [simpleui.flashcards3.web.views.components :refer [get-src] :as components]
-      [simpleui.flashcards3.web.views.icons :as icons]
-      [simpleui.flashcards3.web.htmx :refer [page-htmx defcomponent]]))
+  (:require
+    [simpleui.core :as simpleui]
+    [simpleui.response :as response]
+    [simpleui.flashcards3.env :refer [prod?]]
+    [simpleui.flashcards3.web.controllers.slideshow :as slideshow]
+    [simpleui.flashcards3.web.views.components :refer [get-src] :as components]
+    [simpleui.flashcards3.web.views.icons :as icons]
+    [simpleui.flashcards3.web.htmx :refer [page-htmx defcomponent]]))
 
 (defn- href [href]
   (if prod?
@@ -110,14 +110,18 @@
       [:a {:class "my-1 mr-2"
            :href "../upbeat.mp3"
            :target "_blank"}
-       (components/button "Music")]
-      [:a {:class "my-1 mr-2"
-           :href "../readings"
-           :target "_blank"}
-       (components/button "Readings")]]
+       (components/button "Music")]]
      [:div {:class "right-2 top-2 absolute"}
       [:a {:href "../white.html" :target "_blank"}
        (components/button "White Screen")]]
+     [:div.flex.items-center.mb-1
+      [:a {:class "my-1 mr-2"
+           :href "../readings"
+           :target "_blank"}
+       (components/button "Readings")]
+      [:div {:class "my-1 mr-2"
+             :onclick "postTextToAPI()"}
+       (components/button "This Week")]]
      (tabs-disp req)]))
 
 (defn ui-routes [{:keys [query-fn]}]

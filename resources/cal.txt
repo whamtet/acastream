@@ -1,0 +1,9 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Your Company//Your Application Calendar 1.0//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Public Events Calendar
+X-WR-TIMEZONE:Asia/Ho_Chi_Minh
+%s
+END:VCALENDAR
