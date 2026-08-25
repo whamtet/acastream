@@ -20,7 +20,7 @@
 
 (defn add-minutes [^Date date minutes]
   (-> (.toInstant date)
-      (.plusMinutes minutes)
+      (.plusSeconds (* minutes 60))
       (Date/from)))
 
 (def this-week (atom {}))
