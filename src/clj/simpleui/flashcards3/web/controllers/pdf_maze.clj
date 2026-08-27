@@ -1,5 +1,6 @@
 (ns simpleui.flashcards3.web.controllers.pdf-maze
   (:require
+    [clojure.java.io :as io]
     [clj-pdf.core :as pdf]
     [simpleui.flashcards3.web.controllers.maze :as maze]
     [simpleui.flashcards3.web.controllers.pdf-jtd :as pdf-jtd]
@@ -7,12 +8,17 @@
   (:import [java.io File
             ByteArrayOutputStream ByteArrayInputStream]))
 
+(def skull (-> "icons/skull.svg" io/resource slurp))
+
 (def mi (/ 1 maze/m))
 (def ni (/ 1 maze/n))
 (def buff 2)
 (def tot (- 100 buff buff))
 (defn- pos [a b]
   (+ buff (* tot a b)))
+(defn- pos2 [i j]
+  [(+ 37 (* 16.94 j))
+   (+ 46 (* 17.80 i))])
 (defn- diff [b]
   (* tot b))
 
@@ -29,6 +35,18 @@
   {:x x :y y :font-size font-size :font-family :courier :fill "black"})
 (defn- text [i j c]
   [:text (m (+ (pos j ni) 1) (+ (pos i mi) 1.6) 1.8) (str c)])
+
+(defn- skull-wall [[i j word]]
+  (list
+   [:svg {:scale [0.6 0.6]
+          :translate (pos2 i j)} skull]
+   [:svg {:scale [0.6 0.6]
+          :translate (pos2 (inc i) j)} skull]
+   [:svg {:scale [0.6 0.6]
+          :translate (pos2 i (+ j (count word) -1))} skull]
+   [:svg {:scale [0.6 0.6]
+          :translate (pos2 (inc i) (+ j (count word) -1))} skull]
+    ))
 
 (defn- cell [path?]
   (fn [h c x]
@@ -47,13 +65,15 @@
 
 (defn pdf [query-fn slideshow_id]
   (let [out (ByteArrayOutputStream.)
-        [placements maze path] (maze/maze query-fn slideshow_id)]
+        [raw-placements placements maze path] (maze/maze query-fn slideshow_id)]
     ;; produce PDF in another thread
     (pdf/pdf
      [{:size :a4
        :footer false}
       [:svg {:translate [25 30] :scale [5.3 7.4]}
        (pdf-jtd/svg-s
-        (-> path set cell (mapcat (range) placements maze)))]]
+        (-> path set cell (mapcat (range) placements maze)))]
+      (map skull-wall raw-placements)
+      ]
      out)
     (ByteArrayInputStream. (.toByteArray out))))

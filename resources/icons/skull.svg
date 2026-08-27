@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Cranium and Jaw Outline -->
+  <path d="M12 2C6.48 2 2 6.48 2 12c0 3.12 1.43 5.91 3.67 7.75C6.1 20.12 6.5 21 6.5 21h11s.4-.88.83-1.25C20.57 17.91 22 15.12 22 12c0-5.52-4.48-10-10-10z" />
+  
+  <!-- Eye Sockets -->
+  <circle cx="8.5" cy="11.5" r="2.5" fill="currentColor" stroke="none" />
+  <circle cx="15.5" cy="11.5" r="2.5" fill="currentColor" stroke="none" />
+  
+  <!-- Nasal Cavity -->
+  <path d="M12 14l-1 2h2z" fill="currentColor" stroke="none" />
+  
+  <!-- Teeth / Jaw Cuts -->
+  <path d="M9 21v-3" />
+  <path d="M12 21v-3" />
+  <path d="M15 21v-3" />
+</svg>

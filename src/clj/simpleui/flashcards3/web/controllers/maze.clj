@@ -1,5 +1,6 @@
 (ns simpleui.flashcards3.web.controllers.maze
   (:require
+    [clojure.string :as string]
     [simpleui.flashcards3.web.controllers.slideshow :as slideshow]))
 
 (def m 40)
@@ -7,6 +8,10 @@
 (def m2 (- m 4))
 (def n2 (- n 4))
 
+(defn- shuffle-word [word]
+  (str " "
+       (-> word seq shuffle string/join)
+       " "))
 (defn- place-words [words]
   (when-let [words (->> words (filter #(< 1 (count %) n2)) not-empty)]
     (let [step (->> words count (/ m2) long (max 3))]
@@ -130,21 +135,24 @@
        (repeatedly 10)
        (apply max-key #(region-count % coords->regions))))
 
+(defn- underscore [j2 word]
+  (if (or (zero? j2) (= (dec (count word)) j2))
+    \space
+    \_))
 (defn- insert-word [v [i j word]]
   (->> word
-       seq
-       shuffle
        (map-indexed list)
        (reduce
         (fn [v [j2 c]]
-          (-> v (assoc-v i (+ j j2) c) (assoc-v (inc i) (+ j j2) \_)))
+          (-> v (assoc-v i (+ j j2) c) (assoc-v (inc i) (+ j j2) (underscore j2 word))))
         v)))
 
 (defn- maze* [words]
-  (let [placements (place-words words)]
+  (let [placements (->> words (map shuffle-word) place-words)]
     (conj
      (maze** (clear-squares placements) (coords->regions placements))
-     (reduce insert-word virgin-words placements))))
+     (reduce insert-word virgin-words placements)
+     placements)))
 
 (defn maze [query-fn slideshow_id]
   (maze* (slideshow/get-slideshow-notes query-fn slideshow_id)))
