@@ -35,7 +35,7 @@
     (let [i (long (/ h maze/n))
           j (mod h maze/n)]
       (list
-       (when (path? [i j]) (square i j))
+       ;; (when (path? [i j]) (square i j)) ;; for debugging
        (when (and (zero? i) (bit-test x 0)) (h-line i j))
        (when (bit-test x 1) (v-line i (inc j)))
        (when (bit-test x 2) (h-line (inc i) j))
@@ -54,6 +54,6 @@
        :footer false}
       [:svg {:translate [25 30] :scale [5.3 7.4]}
        (pdf-jtd/svg-s
-        (mapcat (cell path) (range) placements maze))]]
+        (-> path set cell (mapcat (range) placements maze)))]]
      out)
     (ByteArrayInputStream. (.toByteArray out))))

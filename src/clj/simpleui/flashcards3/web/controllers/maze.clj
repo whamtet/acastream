@@ -103,14 +103,14 @@
 (defn- clear-squares [placements]
   (reduce clear-square virgin placements))
 
-(defn- maze** [grid peak-stack coord visited coords->regions stack]
+(defn- maze*** [grid peak-stack coord visited coords->regions stack]
   (let [to-mark (coords->regions coord [coord])
         visited (apply conj visited to-mark)
         candidates (->> to-mark
                         (mapcat #(search-candidates grid %))
                         (remove #(-> % :next visited)))
         peak-stack (if (= [(dec m) (dec n)] coord)
-                     (set stack)
+                     stack
                      peak-stack)]
     (if (empty? candidates)
       (if (empty? stack)
@@ -121,6 +121,14 @@
             (bit-clear-v this direction)
             (bit-clear-v next opposing-direction)
             (recur peak-stack next visited coords->regions (conj stack this)))))))
+
+(defn- region-count [[_ peak-stack] coords->regions]
+  (->> peak-stack (map coords->regions) distinct count))
+
+(defn- maze** [grid coords->regions]
+  (->> #(maze*** grid nil [0 0] borders coords->regions [])
+       (repeatedly 10)
+       (apply max-key #(region-count % coords->regions))))
 
 (defn- insert-word [v [i j word]]
   (->> word
@@ -135,7 +143,7 @@
 (defn- maze* [words]
   (let [placements (place-words words)]
     (conj
-     (maze** (clear-squares placements) nil [0 0] borders (coords->regions placements) [])
+     (maze** (clear-squares placements) (coords->regions placements))
      (reduce insert-word virgin-words placements))))
 
 (defn maze [query-fn slideshow_id]
