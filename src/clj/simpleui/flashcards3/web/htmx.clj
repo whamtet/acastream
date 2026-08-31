@@ -34,7 +34,7 @@
     [:meta {:charset "UTF-8"}]
     [:meta {:name "viewport"
             :content "width=device-width, initial-scale=1.0"}]
-    [:title "SimpleUI Flashcards"]
+    [:title "Acastream"]
     [:link {:rel "icon" :href "/logo_dark.svg"}]
     (for [sheet css]
       [:link {:rel "stylesheet" :href (resource-cache/cache-suffix sheet)}])]
