@@ -123,10 +123,10 @@
        (map week-disp)))
 
 (defn- parse-row [line]
-  (when (re-find #"^\d" line)
-    (let [cols (.split line "\t")]
-      [(second cols)
-       (Long/parseLong (nth cols (- (count cols) 2)))])))
+  (let [cols (.split line "\t")
+        course (first cols)
+        hours (Double/parseDouble (last cols))]
+    [course (if (.startsWith course "HK") (-> hours (* 2) (/ 3) long) (-> hours (* 0.5) long))]))
 
 (defn- parse-vus-hours [s]
   (->> (.split s "\n")

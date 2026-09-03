@@ -1,6 +1,7 @@
 (ns simpleui.flashcards3.web.controllers.grammar
   (:require
-    [clojure.string :as string]))
+    [clojure.string :as string]
+    [simpleui.flashcards3.web.controllers.grammar.underscore :as underscore]))
 
 (defn- map2 [f1 f2 args]
   (loop [i 0
@@ -42,15 +43,17 @@
   (conj (split-pipe s) v))
 
 (defn- format-gen [[s & args]]
-  (format-gen*
-   s
-   (cond
-     (every? string? args)
-     (->> args (map split-pipe) transpose)
-     (some string? args)
-     (->> args (partition 2) (map merge-pairs) transpose)
-     :else
-     args)))
+  (case s
+    :underscore (underscore/underscore-gen args)
+    (format-gen*
+     s
+     (cond
+       (every? string? args)
+       (->> args (map split-pipe) transpose)
+       (some string? args)
+       (->> args (partition 2) (map merge-pairs) transpose)
+       :else
+       args))))
 
 (def data
   '{"Look 2.1"
@@ -283,6 +286,159 @@
        ["Yes, he is" "No, he isn't"]
        ["Yes, she is" "No, she isn't"]
        ["Yes, she is" "No, she isn't"]])
+    "Look 4.1.2"
+    ("%s %s."
+      ["An actor" "A clown" "A dentist" "A firefighter" "A nurse" "A photographer" "A pilot" "A police officer" "A server"]
+      ["acts" "makes children laugh" "fixes teeth" "fights fires"
+       "cares for patients" "takes photos" "flies planes"
+       "catches criminals" "serves food and drinks"])
+    "Look 4.2.2"
+    ("They %s %s."
+      ["played the cello" "played classical music" "performed a concert"
+       "danced" "played the drums" "played the flute" "played the keyboard"
+       "played pop music" "sang" "played the violin"]
+      [["loudly" "well" "slowly" "quickly" "quietly" "carefully"]
+       ["loudly" "well" "slowly" "quickly" "quietly" "carefully"]
+       ["loudly" "well" "slowly" "quickly" "quietly" "carefully"]
+       ["well" "slowly" "quickly"]
+       ["loudly" "well" "slowly" "quickly" "quietly" "carefully"]
+       ["loudly" "well" "slowly" "quickly" "quietly" "carefully"]
+       ["loudly" "well" "slowly" "quickly" "quietly" "carefully"]
+       ["loudly" "well" "slowly" "quickly" "quietly" "carefully"]
+       ["loudly" "well" "slowly" "quickly" "quietly" "carefully"]
+       ["loudly" "well" "slowly" "quickly" "quietly" "carefully"]])
+    "Look 4.3.1"
+    ("We %s %s."
+      ["ate" "gave" "made" "played" "put up" "threw" "watched" "wore"]
+      ["traditional food"
+       "presents"
+       "special food"
+       "party games"
+       "decorations"
+       "streamers"
+       "a parade"
+       "traditional clothes"])
+    "Look 4.3.2"
+    (:underscore
+      "_Where did_ Mica _go_?  She _went_ to Florence."
+      "_What did_ he _buy_?  He _bought_ a ticket."
+      "_When did_ Anna _go to_ Perugia?  She _went_ in October."
+      "_What did_ people _make_ from chocolate pieces?  They _made_ sculptures."
+      "_What did_ Anna _eat_?  She _ate_ chocolate.")
+    "Look 4.4.1"
+    (:underscore
+      "There are many sports they _can_ play."
+      "They _can_ win medals, too."
+      "Soon she _could not_ see at all."
+      "She _could not_ play basketball anymore."
+      "There was a sport she _could_ play: goalball!")
+    "Look 4.5.1"
+    (:underscore
+      "Divers discovered the _longest_ underwater cave."
+      "The _oldest_ paintings in the world are in a cave in northern Spain."
+      "The Atacama Desert is the _driest_ desert in the world."
+      "The _hottest_ ocean in the world is the Indian Ocean."
+      "Many people think the _best_ waves for surfing are in Australia.")
+    "Look 4.5.2"
+    (:underscore
+      "Burj Khalifa became the _tallest_ building in the world."
+      "It was one of the _most expensive_ projects ever."
+      "It's _more famous_ than other buildings in Dubai."
+      "It has the _highest_ restaurant in the world too."
+      "The view from the top is _more exciting_ at night than during the day.")
+    "Look 4.5.1 - 2"
+    (:underscore
+      "Divers discovered the _longest_ underwater cave."
+      "The _oldest_ paintings in the world are in a cave in northern Spain."
+      "The Atacama Desert is the _driest_ desert in the world."
+      "The _hottest_ ocean in the world is the Indian Ocean."
+      "Many people think the _best_ waves for surfing are in Australia."
+      "Burj Khalifa became the _tallest_ building in the world."
+      "It was one of the _most expensive_ projects ever."
+      "It's _more famous_ than other buildings in Dubai."
+      "It has the _highest_ restaurant in the world too."
+      "The view from the top is _more exciting_ at night than during the day.")
+    "Look 4.6.1"
+    (:underscore
+      "You can't use that pen.  It's not _yours_."
+      "_Whose_ coat is this?  I really like it."
+      "Are these your sunglasses?  Yes, they're _mine_."
+      "Where are Jack and Finn?  These drinks are _theirs_."
+      "No, those sneakers aren't _hers_.")
+    "Look 4.6.2"
+    (:underscore
+      "We _wear_ hats _to keep_ our heads warm."
+      "We _wear_ sunglasses _to protect_ our eyes."
+      "We _use_ umbrellas _to protect_ us from the rain."
+      "We _wear_ sports T-shirts _to show_ that we like a team."
+      "We _wear_ gloves to keep our hands warm.")
+    "Look 4.7.1"
+    (:underscore
+      "People didn't watch TV or _listen to_ the radio."
+      "How did people _travel to_ places far away?"
+      "They couldn't _look at_ a clock."
+      "Did people _wait for_ the sun to come up?"
+      "How did people clean their teeth before they _went to_ bed?"
+      "Did people _think about_ work all the time?"
+      "How did people _go between_ different floors in a building?"
+      "How did people _look at_ their faces without mirrors?"
+      "How did people _travel to_ other countries before there were planes?"
+      "How did people _listen to_ music before there were radios?"
+      "How could people _look for_ answers to questions without the internet?")
+    "Look 4.7.2"
+    (:underscore
+      "You _have to_ play it in the gym."
+      "Children _have to_ stand in a line."
+      "They _have to_ bend down."
+      "One child _has to_ jump over all the children."
+      "He or she _has to_ keep his or her feet off the ground."
+      "The other children _have to_ stand still.  It's not that easy!"
+      "If someone _has to take_ a bath, they turn on the faucet."
+      "150 years ago, people _had to put_ hot water on a fire."
+      "150 years ago, people _had to wear_ a lot of clothes in the house."
+      "People _had to sit_ near the fire to stay warm.")
+    "Look 4.8.1"
+    (:underscore
+      "_How many_ broccoli are there?"
+      "_How much_ cereal do you have for breakfast?"
+      "_How many_ chili peppers can you eat?"
+      "_How much_ corn can you eat?"
+      "_How much_ zucchini can you eat?"
+      "_How much_ jam do you like on your bread?"
+      "_How much_ lettuce in a hamburger?"
+      "_How many_ nuts in a jar?"
+      "_How many_ olives in a salad?"
+      "_How many_ strawberries on the cake?")
+    "Look 4.8.2"
+    ("%s %s %s"
+      ["Are there"
+       "Is there"
+       "There"
+       "There"
+       "There"
+       "There"
+       "They ate"
+       "They ate"
+       "They grew"]
+      ["any"
+       "any"
+       "are some"
+       "is some"
+       "aren't any"
+       "isn't any"
+       "a few"
+       "a little"
+       "a lot of"]
+      [["broccoli?" "chili peppers?" "nuts?" "olives?" "strawberries?"]
+       ["cereal?" "corn?" "zucchini?" "jam?" "lettuce?"]
+       ["broccoli." "chili peppers." "nuts." "olives." "strawberries."]
+       ["cereal." "corn." "zucchini." "jam." "lettuce."]
+       ["broccoli." "chili peppers." "nuts." "olives." "strawberries."]
+       ["cereal." "corn." "zucchini." "jam." "lettuce."]
+       ["broccoli." "chili peppers." "nuts." "olives." "strawberries."]
+       ["cereal." "corn." "zucchini." "lettuce."]
+       ["broccoli." "chili peppers." "nuts." "olives." "strawberries." "jam."
+        "cereal." "corn." "zucchini." "lettuce."]])
     })
 
 (def funcs

@@ -36,13 +36,19 @@
        (map pr-event**)
        (string/join "\n")))
 
+(defn- minutes [class]
+  (cond
+    (.startsWith class "HK") 90
+    (.startsWith class "SK") 110
+    :else 120))
+
 (defn- pr-event [[start class :as v]]
   (pr-event*
    "BEGIN" "VEVENT"
    "UID" (format "event%s@flashcards.simpleui.io" (hash v))
    "DTSTAMP" (Date.)
    "DTSTART" start
-   "DTEND" (add-minutes start (if (.startsWith class "HK") 90 120))
+   "DTEND" (add-minutes start (minutes class))
    "SUMMARY" class
    "DESCRIPTION" class
    "LOCATION" class
