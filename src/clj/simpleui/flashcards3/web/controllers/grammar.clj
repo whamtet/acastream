@@ -71,14 +71,14 @@
       ("living room" "dining room" "kitchen")
       ["We have" "They have"]
       ("an armchair" "a bookcase" "a door" "a floor" "a mirror" "a rug" "a window"))
-    "Look 2.4.2"
+    "Look 2.4.4"
     ("%s %s? %s."
       ["Do you" "Do you" "Do the players"]
       ("watch basketball" "ride unicycles" "play baseball" "play basketball" "play hockey" "play tennis")
       [["Yes, I do" "No, I don't"]
        ["Yes, we do" "No, we don't"]
        ["Yes, they do" "No, they don't"]])
-    "Look 2.5.2"
+    "Look 2.5.4"
     ("%s %s? %s."
       ["Does Paul" "Does he" "Does she" "Does a teacher" "Does a doctor" "Does a taxi driver"]
       ("use a lot of building bricks" "build what's on the box" "use a board" "score goals" "drive people home")
@@ -88,7 +88,7 @@
        ["Yes, she does" "No, she doesn't"]
        ["Yes, he does" "No, he doesn't"]
        ["Yes, he does" "No, he doesn't"]])
-    "Look 2.7.1"
+    "Look 2.7.2"
     ("%s %s."
       "There are some | beans"
       "There aren't any | beans"
@@ -110,7 +110,7 @@
       "There aren't any | pears"
       "There are some | sausages"
       "There aren't any | sausages")
-    "Look 2.7.2"
+    "Look 2.7.4"
     ("%s %s? %s."
       "Are there any | beans" ["Yes, there are" "No, there aren't"]
       "Is there any | cheese" ["Yes, there is" "No, there isn't"]
@@ -122,20 +122,20 @@
       "Are there any | mangoes" ["Yes, there are" "No, there aren't"]
       "Are there any | pears" ["Yes, there are" "No, there aren't"]
       "Are there any | sausages" ["Yes, there are" "No, there aren't"])
-    "Look 2.8.2"
+    "Look 2.8.4"
     ("What %s doing? %s %s"
       ["are you" "is he" "is she" "are they"]
       ["I'm" "He's" "She's" "They're"]
       ("dancing" "drinking" "eating" "holding a box" "listening to music"
                  "taking photos" "holding a balloon" "drinking lemonade"))
-    "Look 2.9.1"
+    "Look 2.9.2"
     ("%s the %s %s? %s."
       ["Is" "Are"]
       [["crocodile" "elephant" "giraffe" "hippo" "lion" "monkey" "snake" "tiger" "zebra"]
        ["crocodiles" "elephants" "giraffes" "hippos" "lions" "monkeys" "snakes" "tigers" "zebras"]]
       ("sleeping" "running" "crying" "drinking" "pooping" "eating")
       [["Yes, it is" "No, it isn't"] ["Yes, they are" "No, they aren't"]])
-    "Look 2.11.1"
+    "Look 2.11.2"
     ("%s %s? %s %s."
       ["How do you" "When does the" "Where does the" "Where does the"]
       ["get to school" "bus come" "bus go" "plane go"]
@@ -144,11 +144,11 @@
        ["7:00" "8:00" "9:00" "10:00"]
        ["the library" "school" "the park" "the market"]
        ["Hanoi" "Da Nang" "Nha Trang" "America"]])
-    "Look 2.11.2"
+    "Look 2.11.4"
     ("%s %s"
       ["baby" "beach" "box" "bus" "dish" "scarf" "tomato" "child" "fish" "foot" "man" "mouse" "person" "sheep"]
       ["babies" "beaches" "boxes" "buses" "dishes" "scarves" "tomatoes" "children" "fish" "feet" "men" "mice" "people" "sheep"])
-    "Look 3.1.1"
+    "Look 3.1.2"
     ("%s %s? %s %s."
       ["Are you" "Where are" "Where is" "Where is" "Where are"]
       [["from Japan" "from Vietnam" "from Thailand" "from America"]
@@ -166,7 +166,7 @@
        ["Japan" "Vietnam" "Thailand" "America"]
        ["Japan" "Vietnam" "Thailand" "America"]
        ["Japan" "Vietnam" "Thailand" "America"]])
-    "Look 3.2.1"
+    "Look 3.2.2"
     ("%s live %s? %s."
       ["Does Carlos" "Does Lily" "Do Rita and Lucas" "Do you" "Does your friend"]
       ("in a village" "in a town" "near a river" "next to a lake" "near school")
@@ -175,14 +175,14 @@
        ["Yes, they do" "No, they don't"]
        ["Yes, I do" "No, I don't"]
        ["Yes, he does" "No, she doesn't"]])
-    "Look 3.3.2"
+    "Look 3.3.4"
     ("How often %s %s? %s."
       ["do you" "does your friend"]
       [["clean up your room" "help your mom" "ride your bike" "watch a movie" "wash your hair"]
        ["clean up their room" "help their mom" "ride their bike" "watch a movie" "wash their hair"]]
       [["Never" "Sometimes" "Usually" "Always" "Twice a week" "Once a month"]
        ["Never" "Sometimes" "Usually" "Always" "Twice a week" "Once a month"]])
-    "Look 3.4.2"
+    "Look 3.4.4"
     ("%s like %s? %s."
       ["Does Ed" "Does Sara" "Does Pedro" "Does Tina" "Does Jun" "Do Fatima and Neema"]
       ("riding horses" "playing soccer" "dressing up")
@@ -192,7 +192,7 @@
        ["Yes, she does" "No, she doesn't"]
        ["Yes, he does" "No, he doesn't"]
        ["Yes, they do" "No, they don't"]])
-    "Look 3.5.1"
+    "Look 3.5.2"
     ("%s %s %s"
       ["There is" "There are" "There aren't" "There isn't" "Is there" "Are there"]
       ["some" "a lot of" "any" "any" "any" "any"]
@@ -202,7 +202,7 @@
        ["ketchup." "pasta." "salad." "soup."]
        ["ketchup?" "pasta?" "salad?" "soup?"]
        ["milkshakes?" "noodles?" "pancakes?" "sandwiches?" "vegetables?"]])
-    "Look 3.5.2"
+    "Look 3.5.4"
     ("Can I have a %s of %s, please?"
       ["glass" "bottle" "bowl" "plate" "slice" "bag"]
       [["water" "juice"] ;; glass
@@ -212,7 +212,7 @@
        ["bread" "apple" "cake" "meat" "pizza"] ;; slice
        ["grapes" "apples" "candy"] ;; bag
        ])
-    "Look 3.9.1"
+    "Look 3.9.4"
     ("%s there %s?  %s."
       ["Was" "Were"]
       [["a building" "a movie theater" "a bus stop" "a parking lot" "a cafe" "a sports center" "a hospital" "a supermarket" "a market"]
@@ -220,7 +220,7 @@
         "any sports centers" "any hospitals" "any supermarkets" "any markets"]]
       [["Yes, there was" "No, there wasn't"]
        ["Yes, there were" "No, there weren't"]])
-    "Look 3.10.1"
+    "Look 3.10.2"
     ("The ancient Maya people %s %s."
       ["lived" "didn't live" "danced" "painted" "didn't paint" "traveled" "didn't travel" "liked" "didn't like"]
       ["in Mexico"
@@ -232,7 +232,7 @@
        "by car"
        "chocolate"
        "doing their homework"])
-    "Look 3.11.1"
+    "Look 3.11.2"
     ("On the vacation they %s %s."
       [["ate" "didn't eat"]
        ["got" "didn't get"]
@@ -254,7 +254,7 @@
        "a shooting star"
        "in a tent"
        "in a lake"])
-    "Look 3.12.1"
+    "Look 3.12.2"
     ("We are %s %s."
       ["going to see"
        "going to learn about"
@@ -276,7 +276,7 @@
        "the theme park"
        "the water park"
        "the wildlife park"])
-    "Look 3.12.2"
+    "Look 3.12.4"
     ("Is %s going %s?  %s."
       ["Joe" "Padma" "Sunil" "Kristiina" "Jimena"]
       ("to summer camp" "to the theme park" "camping" "to the wildlife park" "to the fair" "to the museum"
@@ -286,13 +286,13 @@
        ["Yes, he is" "No, he isn't"]
        ["Yes, she is" "No, she isn't"]
        ["Yes, she is" "No, she isn't"]])
-    "Look 4.1.2"
+    "Look 4.1.4"
     ("%s %s."
       ["An actor" "A clown" "A dentist" "A firefighter" "A nurse" "A photographer" "A pilot" "A police officer" "A server"]
       ["acts" "makes children laugh" "fixes teeth" "fights fires"
        "cares for patients" "takes photos" "flies planes"
        "catches criminals" "serves food and drinks"])
-    "Look 4.2.2"
+    "Look 4.2.4"
     ("They %s %s."
       ["played the cello" "played classical music" "performed a concert"
        "danced" "played the drums" "played the flute" "played the keyboard"
@@ -307,7 +307,7 @@
        ["loudly" "well" "slowly" "quickly" "quietly" "carefully"]
        ["loudly" "well" "slowly" "quickly" "quietly" "carefully"]
        ["loudly" "well" "slowly" "quickly" "quietly" "carefully"]])
-    "Look 4.3.1"
+    "Look 4.3.2"
     ("We %s %s."
       ["ate" "gave" "made" "played" "put up" "threw" "watched" "wore"]
       ["traditional food"
@@ -318,35 +318,35 @@
        "streamers"
        "a parade"
        "traditional clothes"])
-    "Look 4.3.2"
+    "Look 4.3.4"
     (:underscore
       "_Where did_ Mica _go_?  She _went_ to Florence."
       "_What did_ he _buy_?  He _bought_ a ticket."
       "_When did_ Anna _go to_ Perugia?  She _went_ in October."
       "_What did_ people _make_ from chocolate pieces?  They _made_ sculptures."
       "_What did_ Anna _eat_?  She _ate_ chocolate.")
-    "Look 4.4.1"
+    "Look 4.4.2"
     (:underscore
       "There are many sports they _can_ play."
       "They _can_ win medals, too."
       "Soon she _could not_ see at all."
       "She _could not_ play basketball anymore."
       "There was a sport she _could_ play: goalball!")
-    "Look 4.5.1"
+    "Look 4.5.2"
     (:underscore
       "Divers discovered the _longest_ underwater cave."
       "The _oldest_ paintings in the world are in a cave in northern Spain."
       "The Atacama Desert is the _driest_ desert in the world."
       "The _hottest_ ocean in the world is the Indian Ocean."
       "Many people think the _best_ waves for surfing are in Australia.")
-    "Look 4.5.2"
+    "Look 4.5.4"
     (:underscore
       "Burj Khalifa became the _tallest_ building in the world."
       "It was one of the _most expensive_ projects ever."
       "It's _more famous_ than other buildings in Dubai."
       "It has the _highest_ restaurant in the world too."
       "The view from the top is _more exciting_ at night than during the day.")
-    "Look 4.5.1 - 2"
+    "Look 4.5.2, 4.5.4"
     (:underscore
       "Divers discovered the _longest_ underwater cave."
       "The _oldest_ paintings in the world are in a cave in northern Spain."
@@ -358,21 +358,21 @@
       "It's _more famous_ than other buildings in Dubai."
       "It has the _highest_ restaurant in the world too."
       "The view from the top is _more exciting_ at night than during the day.")
-    "Look 4.6.1"
+    "Look 4.6.2"
     (:underscore
       "You can't use that pen.  It's not _yours_."
       "_Whose_ coat is this?  I really like it."
       "Are these your sunglasses?  Yes, they're _mine_."
       "Where are Jack and Finn?  These drinks are _theirs_."
       "No, those sneakers aren't _hers_.")
-    "Look 4.6.2"
+    "Look 4.6.4"
     (:underscore
       "We _wear_ hats _to keep_ our heads warm."
       "We _wear_ sunglasses _to protect_ our eyes."
       "We _use_ umbrellas _to protect_ us from the rain."
       "We _wear_ sports T-shirts _to show_ that we like a team."
       "We _wear_ gloves to keep our hands warm.")
-    "Look 4.7.1"
+    "Look 4.7.2"
     (:underscore
       "People didn't watch TV or _listen to_ the radio."
       "How did people _travel to_ places far away?"
@@ -385,7 +385,7 @@
       "How did people _travel to_ other countries before there were planes?"
       "How did people _listen to_ music before there were radios?"
       "How could people _look for_ answers to questions without the internet?")
-    "Look 4.7.2"
+    "Look 4.7.4"
     (:underscore
       "You _have to_ play it in the gym."
       "Children _have to_ stand in a line."
@@ -397,7 +397,7 @@
       "150 years ago, people _had to put_ hot water on a fire."
       "150 years ago, people _had to wear_ a lot of clothes in the house."
       "People _had to sit_ near the fire to stay warm.")
-    "Look 4.8.1"
+    "Look 4.8.2"
     (:underscore
       "_How many_ broccoli are there?"
       "_How much_ cereal do you have for breakfast?"
@@ -409,7 +409,7 @@
       "_How many_ nuts in a jar?"
       "_How many_ olives in a salad?"
       "_How many_ strawberries on the cake?")
-    "Look 4.8.2"
+    "Look 4.8.4"
     ("%s %s %s"
       ["Are there"
        "Is there"
@@ -439,7 +439,117 @@
        ["cereal." "corn." "zucchini." "lettuce."]
        ["broccoli." "chili peppers." "nuts." "olives." "strawberries." "jam."
         "cereal." "corn." "zucchini." "lettuce."]])
-    })
+    "Look 4.9.2"
+    ("%s %s %s."
+      [["The robot" "The e-book" "The headphones" "The interactive whiteboard"
+        "The laptop" "The microphone" "The VR headset" "The Wi-Fi"]
+       ["The robot" "The e-book" "The headphones" "The interactive whiteboard"
+        "The laptop" "The microphone" "The VR headset" "The Wi-Fi"]
+       "One day,"
+       "In 2040,"
+       "Fifteen years from now"
+       ]
+      ["will help"
+       "won't help"
+       "we'll have"
+       "we won't have"
+       "we'll use"]
+      ["a lot of students"
+       "any students"
+       ["robots in our class" "VR headsets" "interactive whiteboards"]
+       ["pens" "pencils" "erasers"]
+       ["AI" "robot teachers" "robots dogs"]])
+    "Look 4.9.4"
+    ("%s there %s more %s in the future?  %s."
+      ["Will"]
+      ["be"]
+      ("drones" "apps" "e-books" "interactive whiteboards" "laptops" "VR headsets")
+      [["Yes, there will" "No, there won't"]])
+    "Look 4.10.2"
+    ("%s %s."
+      ["You should"
+       "Your bedroom should"
+       "You shouldn't"
+       "Your bedroom shouldn't"]
+      [["fall asleep" "rest" "get exercise" "be strong"]
+       ["be dark at night" "be dry"]
+       ["awake too early" "be weak"]
+       ["be wet" "be light at night"]])
+    "Look 4.11.2"
+    ("%s %s the %s."
+      "He's | been to" ["airport" "bus station" "fire station" "hotel" "pharmacy" "police station" "restaurant" "square" "train station" "university"]
+      "She's | been to" ["airport" "bus station" "fire station" "hotel" "pharmacy" "police station" "restaurant" "square" "train station" "university"]
+      "They've | been to" ["airport" "bus station" "fire station" "hotel" "pharmacy" "police station" "restaurant" "square" "train station" "university"]
+      "He | hasn't seen" ["airport" "bus station" "fire station" "hotel" "pharmacy" "police station" "restaurant" "square" "train station" "university"]
+      "She | hasn't seen" ["airport" "bus station" "fire station" "hotel" "pharmacy" "police station" "restaurant" "square" "train station" "university"]
+      "They | haven't seen" ["airport" "bus station" "fire station" "hotel" "pharmacy" "police station" "restaurant" "square" "train station" "university"])
+    "Look 4.11.4"
+    ("%s %s %s? %s."
+      "Have you | visited | a big city" ["Yes, I have" "No, I haven't"]
+      "Have you | traveled on | a plane" ["Yes, I have" "No, I haven't"]
+      "Have you | walked up | a skyscraper" ["Yes, I have" "No, I haven't"]
+      "Have you | seen | a lion" ["Yes, I have" "No, I haven't"]
+      "Have you | drawn | a picture" ["Yes, I have" "No, I haven't"]
+
+      "Has he | visited | a big city" ["Yes, he has" "No, he hasn't"]
+      "Has he | traveled on | a plane" ["Yes, he has" "No, he hasn't"]
+      "Has he | walked up | a skyscraper" ["Yes, he has" "No, he hasn't"]
+      "Has he | seen | a lion" ["Yes, he has" "No, he hasn't"]
+      "Has he | drawn | a picture" ["Yes, he has" "No, he hasn't"]
+
+      "Has she | visited | a big city" ["Yes, she has" "No, she hasn't"]
+      "Has she | traveled on | a plane" ["Yes, she has" "No, she hasn't"]
+      "Has she | walked up | a skyscraper" ["Yes, she has" "No, she hasn't"]
+      "Has she | seen | a lion" ["Yes, she has" "No, she hasn't"]
+      "Has she | drawn | a picture" ["Yes, she has" "No, she hasn't"]
+
+      "Have they | visited | a big city" ["Yes, they have" "No, they haven't"]
+      "Have they | traveled on | a plane" ["Yes, they have" "No, they haven't"]
+      "Have they | walked up | a skyscraper" ["Yes, they have" "No, they haven't"]
+      "Have they | seen | a lion" ["Yes, they have" "No, they haven't"]
+      "Have they | drawn | a picture" ["Yes, they have" "No, they haven't"])
+
+    "Look 4.12.2"
+    ("%s %s %s? %s."
+      "Have you ever | crawled through | an old mine" ["Yes, I have" "No, I haven't"]
+      "Have you ever | discovered | a secret cave" ["Yes, I have" "No, I haven't"]
+      "Have you ever | gone | kayaking" ["Yes, I have" "No, I haven't"]
+      "Have you ever | jumped off | giant steps" ["Yes, I have" "No, I haven't"]
+      "Have you ever | smelled | the city" ["Yes, I have" "No, I haven't"]
+      "Have you ever | swung | across a river" ["Yes, I have" "No, I haven't"]
+
+      "Has he ever | crawled through | an old mine" ["Yes, he has" "No, he hasn't"]
+      "Has he ever | discovered | a secret cave" ["Yes, he has" "No, he hasn't"]
+      "Has he ever | gone | kayaking" ["Yes, he has" "No, he hasn't"]
+      "Has he ever | jumped off | giant steps" ["Yes, he has" "No, he hasn't"]
+      "Has he ever | smelled | the city" ["Yes, he has" "No, he hasn't"]
+      "Has he ever | swung | across a river" ["Yes, he has" "No, he hasn't"]
+
+      "Has she ever | crawled through | an old mine" ["Yes, she has" "No, she hasn't"]
+      "Has she ever | discovered | a secret cave" ["Yes, she has" "No, she hasn't"]
+      "Has she ever | gone | kayaking" ["Yes, she has" "No, she hasn't"]
+      "Has she ever | jumped off | giant steps" ["Yes, she has" "No, she hasn't"]
+      "Has she ever | smelled | the city" ["Yes, she has" "No, she hasn't"]
+      "Has she ever | swung | across a river" ["Yes, she has" "No, she hasn't"]
+
+      "Have they ever | crawled through | an old mine" ["Yes, they have" "No, they haven't"]
+      "Have they ever | discovered | a secret cave" ["Yes, they have" "No, they haven't"]
+      "Have they ever | gone | kayaking" ["Yes, they have" "No, they haven't"]
+      "Have they ever | jumped off | giant steps" ["Yes, they have" "No, they haven't"]
+      "Have they ever | smelled | the city" ["Yes, they have" "No, they haven't"]
+      "Have they ever | swung | across a river" ["Yes, they have" "No, they haven't"])
+    "Look 4.12.4"
+    ("%s %s %s."
+      "I've | seen | a dolphin"
+      "Yesterday, I | saw | a dolphin"
+      "I've | walked | a long distance."
+      "Yesterday, I | walked | a long distance"
+      "I've | been | snorkeling"
+      "Yesterday, I | went | snorkeling"
+      "I've | jumped off | rocks"
+      "Yesterday, I | jumped off | rocks"
+      "I've | crawled through | a tunnel"
+      "Yesterday, I | crawled through | a tunnel")})
 
 (def funcs
   (update-vals data format-gen))
