@@ -585,7 +585,7 @@
          (map f)
          distinct
          (filter #(.contains % "_"))
-         (partition n))))
+         (partition-all n))))
 
 (defn sentence-pair [lesson i]
   (when-let [f (funcs lesson)]
