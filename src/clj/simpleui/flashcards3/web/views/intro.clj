@@ -9,6 +9,9 @@
     [:a {:href "vocabs/"}
      "Vocabs"]]
    [:div.text-blue-500.p-4
+    [:a {:href "grammar/"}
+     "Grammar"]]
+   [:div.text-blue-500.p-4
     [:a {:href "boggle/"}
      "Boggle"]]
    [:div.text-blue-500.p-4

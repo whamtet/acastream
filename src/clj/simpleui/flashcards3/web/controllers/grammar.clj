@@ -1,7 +1,8 @@
 (ns simpleui.flashcards3.web.controllers.grammar
   (:require
     [clojure.string :as string]
-    [simpleui.flashcards3.web.controllers.grammar.underscore :as underscore]))
+    [simpleui.flashcards3.web.controllers.grammar.underscore :as underscore]
+    [simpleui.flashcards3.web.controllers.util :as util]))
 
 (defn- map2 [f1 f2 args]
   (loop [i 0
@@ -549,7 +550,43 @@
       "I've | jumped off | rocks"
       "Yesterday, I | jumped off | rocks"
       "I've | crawled through | a tunnel"
-      "Yesterday, I | crawled through | a tunnel")})
+      "Yesterday, I | crawled through | a tunnel"
+
+      "He's | seen | a dolphin"
+      "Yesterday, he | saw | a dolphin"
+      "He's | walked | a long distance."
+      "Yesterday, he | walked | a long distance"
+      "He's | been | snorkeling"
+      "Yesterday, he | went | snorkeling"
+      "He's | jumped off | rocks"
+      "Yesterday, he | jumped off | rocks"
+      "He's | crawled through | a tunnel"
+      "Yesterday, he | crawled through | a tunnel"
+
+      "She's | seen | a dolphin"
+      "Yesterday, she | saw | a dolphin"
+      "She's | walked | a long distance."
+      "Yesterday, she | walked | a long distance"
+      "She's | been | snorkeling"
+      "Yesterday, she | went | snorkeling"
+      "She's | jumped off | rocks"
+      "Yesterday, she | jumped off | rocks"
+      "She's | crawled through | a tunnel"
+      "Yesterday, she | crawled through | a tunnel")})
 
 (def funcs
   (update-vals data format-gen))
+(def lessons (->> funcs keys (sort-by identity util/compare-names)))
+
+(defn line-groups [lesson n]
+  (when-let [f (funcs lesson)]
+    (->> 100
+         range
+         (map f)
+         distinct
+         (filter #(.contains % "_"))
+         (partition n))))
+
+(defn sentence-pair [lesson i]
+  (when-let [f (funcs lesson)]
+    (map f (range i (+ i 2)))))

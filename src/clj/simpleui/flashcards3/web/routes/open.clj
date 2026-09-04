@@ -8,6 +8,7 @@
     [simpleui.flashcards3.web.views.boggle :as boggle]
     [simpleui.flashcards3.web.views.dominos :as dominos]
     [simpleui.flashcards3.web.views.fill :as fill]
+    [simpleui.flashcards3.web.views.grammar :as grammar]
     [simpleui.flashcards3.web.views.icon-search :as icon-search]
     [simpleui.flashcards3.web.views.students :as students]
     [simpleui.flashcards3.web.views.intro :as intro]
@@ -107,6 +108,9 @@
       {:status 200
        :headers {"Content-Type" "text/csv"}
        :body (-> req :params controllers.blooket/csv)})]
+   ["/grammar" (route-data opts) (grammar/ui-routes opts)]
+   ["/grammar-game" (route-data opts) (grammar/ui-routes-game opts)]
+   ["/grammar-lesson" (route-data opts) (grammar/ui-routes-lesson opts)]
    ["/kahoot"
     (fn [req]
       {:status 200
