@@ -21,8 +21,9 @@
 (defn- count1 [x]
   (max (count x) 1))
 (defn- row [items]
-  [:div.grid.mt-20
+  [:div.grid
    {:style {:height "50vh"
+            :margin-top "250px"
             :grid-template-columns (format "repeat(%s, minmax(0, 1fr))" (count1 items))}}
    (map paragraph items)])
 
@@ -40,4 +41,11 @@
    (fn [req]
      (page-htmx
       {:css ["../../output.css"]}
-      (-> req (assoc :query-fn query-fn) panel)))))
+      (-> req (assoc :query-fn query-fn) panel)
+      [:script
+       "document.addEventListener(\"keydown\", e => {
+  if (e.code === \"Space\") {
+    e.preventDefault();
+    location.reload();
+  }
+});"]))))
