@@ -12,6 +12,9 @@
     [:a {:href "grammar/"}
      "Grammar"]]
    [:div.text-blue-500.p-4
+    [:a {:href "videos/"}
+     "Videos"]]
+   [:div.text-blue-500.p-4
     [:a {:href "boggle/"}
      "Boggle"]]
    [:div.text-blue-500.p-4

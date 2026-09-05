@@ -14,6 +14,7 @@
     [simpleui.flashcards3.web.views.intro :as intro]
     [simpleui.flashcards3.web.views.share :as share]
     [simpleui.flashcards3.web.views.snl :as snl]
+    [simpleui.flashcards3.web.views.videos :as videos]
     [simpleui.flashcards3.web.views.vocab :as vocab]
     [simpleui.flashcards3.web.controllers.cache :as cache]
     [simpleui.flashcards3.web.controllers.local :as local]
@@ -130,6 +131,7 @@
       {:status 200
        :headers {"Content-Type" "application/pdf"}
        :body (pdf-snl/pdf req)})]
+   ["/videos" (route-data opts) (videos/ui-routes opts)]
    ["/dominos" (route-data opts) (dominos/ui-routes opts)]
    ["/snl" (route-data opts) (snl/ui-routes opts)]
    ["/s" (share/ui-routes-qr opts)]
