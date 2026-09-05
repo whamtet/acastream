@@ -5,25 +5,33 @@
     [simpleui.flashcards3.web.controllers.slideshow :as slideshow]
     [simpleui.flashcards3.web.htmx :refer [page-htmx defcomponent]]))
 
-(defn hide-vowels [s]
-  (string/replace s #"[aeiou]" "_"))
-
-(defn hide-consonants [s]
-  (string/replace s #"[^aeiou -]" "_"))
-
-(defn scramble [s]
+(defn- scramble [s]
   (-> s seq shuffle string/join))
 
-(defn create-guess [s]
-  ((rand-nth [hide-vowels hide-consonants scramble]) s))
+(defn- paragraph [x]
+  [:div {:class "text-center leading-tight"
+         :style {:font-size "24px"}}
+   [:div {:class "flex justify-center mb-6"}
+    (for [c x]
+      [:span {:class "inline-block w-8"} c])]
+   [:div {:class "flex justify-center"}
+    (for [_ x]
+      [:span {:class "inline-block w-8"} "_"])]])
 
-(defcomponent ^:endpoint panel [req n]
-  (let [note (rand-nth (slideshow/get-slideshow-notes query-fn slideshow_id))]
-    [:div {:style {:height "100vh" :letter-spacing "0.6em"}
-           :class "flex items-center justify-center"
-           :hx-post "panel"
-           :hx-vals (when-not n {:n note})}
-     [:span.text-9xl (or n (create-guess note))]]))
+(defn- count1 [x]
+  (max (count x) 1))
+(defn- row [items]
+  [:div.grid.mt-20
+   {:style {:height "50vh"
+            :grid-template-columns (format "repeat(%s, minmax(0, 1fr))" (count1 items))}}
+   (map paragraph items)])
+
+(defcomponent ^:endpoint panel [req ^:boolean random]
+  (let [note (slideshow/get-slideshow-note query-fn slideshow_id)
+        f (if random scramble identity)]
+    [:div {:hx-post "panel"
+           :hx-vals {:random random}}
+     (row [(f note) (f note)])]))
 
 (defn ui-routes [{:keys [query-fn]}]
   (simpleui/make-routes
@@ -31,5 +39,5 @@
    [query-fn]
    (fn [req]
      (page-htmx
-      {:css ["../../../output.css"]}
+      {:css ["../../output.css"]}
       (-> req (assoc :query-fn query-fn) panel)))))

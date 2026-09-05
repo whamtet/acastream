@@ -30,7 +30,7 @@
       icons/play-circle]
      [:a.mr-2.text-green-500 (href (format "../memory/%s/" slideshow_id))
       icons/play-circle]
-     [:a.mr-2.text-sky-400 (href (format "../play-guess/%s/" slideshow_id))
+     [:a.mr-2.text-sky-400 (href (format "../play-guess/%s/?random=true" slideshow_id))
       icons/play-circle]
      [:a.mr-2.text-orange-400 (href (format "../play-video/%s/?prefix=The_Floor_Is_Lava" slideshow_id))
       icons/play-circle]]

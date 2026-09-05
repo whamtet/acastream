@@ -69,5 +69,6 @@
    (fn [req]
      (page-htmx
       {:css ["../output.css"]
-       :js ["../scramble.js"]}
+       :js ["../scramble.js"]
+       :fitty? true}
       (panel req)))))

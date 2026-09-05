@@ -64,6 +64,9 @@
 (defn get-slideshow-notes [query-fn slideshow_id]
   (:notes
     (get-slideshow-details query-fn slideshow_id)))
+(defn get-slideshow-note [query-fn slideshow_id]
+  (rand-nth
+   (get-slideshow-notes query-fn slideshow_id)))
 (defn get-slideshow-slides-edit [query-fn slideshow_id]
   (let [{:keys [slides notes]} (get-slideshow-details query-fn slideshow_id)]
     (map (fn [[medium] note] [medium note]) slides notes)))
