@@ -125,6 +125,11 @@
                  "Cache-Control" "no-cache, no-store, must-revalidate"
                  "Access-Control-Allow-Origin" "*"}
        :body (schedule/cal-body)})]
+   ["/cal2"
+    (fn [req]
+      {:status 200
+       :headers {"Content-Type" "text/plain"}
+       :body (schedule/cal-body)})]
    ["/api/students" controllers.students/parse]
    ["/api/snl"
     (fn [req]
