@@ -16,8 +16,10 @@
 (defn- rand-nth-leaf [s]
   (if (string? s) s (rand-nth s)))
 (defn- underscore-leaf [s]
-  (let [i (if (string? s) (count s) (->> s (map count) (apply max)))]
-    (-> i (+ 2) (repeat "_") string/join)))
+  (if (empty? s)
+    ""
+    (let [i (if (string? s) (count s) (->> s (map count) (apply max)))]
+      (-> i (+ 2) (repeat "_") string/join))))
 
 (defn- format-gen* [s args]
   (let [matches (filter vector? args)
@@ -46,6 +48,10 @@
 (defn- format-gen [[s & args]]
   (case s
     :underscore (underscore/underscore-gen args)
+    :multiple
+    (let [fs (map format-gen args)]
+      (assert (not-empty fs))
+      #((rand-nth fs) %))
     (format-gen*
      s
      (cond
@@ -238,7 +244,6 @@
       [["ate" "didn't eat"]
        ["got" "didn't get"]
        ["went" "didn't go"]
-       ["went" "didn't go"]
        ["had" "didn't have"]
        ["made" "didn't make"]
        ["rode" "didn't ride"]
@@ -248,7 +253,6 @@
       ["outside"
        "lost"
        "canoeing"
-       "on a roller coaster"
        "a picnic"
        "friends"
        "on a motorcycle"
@@ -346,7 +350,17 @@
       "It was one of the _most expensive_ projects ever."
       "It's _more famous_ than other buildings in Dubai."
       "It has the _highest_ restaurant in the world too."
-      "The view from the top is _more exciting_ at night than during the day.")
+      "The view from the top is _more exciting_ at night than during the day."
+      "The animals in Nepal are _more interesting_ than the animals in Costa Rica."
+      "Some of the _most famous_ mountains in the world are in Nepal."
+      "The mountains in Costa Rica are _less difficult_ to climb than the mountains in Nepal."
+      "The beach at Tamarindo is one of the _most popular_ in Costa Rica."
+      "Surfing is _more exciting_ at Tamarindo than at other beaches."
+      "The snowboarding lesson is _more exciting_ than the boat trip."
+      "The museum visit is _more boring_ than the snowboarding lesson."
+      "The boat trip is _more interesting_ than the museum visit."
+      "I think the snowboarding lesson is the _best_ activity."
+      "I think the _museum visit_ is the _most boring_ activity.")
     "Look 4.5.2, 4.5.4"
     (:underscore
       "Divers discovered the _longest_ underwater cave."
@@ -365,14 +379,28 @@
       "_Whose_ coat is this?  I really like it."
       "Are these your sunglasses?  Yes, they're _mine_."
       "Where are Jack and Finn?  These drinks are _theirs_."
-      "No, those sneakers aren't _hers_.")
+      "No, those sneakers aren't _hers_."
+      "Are those sneakers David's?  Yes, I think they're _his_."
+      "Whose hat is that with stripes?  It's _mine_."
+      "She says they're not _hers_."
+      "Are they yours?  No, they aren't _mine_."
+      "Our family is big.  That big car is _ours_."
+      "Is that their house?  Yes, it is _theirs_.")
     "Look 4.6.4"
     (:underscore
       "We _wear_ hats _to keep_ our heads warm."
       "We _wear_ sunglasses _to protect_ our eyes."
       "We _use_ umbrellas _to protect_ us from the rain."
       "We _wear_ sports T-shirts _to show_ that we like a team."
-      "We _wear_ gloves to keep our hands warm.")
+      "We _wear_ gloves to keep our hands warm."
+      "I walked to the bus stop _to catch_ a bus."
+      "I went to the shopping mall _to buy_ some new sneakers."
+      "I needed the sneakers _to play_ volleyball."
+      "I'm on a volleyball team _to make_ new friends."
+      "I practice volleyball every week _to learn_ how to play better."
+      "People go to cafes _to drink_ coffee."
+      "People play sports _to have_ fun."
+      "I go to VUS _to learn_ English and _to have_ fun.")
     "Look 4.7.2"
     (:underscore
       "People didn't watch TV or _listen to_ the radio."
@@ -385,7 +413,11 @@
       "How did people _look at_ their faces without mirrors?"
       "How did people _travel to_ other countries before there were planes?"
       "How did people _listen to_ music before there were radios?"
-      "How could people _look for_ answers to questions without the internet?")
+      "How could people _look for_ answers to questions without the internet?"
+      "What type of music do you like _listening to_?"
+      "What do you _talk about_ with your friends?"
+      "Where did you _travel to_ on your last vacation?"
+      "What things do you like _looking for_ in museums?")
     "Look 4.7.4"
     (:underscore
       "You _have to_ play it in the gym."
@@ -461,21 +493,41 @@
        ["pens" "pencils" "erasers"]
        ["AI" "robot teachers" "robots dogs"]])
     "Look 4.9.4"
-    ("%s there %s more %s in the future?  %s."
-      ["Will"]
-      ["be"]
-      ("drones" "apps" "e-books" "interactive whiteboards" "laptops" "VR headsets")
-      [["Yes, there will" "No, there won't"]])
+    (:multiple
+      ("%s there %s more %s in the future?  %s."
+        ["Will"]
+        ["be"]
+        ("drones" "apps" "e-books" "interactive whiteboards" "laptops" "VR headsets")
+        [["Yes, there will" "No, there won't"]])
+      ("In the future %s %s %s."
+        ["people" "robots" "people" "robots" "robots"]
+        ["won't go" "will work" "won't have" "will work" "will be"]
+        ["to the supermarket" "in the house" "to drive" "as doctors" "police officers"])
+      (:underscore
+        "Children _won't wear_ school uniforms."
+        "Children _will go_ to school in flying cars."
+        "Children _will have_ robot teachers."
+        "Children _won't write_ with pencils and pens."
+        "Children _won't play_ traditional games outside."
+        "Children _will talk_ to friends around the world with VR headsets."))
     "Look 4.10.2"
-    ("%s %s."
-      ["You should"
-       "Your bedroom should"
-       "You shouldn't"
-       "Your bedroom shouldn't"]
-      [["fall asleep" "rest" "get exercise" "be strong"]
-       ["be dark at night" "be dry"]
-       ["awake too early" "be weak"]
-       ["be wet" "be light at night"]])
+    (:multiple
+      ("%s %s."
+        ["You should"
+         "Your bedroom should"
+         "You shouldn't"
+         "Your bedroom shouldn't"]
+        [["fall asleep" "rest" "get exercise" "be strong"]
+         ["be dark at night" "be dry"]
+         ["awake too early" "be weak"]
+         ["be wet" "be light at night"]])
+      (:underscore
+        "You _should drink_ a lot of water and hot tea."
+        "You _should wear_ warm clothes."
+        "You _shouldn't go_ to a party."
+        "You _should rest_ and watch movies on the sofa."
+        "You _shouldn't go_ near babies or old people."
+        "You _should stay_ home until you are better."))
     "Look 4.11.2"
     ("%s %s the %s."
       "He's | been to" ["airport" "bus station" "fire station" "hotel" "pharmacy" "police station" "restaurant" "square" "train station" "university"]
