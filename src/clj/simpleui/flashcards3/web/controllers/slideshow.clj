@@ -110,6 +110,12 @@
         (update $ :notes conj note)
         (assoc $ :updated (Date.))
         (slideshow-details query-fn slideshow_id $)))
+(defn conj-qr [query-fn slideshow_id qr]
+  (let [qr2 (str "qr://" qr)]
+    (as-> (get-slideshow-details query-fn slideshow_id) $
+          (update $ :slides conj [qr2 qr2])
+          (update $ :notes conj qr)
+          (slideshow-details query-fn slideshow_id $))))
 (defn shuffle-slides [query-fn slideshow_id]
   (let [details (get-slideshow-details query-fn slideshow_id)
         indices (-> details :slides count range shuffle)]

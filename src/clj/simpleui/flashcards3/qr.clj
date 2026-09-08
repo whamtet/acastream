@@ -9,9 +9,8 @@
     [java.util HashMap Base64]))
 
 (defn base64
-  [a]
-  (let [url (host a)
-        hints (doto (HashMap.)
+  [url]
+  (let [hints (doto (HashMap.)
                     (.put EncodeHintType/MARGIN 1))
         matrix (.encode (QRCodeWriter.)
                         url
@@ -24,3 +23,6 @@
     (str "data:image/png;base64,"
          (.encodeToString (Base64/getEncoder)
                           (.toByteArray baos)))))
+
+(defn base64-host [a]
+  (base64 (host a)))

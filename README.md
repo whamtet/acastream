@@ -23,6 +23,11 @@
 - Dice Sentence Game
 - Boggle
 - Mixed video + slides
+- Temp File Share
+- Skeleton maze
+- Grammar Generator
+- Vocab Summary
+- QR Share
 
 ## Development
 

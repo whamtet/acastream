@@ -152,6 +152,7 @@
     "concat" (slideshow/concat-slideshow query-fn slideshow_id images)
     "concat2" (slideshow/concat-slideshow2 query-fn slideshow_id images)
     "conj" (slideshow/conj-slideshow query-fn slideshow_id [(or medium large) large])
+    "conj-qr" (slideshow/conj-qr query-fn slideshow_id large)
     "up" (slideshow/up-slideshow query-fn slideshow_id i)
     "down" (slideshow/down-slideshow query-fn slideshow_id i)
     "del" (slideshow/delete-slide query-fn slideshow_id i)
@@ -173,10 +174,10 @@
      (components/button "Paste Bottom" "pasteClipboard")
      [:input#clipboard.hidden {:type "file" :name "images"}]
      [:input#clipboardSubmit.hidden {:type "submit"}]]
-    [:form {:hx-post "image-order:conj"
+    [:form {:hx-post "image-order:conj-qr"
             :hx-target "#images"}
      [:input {:class "p-2 rounded-md border mr-2 w-96"
-              :placeholder "Direct URL"
+              :placeholder "QR"
               :name "large"}]]
     [:input {:hx-post "image-order:concat"
              :hx-encoding "multipart/form-data"
@@ -220,11 +221,12 @@
                :hx-vals {:i i}
                :hx-target "#modal"}
          icons/arrow-right]
-        [:div {:class "cursor-pointer border rounded-md p-2 mr-2"
-               :hx-post "panel:rescale1"
-               :hx-vals {:i i}
-               :hx-confirm "Rescale Image?  This cannot be undone"}
-         icons/photo]]
+        (when (number? medium)
+          [:div {:class "cursor-pointer border rounded-md p-2 mr-2"
+                 :hx-post "panel:rescale1"
+                 :hx-vals {:i i}
+                 :hx-confirm "Rescale Image?  This cannot be undone"}
+           icons/photo])]
        [:input {:class "border rounded-md p-2 mt-1 mb-4 ml-20"
                 :style {:width "500px"}
                 :hx-post "image-note"

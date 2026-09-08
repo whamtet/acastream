@@ -1,4 +1,6 @@
-(ns simpleui.flashcards3.web.views.components)
+(ns simpleui.flashcards3.web.views.components
+  (:require
+    [simpleui.flashcards3.qr :as qr]))
 
 (defn hiddens [& args]
   (for [[k v] (partition 2 args)
@@ -63,12 +65,16 @@
   (if (string? x)
     (if (.startsWith x "http")
       (str "../../cache?src=" x)
-      x)
+      (if (.startsWith x "qr://")
+        (qr/base64 (.substring x 5))
+        x))
     (format "../../local/%s" x)))
 
 (defn get-src2 [x]
   (if (string? x)
     (if (.startsWith x "http")
       (str "../../../cache?src=" x)
-      x)
+      (if (.startsWith x "qr://")
+        (qr/base64 (.substring x 5))
+        x))
     (format "../../../local/%s" x)))
