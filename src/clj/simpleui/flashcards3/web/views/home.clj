@@ -66,8 +66,10 @@
 (defcomponent ^:endpoint panel [req ^:prompt slideshow-name command]
   (case command
     "new" (when slideshow-name
-            (when-let [new-id (slideshow/add-slideshow query-fn slideshow-name)]
-              (response/hx-redirect (format "../edit/%s/" new-id))))
+            (->> slideshow-name
+                 (slideshow/add-slideshow query-fn)
+                 (format "../edit/%s/")
+                 response/hx-redirect))
     [:div.p-2
      [:div.flex.items-center.mb-1
       [:div {:class "my-1 mr-2"
