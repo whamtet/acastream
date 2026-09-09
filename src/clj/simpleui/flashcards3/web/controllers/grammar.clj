@@ -386,15 +386,16 @@
       "Are they yours?  No, they aren't _mine_."
       "Our family is big.  That big car is _ours_."
       "Is that their house?  Yes, it is _theirs_.")
+"xx" (:underscore "I'm on a volleyball team _to make_ new friends.")
     "Look 4.6.4"
     (:underscore
       "We _wear_ hats _to keep_ our heads warm."
       "We _wear_ sunglasses _to protect_ our eyes."
       "We _use_ umbrellas _to protect_ us from the rain."
       "We _wear_ sports T-shirts _to show_ that we like a team."
-      "We _wear_ gloves to keep our hands warm."
-      "I walked to the bus stop _to catch_ a bus."
-      "I went to the shopping mall _to buy_ some new sneakers."
+      "We _wear_ gloves _to keep_ our hands warm."
+      "I _walked_ to the bus stop _to catch_ a bus."
+      "I _went_ to the shopping mall _to buy_ some new sneakers."
       "I needed the sneakers _to play_ volleyball."
       "I'm on a volleyball team _to make_ new friends."
       "I practice volleyball every week _to learn_ how to play better."
@@ -630,14 +631,14 @@
   (update-vals data format-gen))
 (def lessons (->> funcs keys (sort-by identity util/compare-names)))
 
-(defn line-groups [lesson n]
+(defn line-group [lesson n]
   (when-let [f (funcs lesson)]
     (->> 100
          range
          (map f)
          distinct
          (filter #(.contains % "_"))
-         (partition-all n))))
+         (take n))))
 
 (defn sentence-pair [lesson i]
   (when-let [f (funcs lesson)]

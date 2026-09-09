@@ -28,10 +28,10 @@
 
 (defcomponent lesson-ui [req lesson ^:long n]
   [:div
-   (for [group (grammar/line-groups lesson n)]
-     [:div.mb-6
-      (for [line group]
-        [:div line])])])
+   (repeat 10
+           [:div.mb-6
+            (for [line (grammar/line-group lesson n)]
+              [:div line])])])
 
 (defn ui-routes-lesson [{:keys [query-fn]}]
   (simpleui/make-routes
@@ -58,6 +58,7 @@
     [:div {:hx-post "panel"
            :hx-vals {:i (+ i 3)
                      :lesson lesson}}
+     [:div {:style {:height "200px"}}]
      (row (grammar/sentence-pair lesson i))
      (when post?
        [:script "fit()"])]))
