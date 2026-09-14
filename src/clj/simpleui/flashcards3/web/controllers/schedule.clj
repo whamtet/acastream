@@ -2,7 +2,7 @@
   (:require
     [clojure.java.io :as io]
     [clojure.string :as string]
-    [simpleui.flashcards3.web.controllers.hours :as hours])
+    [simpleui.flashcards3.web.controllers.hours.parse :as hours.parse])
   (:import
     (java.util Date)
     (java.time ZoneOffset Instant)
@@ -26,7 +26,7 @@
 (def this-week (atom {}))
 
 (defn update-hours [s]
-  (reset! this-week (hours/parse-hours* s)))
+  (reset! this-week (hours.parse/parse-hours* s)))
 
 (defn- pr-event** [[a b]]
   (str a ":" (if (instance? Date b) (format-ics-date b) b)))
