@@ -14,7 +14,7 @@
       (drop (inc curr) x)))))
 
 (defcomponent panel [req ^:longs randoms]
-  (let [slides (slideshow/get-slideshow-slides query-fn slideshow_id)
+  (let [slides (slideshow/get-slideshow-slides-notes query-fn slideshow_id)
         last? (-> slides count dec (= step))
         next-href (if (or (empty? slides) last?)
                     (format "../../../edit/%s/" slideshow_id)
@@ -39,11 +39,13 @@
      (if (empty? slides)
        [:a {:href next-href}
         [:div.p-6.text-xl "Empty"]]
-       (let [[_ src] (nth slides step)]
+       (let [[[_ src] note] (nth slides step)]
          [:a#next {:href next-href}
-          [:div.flex.justify-center.items-center
+          [:div.flex.flex-col.justify-center.items-center
            [:img {:src (get-src2 src)
-                  :style {:max-width "1000px"}}]]]))]))
+                  :_ "on click halt the event remove .hidden from #note"
+                  :style {:max-width "1000px"}}]
+           [:div#note.text-6xl.hidden note]]]))]))
 
 (defn ui-routes [{:keys [query-fn]}]
   (simpleui/make-routes

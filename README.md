@@ -4,6 +4,7 @@
 
 - Battleships
 - Blooket Quiz Generation
+- Kahoot Quiz Generation
 - Dominos
 - Gap Fill
 - Icon PDF
@@ -13,6 +14,7 @@
 - Running Dictation
 - Information Exchange
 - Quiz
+- Word Scramble
 - Sentence Scramble
 - Paragraph Scramble
 - Snakes and Ladders
