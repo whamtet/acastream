@@ -42,7 +42,8 @@
 (defn- drop-offset [offsets]
   (drop 2 offsets))
 
-(def superscripts ["¹" "²" "³" "⁴" "⁵" "⁶" "⁷" "⁸" "⁹"])
+(def superscripts ["¹" "²" "³" "⁴" "⁵" "⁶" "⁷" "⁸" "⁹" "¹⁰"
+                   "¹¹" "¹²" "¹³" "¹⁴" "¹⁵" "¹⁶" "¹⁷" "¹⁸" "¹⁹"])
 
 (defn- _ [superscript i]
   (apply str superscript (repeat i "_")))
@@ -56,7 +57,8 @@
         (when (< a b)
           (if (even? i)
             (.substring s a b)
-            (_ (-> i (* 0.5) long superscripts) (+ b extension (- a) -1)))))
+            (let [n (-> i (bit-shift-right 1) superscripts)]
+              (_ n (- (+ b extension) a (count n)))))))
       (range)
       padded
       (rest padded)))))

@@ -26,7 +26,7 @@
       [:div
        [:div.p-2.flex.items-center
         [:a.mr-2 {:href "../../home/"} icons/home]
-        [:input {:class "p-2 rounded-md border mr-2"
+        [:input {:class "p-2 rounded-md border border-black mr-2"
                  :hx-post "name-editor:update"
                  :name "new-name"
                  :value slideshow-name}]

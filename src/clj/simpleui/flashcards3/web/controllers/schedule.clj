@@ -23,7 +23,7 @@
       (.plusSeconds (* minutes 60))
       (Date/from)))
 
-(def this-week (atom (hours.parse/parse-hours-full (slurp "t"))))
+(def this-week (atom {}))
 
 (defn update-hours [s]
   (reset! this-week (hours.parse/parse-hours-full s)))
