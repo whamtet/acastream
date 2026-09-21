@@ -109,7 +109,8 @@
            :href "../abc.jpg"
            :target "_blank"}
        (components/button "ABC")]
-      [:a {:class "my-1 mr-2"
+      [:a {:id "music"
+           :class "my-1 mr-2"
            :href "../upbeat.mp3"
            :target "_blank"}
        (components/button "Music")]]

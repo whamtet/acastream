@@ -4,6 +4,9 @@ document.addEventListener('keydown', (event) => {
     if (event.key === 'n') {
         $('#new-slideshow').click();
     }
+    if (event.key === 'm') {
+        $('#music').click();
+    }
 });
 
 function activateImages() {

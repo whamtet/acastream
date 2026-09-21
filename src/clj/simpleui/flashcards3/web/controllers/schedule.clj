@@ -4,6 +4,7 @@
     [clojure.string :as string]
     [simpleui.flashcards3.web.controllers.hours.parse :as hours.parse])
   (:import
+    (java.io File)
     (java.util Date)
     (java.time ZoneOffset Instant)
     (java.time.format DateTimeFormatter)))
@@ -23,7 +24,10 @@
       (.plusSeconds (* minutes 60))
       (Date/from)))
 
-(def this-week (atom {}))
+(def hours (File. "hours.txt"))
+(def this-week (atom (if (.exists hours)
+                       (-> hours slurp hours.parse/parse-hours-full)
+                       {})))
 
 (defn update-hours [s]
   (reset! this-week (hours.parse/parse-hours-full s)))
