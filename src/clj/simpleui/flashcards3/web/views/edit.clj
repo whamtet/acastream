@@ -227,7 +227,7 @@
                  :hx-vals {:i i}
                  :hx-confirm "Rescale Image?  This cannot be undone"}
            icons/photo])]
-       [:input {:class "border rounded-md p-2 mt-1 mb-4 ml-20"
+       [:input {:class "border border-black rounded-md p-2 mt-1 mb-4 ml-20"
                 :style {:width "500px"}
                 :hx-post "image-note"
                 :hx-vals {:i i}
