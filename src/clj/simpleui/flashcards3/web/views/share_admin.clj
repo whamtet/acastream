@@ -33,7 +33,7 @@
      [:div.mt-3
       {:hx-post "panel:delete"
        :hx-confirm "Wipe Files?"}
-      (components/button "Delete Files")]
+      (components/button "Delete Files and URLs")]
      [:div.flex.flex-col.gap-4
       (map-indexed
        (fn [i [submission-name files]]
@@ -48,7 +48,15 @@
                 {:href (format "/api/share/%s/%s" i j)}
                 (.getName f)]])
             files)]])
-       (share/get-submissions))]]))
+       (share/get-submissions))]
+     [:h3.text-xl.ml-2.my-4 "URLs Shared"]
+     [:div.flex.flex-col.gap-4
+      (map
+       (fn [url]
+         [:div.ml-2
+           [:a.text-clj-blue {:href url :target "_blank"} url]])
+       (share/get-urls))]
+     ]))
 
 (defn ui-routes [{:keys [query-fn]}]
   (simpleui/make-routes

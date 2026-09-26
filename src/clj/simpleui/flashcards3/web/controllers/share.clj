@@ -11,6 +11,7 @@
   (atom
    {:files []
     :names []
+    :urls []
     :open? false
     :force-images? false}))
 
@@ -26,6 +27,8 @@
 (defn add-entry [name files]
   (let [files (mapv copy-file files)]
     (swap! share-status add-entry* name files)))
+(defn add-url [url]
+  (swap! share-status update :urls conj url))
 
 (defn open? []
   (:open? @share-status))
@@ -42,12 +45,14 @@
 (defn delete-files []
   (doseq [f (.listFiles share)]
     (.delete f))
-  (swap! share-status assoc :files [] :names [])
+  (swap! share-status assoc :files [] :names [] :urls [])
   nil)
 
 (defn get-submissions []
   (let [{:keys [names files]} @share-status]
     (map list names files)))
+(defn get-urls []
+  (:urls @share-status))
 
 (defn get-submission [i j]
   (let [{:keys [f content-type]} (get-in @share-status [:files i j])]
