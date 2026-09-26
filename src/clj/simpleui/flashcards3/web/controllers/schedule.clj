@@ -69,22 +69,22 @@
     :else 120))
 
 (defn- pr-event [[start {:keys [class location book plan]} :as v]]
-  (pr-event*
-   "BEGIN" "VEVENT"
-   "UID" (format "event%s@flashcards.simpleui.io" (hash v))
-   "DTSTAMP" (Date.)
-   "DTSTART" start
-   "DTEND" (add-minutes start (minutes class))
-   "SUMMARY" (str class " " location)
-   "DESCRIPTION" (str book "\n\n" plan)
-   "LOCATION" location
-   "STATUS" "CONFIRMED"
-   "SEQUENCE" 0
-   "END" "VEVENT"
-   ))
+  (when location
+    (pr-event*
+     "BEGIN" "VEVENT"
+     "UID" (format "event%s@flashcards.simpleui.io" (hash v))
+     "DTSTAMP" (Date.)
+     "DTSTART" start
+     "DTEND" (add-minutes start (minutes class))
+     "SUMMARY" (str class " " location)
+     "DESCRIPTION" (str book "\n\n" plan)
+     "LOCATION" location
+     "STATUS" "CONFIRMED"
+     "SEQUENCE" 0
+     "END" "VEVENT")))
 
 (defn cal-body []
   (->> @this-week
-       (map pr-event)
+       (keep pr-event)
        (string/join "\n")
        (format cal-text)))
