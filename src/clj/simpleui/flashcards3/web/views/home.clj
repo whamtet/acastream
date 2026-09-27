@@ -115,7 +115,7 @@
            :target "_blank"}
        (components/button "Music")]]
      [:div {:class "right-2 top-2 absolute"}
-      [:a {:href "../white.html" :target "_blank"}
+      [:a#white {:href "../white.html" :target "_blank"}
        (components/button "White Screen")]]
      [:div.flex.items-center.mb-1
       [:a {:class "my-1 mr-2"

@@ -7,6 +7,9 @@ document.addEventListener('keydown', (event) => {
     if (event.key === 'm') {
         $('#music').click();
     }
+    if (event.key === 'w') {
+        $('#white').click();
+    }
 });
 
 function activateImages() {
