@@ -94,4 +94,4 @@
      {:css ["../output.css"]}
      [:div.mt-4
       [:img {:class "mx-auto w-[500px]"
-             :src (qr/base64-host "/share/")}]])))
+             :src (qr/base64-host (if (-> req :params :url) "/share/?url=true" "/share/"))}]])))
