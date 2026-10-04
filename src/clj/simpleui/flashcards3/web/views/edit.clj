@@ -153,6 +153,7 @@
     "concat2" (slideshow/concat-slideshow2 query-fn slideshow_id images)
     "conj" (slideshow/conj-slideshow query-fn slideshow_id [(or medium large) large])
     "conj-qr" (slideshow/conj-qr query-fn slideshow_id large)
+    "langeek" (slideshow/conj-langeek query-fn slideshow_id large)
     "up" (slideshow/up-slideshow query-fn slideshow_id i)
     "down" (slideshow/down-slideshow query-fn slideshow_id i)
     "del" (slideshow/delete-slide query-fn slideshow_id i)
@@ -186,6 +187,13 @@
              :accept (string/join ", " local/supported-types)
              :multiple true
              :name "images"}]]
+   [:hr.border-top]
+   [:div.flex.m-2
+    [:form {:hx-post "image-order:langeek"
+            :hx-target "#images"}
+     [:input {:class "p-2 rounded-md border mr-2 w-96"
+              :placeholder "Langeek"
+              :name "large"}]]]
    (map-indexed
     (fn [i [medium note]]
       [:div

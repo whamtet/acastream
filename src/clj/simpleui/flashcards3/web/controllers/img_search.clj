@@ -28,7 +28,18 @@
                                :q q
                                :image_type "illustration"}})
    :body
-   util/read-str
+    util/read-str
    :hits
-   (map get-src-pixabay)))
+    (map get-src-pixabay)))
 
+(defn get-langeek [q]
+  (->
+   "https://api.langeek.co/v1/cs/en/vi/word/?term=%s&filter=,inCategory,withExamples"
+   (format q)
+   (client/get {})
+   :body
+   util/read-str
+   first
+   :translation
+   :wordPhoto
+   :photo))

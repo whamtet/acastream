@@ -1,5 +1,6 @@
 (ns simpleui.flashcards3.web.controllers.slideshow
   (:require
+    [simpleui.flashcards3.web.controllers.img-search :as img-search]
     [simpleui.flashcards3.web.controllers.local :as local]
     [simpleui.flashcards3.web.controllers.slideshow.delete :as delete]
     [simpleui.flashcards3.web.controllers.util :as util])
@@ -7,11 +8,11 @@
     java.util.Date))
 
 (defn add-slideshow [query-fn slideshow_name]
-  (or 
-    (:slideshow_id (query-fn :get-slideshow-name {:slideshow_name slideshow_name}))
-    (-> (query-fn :insert-slideshow {:slideshow_name slideshow_name})
-        first
-        :slideshow_id)))
+  (or
+   (:slideshow_id (query-fn :get-slideshow-name {:slideshow_name slideshow_name}))
+   (-> (query-fn :insert-slideshow {:slideshow_name slideshow_name})
+       first
+       :slideshow_id)))
 
 (defn get-slideshows [query-fn tab]
   (let [grouped (util/group-by-other #(re-find #"\w+" (:slideshow_name %))
@@ -105,6 +106,13 @@
         (update $ :slides conj x)
         (update $ :notes conj "")
         (slideshow-details query-fn slideshow_id $)))
+(defn conj-langeek [query-fn slideshow_id q]
+  (when-let [photo (img-search/get-langeek q)]
+    (as-> (get-slideshow-details query-fn slideshow_id) $
+          (update $ :slides conj [photo photo])
+          (update $ :notes conj q)
+          (slideshow-details query-fn slideshow_id $))))
+
 (defn- conj-slideshow-note [query-fn slideshow_id slide note]
   (as-> (get-slideshow-details query-fn slideshow_id) $
         (update $ :slides conj slide)
