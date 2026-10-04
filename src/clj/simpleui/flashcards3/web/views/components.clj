@@ -63,18 +63,18 @@
 
 (defn get-src [x]
   (if (string? x)
-    (if (.startsWith x "http")
-      (str "../../cache?src=" x)
-      (if (.startsWith x "qr://")
-        (qr/base64 (.substring x 5))
-        x))
+    (cond
+      (.startsWith x "https://cdn.langeek.co") x
+      (.startsWith x "http") (str "../../cache?src=" x)
+      (.startsWith x "qr://") (qr/base64 (.substring x 5))
+      :else x)
     (format "../../local/%s" x)))
 
 (defn get-src2 [x]
   (if (string? x)
-    (if (.startsWith x "http")
-      (str "../../../cache?src=" x)
-      (if (.startsWith x "qr://")
-        (qr/base64 (.substring x 5))
-        x))
+    (cond
+      (.startsWith x "https://cdn.langeek.co") x
+      (.startsWith x "http") (str "../../../cache?src=" x)
+      (.startsWith x "qr://") (qr/base64 (.substring x 5))
+      :else x)
     (format "../../../local/%s" x)))
