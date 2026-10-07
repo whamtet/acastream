@@ -101,6 +101,9 @@
         (update $ :notes #(apply f % args))
         (slideshow-details query-fn slideshow_id $)))
 
+(defn- precat [v x]
+  (vec (concat x v)))
+
 (defn conj-slideshow [query-fn slideshow_id x]
   (as-> (get-slideshow-details query-fn slideshow_id) $
         (update $ :slides conj x)
@@ -109,8 +112,8 @@
 (defn conj-langeek [query-fn slideshow_id q]
   (when-let [photo (img-search/get-langeek q)]
     (as-> (get-slideshow-details query-fn slideshow_id) $
-          (update $ :slides conj [photo photo])
-          (update $ :notes conj q)
+          (update $ :slides precat [[photo photo]])
+          (update $ :notes precat [q])
           (slideshow-details query-fn slideshow_id $))))
 
 (defn- conj-slideshow-note [query-fn slideshow_id slide note]
@@ -146,8 +149,6 @@
         (update $ :notes into (repeat (count images) ""))
         (slideshow-details query-fn slideshow_id $)))
 
-(defn- precat [v x]
-  (vec (concat x v)))
 (defn concat-slideshow2 [query-fn slideshow_id images]
   (as-> (get-slideshow-details query-fn slideshow_id) $
         (update $ :slides precat (local/convert images))
