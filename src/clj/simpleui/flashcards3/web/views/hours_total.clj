@@ -78,7 +78,7 @@
              :hx-post "report"
              :hx-vals {:year year :month month}}
       (components/submit "Analyze")
-      [:div.mt-2.text-sm.text-gray-500 "Use CSV export (actually TSV)"]
+      [:div.mt-2.text-sm.text-gray-500 "Use CSV export, open in Numbers and copy (will copy as TSV)."]
       [:textarea {:class "w-full rounded-md border mt-2 p-2"
                   :style {:height "50vh"}
                   :required true
