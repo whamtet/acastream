@@ -35,7 +35,7 @@
 (defn get-langeek [q]
   (->
    "https://api.langeek.co/v1/cs/en/vi/word/?term=%s&filter=,inCategory,withExamples"
-   (format q)
+   (format (java.net.URLEncoder/encode q))
    (client/get {})
    :body
    util/read-str
