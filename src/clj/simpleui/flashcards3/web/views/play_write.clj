@@ -42,6 +42,7 @@
         [a b c] (split-rows slides n three-rows?)
         enlargement (or enlargement 0)]
     [:div {:hx-target "this"}
+     [:audio#music {:src "/upbeat.mp3" :hidden true}]
      [:div#shuffle.hidden
       {:hx-get "panel"
        :hx-vals {:enlargement enlargement
