@@ -13,7 +13,7 @@
                                 submission-name
                                 submission-url
                                 ^:array files
-                                ^:boolean url
+                                ^:boolean filez
                                 command]
   (case command
     "submit"
@@ -24,7 +24,7 @@
     (do
       (share/add-url submission-url)
       [:div.p-4 "Thank you"])
-    (if url
+    (if (not filez)
       [:form.max-w-lg.mx-auto.p-4.space-y-4
        {:hx-post "panel:submit-url"}
        [:div
@@ -94,4 +94,4 @@
      {:css ["../output.css"]}
      [:div.mt-4
       [:img {:class "mx-auto w-[500px]"
-             :src (qr/base64-host (if (-> req :params :url) "/share/?url=true" "/share/"))}]])))
+             :src (qr/base64-host (if (-> req :params :filez) "/share/?filez=true" "/share/"))}]])))

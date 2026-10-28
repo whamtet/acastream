@@ -51,9 +51,10 @@
        (share/get-submissions))]
      [:h3.text-xl.ml-2.my-4 "URLs Shared"]
      [:div.flex.flex-col.gap-4
-      (map
-       (fn [url]
-         [:div.ml-2
+      (map-indexed
+       (fn [i url]
+         [:div.ml-2.flex
+           [:span.mr-2 (inc i)]
            [:a.text-clj-blue {:href url :target "_blank"} url]])
        (share/get-urls))]
      ]))
