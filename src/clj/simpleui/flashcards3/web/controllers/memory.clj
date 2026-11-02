@@ -9,17 +9,15 @@
 
 (def LIMIT 15)
 (defn permutation [query-fn slideshow_id]
-  (let [n (min (count (slideshow/get-slideshow-slides query-fn slideshow_id)) LIMIT)
-        width (->> n (* 2) (get-width 2))]
+  (let [n (count (slideshow/get-slideshow-slides query-fn slideshow_id))
+        width (->> n (min LIMIT) (* 2) (get-width 2))
+        indices (->> n range shuffle (take LIMIT))]
     [width
-     (->> (concat (range n) (range n) (repeat nil))
+     (->> (concat indices indices (repeat nil))
           (take (* (dec width) width))
           shuffle
           vec)]))
 
 (defn images [query-fn slideshow_id permutation]
-  (let [v (->> (slideshow/get-slideshow-slides query-fn slideshow_id)
-               shuffle
-               (take LIMIT)
-               vec)]
+  (let [v (slideshow/get-slideshow-slides query-fn slideshow_id)]
     (map #(get v %) permutation)))
