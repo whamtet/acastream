@@ -62,6 +62,14 @@
        (map pr-event**)
        (string/join "\r\n")))
 
+(defn- pr-event-h** [[a b]]
+  (str a ": " b))
+(defn- pr-event-h* [& pairs]
+  (->> pairs
+       (partition 2)
+       (map pr-event-h**)
+       (string/join "\r\n")))
+
 (defn- minutes [class]
   (cond
     (.startsWith class "HK") 90
@@ -83,8 +91,20 @@
      "SEQUENCE" 0
      "END" "VEVENT")))
 
+(defn- pr-event-h [[start {:keys [class location book plan]}]]
+  (when location
+    (pr-event-h*
+     "DTSTART" start
+     "SUMMARY" (str class " " location)
+     "DESCRIPTION" (str book "\n\n" plan))))
+
 (defn cal-body []
   (->> @this-week
        (keep pr-event)
        (string/join "\n")
        (format cal-text)))
+
+(defn cal-body-h []
+  (->> @this-week
+       (keep pr-event-h)
+       (string/join "\n****************\n")))

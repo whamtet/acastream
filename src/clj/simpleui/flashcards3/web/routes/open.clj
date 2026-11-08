@@ -129,7 +129,7 @@
     (fn [req]
       {:status 200
        :headers {"Content-Type" "text/plain"}
-       :body (schedule/cal-body)})]
+       :body (schedule/cal-body-h)})]
    ["/api/students" controllers.students/parse]
    ["/api/snl"
     (fn [req]
