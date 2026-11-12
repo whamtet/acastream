@@ -79,6 +79,14 @@
       ["bike" "camera" "guitar" "robot" "skateboard" "tablet"]
       ["building bricks" "markers"]
       ["building bricks" "markers"]])
+    "Look 2.2a"
+    ("(%s) %s my %s."
+     ["near" "far" "near" "far"]
+     ["This is" "That is" "These are" "Those are"]
+     [["bike" "camera" "guitar" "robot" "skateboard" "tablet"]
+      ["bike" "camera" "guitar" "robot" "skateboard" "tablet"]
+      ["building bricks" "markers"]
+      ["building bricks" "markers"]])
     "Look 2.3"
     ("%s %s. %s %s."
       ["This is our" "That's their"]

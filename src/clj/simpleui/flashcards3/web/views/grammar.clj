@@ -30,8 +30,10 @@
   [:div
    (repeat 10
            [:div.mb-6
-            (for [line (grammar/line-group lesson n)]
-              [:div line])])])
+            (map-indexed
+              (fn [i x]
+                [:div (format "%s)" (inc i)) x])
+              (grammar/line-group lesson n))])])
 
 (defn ui-routes-lesson [{:keys [query-fn]}]
   (simpleui/make-routes
