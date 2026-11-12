@@ -72,6 +72,13 @@
        ["Yes, he does" "No, he doesn't"]
        ["Yes, she does" "No, she doesn't"]
        ["Yes, they do" "No, they don't"]])
+    "Look 2.2"
+    ("%s my %s."
+     ["This is" "That is" "These are" "Those are"]
+     [["bike" "camera" "guitar" "robot" "skateboard" "tablet"]
+      ["bike" "camera" "guitar" "robot" "skateboard" "tablet"]
+      ["building bricks" "markers"]
+      ["building bricks" "markers"]])
     "Look 2.3"
     ("%s %s. %s %s."
       ["This is our" "That's their"]
