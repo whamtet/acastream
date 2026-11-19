@@ -7,12 +7,23 @@
   (:import
     java.util.Date))
 
+(def temp-slideshow (atom {:slides [] :notes []}))
+
 (defn add-slideshow [query-fn slideshow_name]
   (or
    (:slideshow_id (query-fn :get-slideshow-name {:slideshow_name slideshow_name}))
    (-> (query-fn :insert-slideshow {:slideshow_name slideshow_name})
        first
        :slideshow_id)))
+
+(defn add-from-temp [query-fn slideshow_name]
+  (or
+    (:slideshow_id (query-fn :get-slideshow-name {:slideshow_name slideshow_name}))
+    (let [new-id (-> (query-fn :insert-slideshow {:slideshow_name slideshow_name :details (pr-str @temp-slideshow)})
+                     first
+                     :slideshow_id)]
+      (reset! temp-slideshow {:slides [] :notes []})
+     new-id))) 
 
 (defn get-slideshows [query-fn tab]
   (let [grouped (util/group-by-other #(re-find #"\w+" (:slideshow_name %))
@@ -56,6 +67,18 @@
 (defn get-slideshow-details2 [query-fn slideshow_id]
   (-> (query-fn :get-slideshow {:slideshow_id slideshow_id})
       (update :details delete/read-details)))
+
+(defn add-to-temp [query-fn slideshow_id i]
+  (let [{:keys [slides notes]} (get-slideshow-details query-fn slideshow_id)]
+    (when-let [slide (get slides i)]
+      (let [note (get notes i)]
+        (swap! temp-slideshow
+               #(-> %
+                    (update :slides conj slide)
+                    (update :notes conj note)))))))
+
+(defn has-temp? []
+  (-> @temp-slideshow :slides not-empty))
 
 (defn get-slideshow-slides [query-fn slideshow_id]
   (:slides
