@@ -34,7 +34,13 @@
   (if three?
     [(take n slides) (->> slides (drop n) (take n)) (drop (* 2 n) slides)]
     (split-at n slides)))
+
+(defcomponent ^:endpoint temp-adder [req ^:long i]
+  (slideshow/add-to-temp query-fn slideshow_id i)
+  [:script "alert('Added')"])
+
 (defcomponent ^:endpoint panel [req ^:long enlargement ^:boolean shuff]
+  temp-adder
   (let [slides (slideshow/get-slideshow-slides-notes query-fn slideshow_id)
         slides (if shuff (shuffle slides) slides)
         three-rows? (> (count slides) 20)
