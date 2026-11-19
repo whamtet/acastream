@@ -137,6 +137,11 @@
                     :hx-post "panel:temp"
                     :hx-prompt "New Slideshow Name?"
                     :class "bg-clj-blue py-1.5 px-3 rounded-lg text-white"}
+           "Create from temp"]]
+         [:span.p-1
+          [:button {:type "button"
+                    :disabled true
+                    :class "bg-clj-blue py-1.5 px-3 rounded-lg text-white opacity-50 cursor-not-allowed"}
            "Create from temp"]])]
       ]
      (tabs-disp req)]))
