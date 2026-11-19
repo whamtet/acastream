@@ -5,7 +5,3 @@ document.addEventListener('keydown', (event) => {
         $('#drop').click();
     }
 });
-
-function fixSrc(target) {
-    target.src = target.getAttribute('src2');
-}

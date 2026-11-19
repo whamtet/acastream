@@ -18,11 +18,14 @@
   [:div.flex.flex-col {:style {:height "48vh"}}
    [:div {:class "grid grid-rows-1 flex-1 min-h-0"
           :style {:grid-template-columns (format "repeat(%s, minmax(0, 1fr))" (count slides))}}
-    (for [[_ src] (map first slides)]
-      [:img {:class "max-h-full w-full object-contain"
-             :src (get-src src)
-             :hx-get "panel"
-             :hx-vals {:enlargement (inc-mod enlargement)}}])]
+    (->> slides
+         (map-indexed
+          (fn [i [[_ src]]]
+            [:img {:class "max-h-full w-full object-contain"
+                   :src (get-src src)
+                   :hx-get "panel"
+                   :oncontextmenu (format "addTemp(%s); return false;" i)
+                   :hx-vals {:enlargement (inc-mod enlargement)}}])))]
    (when (pos? enlargement)
      [:div.grid {:style {:grid-template-columns (format "repeat(%s, minmax(0, 1fr))" (count slides))}}
       (for [note (map second slides)]
@@ -36,8 +39,8 @@
     (split-at n slides)))
 
 (defcomponent ^:endpoint temp-adder [req ^:long i]
-  (slideshow/add-to-temp query-fn slideshow_id i)
-  [:script "alert('Added')"])
+  (when-let [c (slideshow/add-to-temp query-fn slideshow_id i)]
+    [:script (format "alert ('%s in queue')" c)]))
 
 (defcomponent ^:endpoint panel [req ^:long enlargement ^:boolean shuff]
   temp-adder
@@ -49,6 +52,11 @@
         enlargement (or enlargement 0)]
     [:div {:hx-target "this"}
      [:audio#music {:src "/upbeat.mp3" :hidden true}]
+     [:form.hidden {:hx-post "temp-adder"
+                    :hx-target "body"
+                    :hx-swap "beforeend"}
+      [:input#add-i {:name "i"}]
+      [:input#add-submit {:type "submit"}]]
      [:div#shuffle.hidden
       {:hx-get "panel"
        :hx-vals {:enlargement enlargement

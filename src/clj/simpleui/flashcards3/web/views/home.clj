@@ -70,6 +70,11 @@
                  (slideshow/add-slideshow query-fn)
                  (format "../edit/%s/")
                  response/hx-redirect))
+    "temp" (when slideshow-name
+             (->> slideshow-name
+                  (slideshow/add-from-temp query-fn)
+                  (format "../edit/%s/")
+                  response/hx-redirect))
     [:div.p-2
      [:div.flex.items-center.mb-1
       [:div {:class "my-1 mr-2"
@@ -124,7 +129,16 @@
        (components/button "Readings")]
       [:div {:class "my-1 mr-2"
              :onclick "postTextToAPI()"}
-       (components/button "This Week")]]
+       (components/button "This Week")]
+      [:div {:class "my-1 mr-2"}
+       (if (slideshow/has-temp?)
+         [:span.p-1
+          [:button {:type "button"
+                    :hx-post "panel:temp"
+                    :hx-prompt "New Slideshow Name?"
+                    :class "bg-clj-blue py-1.5 px-3 rounded-lg text-white"}
+           "Create from temp"]])]
+      ]
      (tabs-disp req)]))
 
 (defn ui-routes [{:keys [query-fn]}]

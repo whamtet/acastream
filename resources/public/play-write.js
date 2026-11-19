@@ -11,6 +11,7 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-function fixSrc(target) {
-    target.src = target.getAttribute('src2');
+function addTemp(i) {
+    $('#add-i').value = i;
+    $('#add-submit').click();
 }
