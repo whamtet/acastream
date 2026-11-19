@@ -4,6 +4,11 @@ insert into slideshow (slideshow_name)
 values (:slideshow_name)
 returning slideshow_id;
 
+-- :name insert-from-temp :returning-execute
+insert into slideshow (slideshow_name, details)
+values (:slideshow_name, :details)
+returning slideshow_id;
+
 -- :name insert-reading :returning-execute
 insert into reading (reading_name)
 values (:reading_name)
